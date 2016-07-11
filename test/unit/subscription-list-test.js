@@ -24,7 +24,7 @@
 
 var request = require('request'),
     iotConfig = require('../configTest'),
-    utils = require('../utils'),
+    should = require('should'),
     iotManager = require('../../lib/iotagent-manager');
 
 describe('Subscription list tests', function() {

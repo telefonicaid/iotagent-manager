@@ -33,6 +33,7 @@
     "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#task/refactorGenericMiddleware"
   },
   "devDependencies": {
+    "mongodb": "2.1.18",
     "grunt": "0.4.5",
     "closure-linter-wrapper": "1.0.1",
     "grunt-contrib-clean": "0.7.0",

@@ -24,6 +24,9 @@
 
 var request = require('request'),
     iotConfig = require('../configTest'),
+    mongoDBUtils = require('../mongoDBUtils'),
+    async = require('async'),
+    should = require('should'),
     utils = require('../utils'),
     iotManager = require('../../lib/iotagent-manager');
 
@@ -36,13 +39,16 @@ describe('Subscription tests', function() {
             'fiware-servicepath': '/gardens'
         }
     };
-    
+
     beforeEach(function(done) {
         iotManager.start(iotConfig, done);
     });
 
     afterEach(function(done) {
-        iotManager.stop(done);
+        async.series([
+            mongoDBUtils.cleanDbs,
+            iotManager.stop
+        ], done);
     });
 
     describe('When a new IoTAgent registration subscription arrives to the IOTAM', function() {
@@ -64,7 +70,24 @@ describe('Subscription tests', function() {
                 done();
             });
         });
-        it('should appear in subsequent listings');
+        it('should appear in subsequent listings', function(done) {
+            request(subscriptionRequest, function(error, result, body) {
+                request(listRequest, function(error, result, body) {
+                    var parsedBody;
+
+                    should.not.exist(error);
+                    should.exist(body);
+
+                    parsedBody = JSON.parse(body);
+
+                    result.statusCode.should.equal(200);
+                    should.exist(parsedBody.protocols);
+                    should.exist(parsedBody.count);
+                    parsedBody.count.should.equal(1);
+                    done();
+                });
+            });
+        });
     });
 
     describe('When a registration arrives with an incorrect payload', function() {
