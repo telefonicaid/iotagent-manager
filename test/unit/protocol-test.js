@@ -90,8 +90,46 @@ describe('Protocol creation tests', function() {
         });
     });
 
-    describe('When a protocol registration arrives with an incorrect payload', function() {
-        it('should return a 400 BAD INPUT code to the IoTA');
+    describe('When a protocol registration arrives with missing attributes', function() {
+        var protocolRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithMissingAttrs.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        it('should return a 400 BAD INPUT code to the IoTA', function(done) {
+            request(protocolRequest, function(error, result, body) {
+                should.not.exist(error);
+                should.exist(body);
+                result.statusCode.should.equal(400);
+                done();
+            });
+        });
+    });
+
+    describe('When a protocol registration arrives with extra attributes', function() {
+        var protocolRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithWrongAttrs.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        it('should return a 400 BAD INPUT code to the IoTA', function(done) {
+            request(protocolRequest, function(error, result, body) {
+                should.not.exist(error);
+                should.exist(body);
+                result.statusCode.should.equal(400);
+                done();
+            });
+        });
     });
 
     describe('When an already existing registration arrives to the IoTAM', function() {
