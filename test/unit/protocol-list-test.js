@@ -27,7 +27,7 @@ var request = require('request'),
     should = require('should'),
     iotManager = require('../../lib/iotagent-manager');
 
-describe('Subscription list tests', function() {
+describe('Protocol list tests', function() {
     beforeEach(function(done) {
         iotManager.start(iotConfig, done);
     });
@@ -36,7 +36,7 @@ describe('Subscription list tests', function() {
         iotManager.stop(done);
     });
 
-    describe('When a simple subscription list request arrives to a database without subscriptions', function() {
+    describe('When a simple protocol list request arrives to a database without protocols', function() {
         var listRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'GET',
@@ -46,7 +46,7 @@ describe('Subscription list tests', function() {
             }
         };
 
-        it('should return the list of the subscriptions', function(done) {
+        it('should return the list of the protocols', function(done) {
             request(listRequest, function(error, result, body) {
                 should.not.exist(error);
                 should.exist(body);
@@ -57,11 +57,11 @@ describe('Subscription list tests', function() {
         it('should return a 200 OK code');
     });
 
-    describe('When a subscription list request with an offset = 3 arrives to the IOTAM', function() {
+    describe('When a protocol list request with an offset = 3 arrives to the IOTAM', function() {
         it('should skip the 3 first registers');
     });
 
-    describe('When a subscription list request arreives with a limit of 4', function() {
+    describe('When a protocol list request arreives with a limit of 4', function() {
         it('should return just 4 records');
     });
 });

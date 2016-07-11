@@ -1,6 +1,6 @@
 {
-  "title": "Subscription",
-  "description": "A IoTA's subscription to the IoTA Manager",
+  "title": "Protocol",
+  "description": "A IoTA's protocol subscription to the IoTA Manager",
   "additionalProperties": false,
   "type": "object",
   "properties": {

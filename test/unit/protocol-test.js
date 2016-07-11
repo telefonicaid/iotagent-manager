@@ -30,7 +30,7 @@ var request = require('request'),
     utils = require('../utils'),
     iotManager = require('../../lib/iotagent-manager');
 
-describe('Subscription tests', function() {
+describe('Protocol creation tests', function() {
     var listRequest = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
         method: 'GET',
@@ -51,11 +51,11 @@ describe('Subscription tests', function() {
         ], done);
     });
 
-    describe('When a new IoTAgent registration subscription arrives to the IOTAM', function() {
-        var subscriptionRequest = {
+    describe('When a new IoTAgent protocol registration request arrives to the IOTAM', function() {
+        var protocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'POST',
-            json: utils.readExampleFile('./test/examples/subscriptions/registrationWithGroups.json'),
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -63,7 +63,7 @@ describe('Subscription tests', function() {
         };
 
         it('should return a 200 OK code if the registration was correct', function(done) {
-            request(subscriptionRequest, function(error, result, body) {
+            request(protocolRequest, function(error, result, body) {
                 should.not.exist(error);
                 should.exist(body);
                 result.statusCode.should.equal(200);
@@ -71,7 +71,7 @@ describe('Subscription tests', function() {
             });
         });
         it('should appear in subsequent listings', function(done) {
-            request(subscriptionRequest, function(error, result, body) {
+            request(protocolRequest, function(error, result, body) {
                 request(listRequest, function(error, result, body) {
                     var parsedBody;
 
@@ -90,7 +90,7 @@ describe('Subscription tests', function() {
         });
     });
 
-    describe('When a registration arrives with an incorrect payload', function() {
+    describe('When a protocol registration arrives with an incorrect payload', function() {
         it('should return a 400 BAD INPUT code to the IoTA');
     });
 
