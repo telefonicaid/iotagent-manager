@@ -22,9 +22,38 @@
  */
 'use strict';
 
+var request = require('request'),
+    iotConfig = require('../configTest'),
+    utils = require('../utils'),
+    iotManager = require('../../lib/iotagent-manager');
+
 describe('Subscription list tests', function() {
-    describe('When a simple subscription list request arrives', function() {
-        it('should return the list of the subscriptions');
+    beforeEach(function(done) {
+        iotManager.start(iotConfig, done);
+    });
+
+    afterEach(function(done) {
+        iotManager.stop(done);
+    });
+
+    describe('When a simple subscription list request arrives to a database without subscriptions', function() {
+        var listRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'GET',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        it('should return the list of the subscriptions', function(done) {
+            request(listRequest, function(error, result, body) {
+                should.not.exist(error);
+                should.exist(body);
+                result.statusCode.should.equal(200);
+                done();
+            });
+        });
         it('should return a 200 OK code');
     });
 
