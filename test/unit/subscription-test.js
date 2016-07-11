@@ -45,7 +45,7 @@ describe('Subscription tests', function() {
         iotManager.stop(done);
     });
 
-    describe.only('When a new IoTAgent registration subscription arrives to the IOTAM', function() {
+    describe('When a new IoTAgent registration subscription arrives to the IOTAM', function() {
         var subscriptionRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'POST',
