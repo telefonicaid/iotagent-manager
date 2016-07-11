@@ -22,9 +22,48 @@
  */
 'use strict';
 
+var request = require('request'),
+    iotConfig = require('../configTest'),
+    utils = require('../utils'),
+    iotManager = require('../../lib/iotagent-manager');
+
 describe('Subscription tests', function() {
-    describe('When a new IoTAgent registration subscription arrives to the IOTAM', function() {
-        it('should return a 200 OK code if the registration was correct');
+    var listRequest = {
+        url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+        method: 'GET',
+        headers: {
+            'fiware-service': 'smartGondor',
+            'fiware-servicepath': '/gardens'
+        }
+    };
+    
+    beforeEach(function(done) {
+        iotManager.start(iotConfig, done);
+    });
+
+    afterEach(function(done) {
+        iotManager.stop(done);
+    });
+
+    describe.only('When a new IoTAgent registration subscription arrives to the IOTAM', function() {
+        var subscriptionRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/subscriptions/registrationWithGroups.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        it('should return a 200 OK code if the registration was correct', function(done) {
+            request(subscriptionRequest, function(error, result, body) {
+                should.not.exist(error);
+                should.exist(body);
+                result.statusCode.should.equal(200);
+                done();
+            });
+        });
         it('should appear in subsequent listings');
     });
 

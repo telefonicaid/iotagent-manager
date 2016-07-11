@@ -8,10 +8,68 @@
 
 ## <a name="overview"/> Overview
 ### Description
-
+The IoT Agent manager works as a proxy for multiple IoT Agents
 
 ## <a name="subscriptionapi"/> Subscription API
 ### Description
+
+#### New Subscription (POST /iot/protocols)
+Whenever a new IoT Agent wants to register itself into the IoTAgent Manager, it must send a subscription request to
+the following path: ``, indicating the following information:
+* *protocol*: Name of the protocol served by the IoTAgent.
+* *description*: Textual description for its display in portals.
+* *iotagent*: URL address where requests for this IoT Agent will be redirected.
+* *resource*: Unique string used to identify different IoT Agents for the same protocol.
+* *services*: List of device Configurations available in the IoT Agent. The IoTA Manager saves a cache for all the
+configurations, aimed to be used to fasten the operations agains the IoTA databases.
+
+The following example shows a registration of an IoT Agent that already have some configuration groups registered in the
+IoT Agent:
+```
+{
+  "protocol": "GENERIC_PROTOCOL",
+  "description": "A generic protocol",
+  "iotagent": "http://smartGondor.com/iot",
+  "resource": "/iot/d",
+  "services": [
+    {
+      "apikey": "801230BJKL23Y9090DSFL123HJK09H324HV8732",
+      "token": "8970A9078A803H3BL98PINEQRW8342HBAMS",
+      "entity_type": "SensorMachine",
+      "resource": "/deviceTest",
+      "service": "theService",
+      "service_path": "theSubService",
+      "attributes": [
+        {
+          "name": "status",
+          "type": "Boolean"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### List subscriptions (GET /iot/protocols)
+Retrieve the list of all the available protocols, with their available endpoints. The following example shows a sample
+response from the server:
+```
+{
+   "count": 1,
+   "protocols": [
+     {
+       "protocol" : "PDI-IoTA-UltraLight",
+       "description" : "UL2",
+       "endpoints" : [
+          { "endpoint" : "http://127.0.0.1:8080/iot",
+            "identifier" : "idcl1:8080",
+            "resource" : "/iot/d"
+          }
+        ]
+     }
+    ]
+ }
+```
 
 
 ## <a name="development"/> Development documentation
