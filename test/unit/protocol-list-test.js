@@ -139,10 +139,76 @@ describe('Protocol list tests', function() {
     });
 
     describe('When a protocol list request with an offset = 3 arrives to the IOTAM', function() {
-        it('should skip the 3 first registers');
+        var listRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'GET',
+            qs: {
+                offset: 3
+            },
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        beforeEach(function(done) {
+            var protocolCreationRequests = generateProtocols(10);
+
+            async.series(protocolCreationRequests, function(error, results) {
+                done();
+            });
+        });
+
+        it('should skip the 3 first registers', function(done) {
+            request(listRequest, function(error, result, body) {
+                var parsedBody;
+
+                parsedBody = JSON.parse(body);
+
+                should.exist(parsedBody.protocols);
+                should.exist(parsedBody.count);
+                parsedBody.count.should.equal(10);
+                parsedBody.protocols.length.should.equal(7);
+                parsedBody.protocols["0"].protocol.should.equal('GENERIC_PROTOCOL3');
+                done();
+            });
+        });
     });
 
     describe('When a protocol list request arreives with a limit of 4', function() {
-        it('should return just 4 records');
+        var listRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'GET',
+            qs: {
+                limit: 4
+            },
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        beforeEach(function(done) {
+            var protocolCreationRequests = generateProtocols(10);
+
+            async.series(protocolCreationRequests, function(error, results) {
+                done();
+            });
+        });
+
+        it('should return just 4 records', function(done) {
+            request(listRequest, function(error, result, body) {
+                var parsedBody;
+
+                parsedBody = JSON.parse(body);
+
+                should.exist(parsedBody.protocols);
+                should.exist(parsedBody.count);
+                parsedBody.count.should.equal(10);
+                parsedBody.protocols.length.should.equal(4);
+
+                done();
+            });
+        });
     });
 });
