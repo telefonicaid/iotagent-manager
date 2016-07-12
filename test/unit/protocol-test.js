@@ -133,7 +133,77 @@ describe('Protocol creation tests', function() {
     });
 
     describe('When an already existing registration arrives to the IoTAM', function() {
-        it('should NOT create a new register');
-        it('should update the information in previous registration records');
+        var protocolRequest = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+                method: 'POST',
+                json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            },
+            protocolRequest2 = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+                method: 'POST',
+                json: utils.readExampleFile('./test/examples/protocols/registrationWithGroupsUpdate.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        it('should return a 200 OK', function(done) {
+            request(protocolRequest, function(error, result, body) {
+                request(protocolRequest2, function(error, result, body) {
+                    should.not.exist(error);
+                    should.exist(body);
+                    result.statusCode.should.equal(200);
+                    done();
+                });
+            });
+        });
+
+        it('should NOT create a new register', function(done) {
+            request(protocolRequest, function(error, result, body) {
+                request(protocolRequest2, function(error, result, body) {
+                    request(listRequest, function(error, result, body) {
+                        var parsedBody;
+
+                        should.not.exist(error);
+                        should.exist(body);
+
+                        parsedBody = JSON.parse(body);
+
+                        result.statusCode.should.equal(200);
+                        should.exist(parsedBody.protocols);
+                        should.exist(parsedBody.count);
+                        parsedBody.count.should.equal(1);
+                        done();
+                    });
+                });
+            });
+        });
+
+        it('should update the information in previous registration records', function(done) {
+            request(protocolRequest, function(error, result, body) {
+                request(protocolRequest2, function(error, result, body) {
+                    request(listRequest, function(error, result, body) {
+                        var parsedBody;
+
+                        should.not.exist(error);
+                        should.exist(body);
+
+                        parsedBody = JSON.parse(body);
+
+                        parsedBody.protocols[0].description.should.equal(
+                            'A generic protocol updated with new information');
+
+                        parsedBody.protocols[0].iotagent.should.equal('http://smartGondor.com/iotNew');
+
+                        done();
+                    });
+                });
+            });
+        });
     });
 });
