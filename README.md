@@ -3,15 +3,39 @@
 ## Index
 
 * [Overview](#overview)
+* [Configuration] (#configuration)
 * [Subscription API](#subscriptionapi)
 * [Development Documentation](#development)
 
 ## <a name="overview"/> Overview
 ### Description
-The IoT Agent manager works as a proxy for multiple IoT Agents
+The IoT Agent Manager works as a proxy for scenarios where multiple IoT Agents offer different southbound protocols.
+The IoTA Manager appears as a single administration endpoint for provisioning tasks, redirecting provisioning requests
+to the appropriate IoTAgent based on the declared protocol.
+
+The IoTAgent Manager also offers a cache of all the provided device Configurations, to fasten the retrieval of certain
+information from the Agents.
+
+## <a name="configuration"/> Configuration
+The IoT Agent Manager main configuration point is the `config.js` file at the root of the project. The following section
+explains each configuration parameter in detail.
+
+### Configuration parameters
+* *server.port*: port where the server will be listening for connections.
+* *server.host*: address the server will bind to.
+* *logLevel*: set the log level for the internal logger. Its allowed values are: FATAL, ERROR, WARNING, INFO and DEBUG.
+
+### Environment variables
+Some of the configuration parameters can also be modified using environment variables when starting the process. The
+following table shows the correspondence between allowed environment variables and configuration parameters.
+
+| Environment variable      | Configuration attribute             |
+|:------------------------- |:----------------------------------- |
+| IOTA_SERVER_PORT          | server.port                         |
+| IOTA_SERVER_HOST          | server.host                         |
+| IOTA_LOG_LEVEL            | logLevel                            |
 
 ## <a name="subscriptionapi"/> Subscription API
-### Description
 
 #### New Subscription (POST /iot/protocols)
 Whenever a new IoT Agent wants to register itself into the IoTAgent Manager, it must send a subscription request to
@@ -50,6 +74,10 @@ IoT Agent:
 }
 ```
 
+This operation can be used also to update the protocol subscriptions. If a protocol creation request arrives to the
+IoTAgent Manager with the same protocol and resource of an already existing agent, it will override the record with the
+new information.
+
 #### List subscriptions (GET /iot/protocols)
 Retrieve the list of all the available protocols, with their available endpoints. The following example shows a sample
 response from the server:
@@ -70,6 +98,10 @@ response from the server:
     ]
  }
 ```
+
+The list accepts to query parameters:
+* *limit*: limits the number of entries to return from the query.
+* *offset*: skips the given number of entries from the database before returning the list.
 
 
 ## <a name="development"/> Development documentation
