@@ -169,7 +169,7 @@ describe('Protocol list tests', function() {
                 should.exist(parsedBody.count);
                 parsedBody.count.should.equal(10);
                 parsedBody.protocols.length.should.equal(7);
-                parsedBody.protocols["0"].protocol.should.equal('GENERIC_PROTOCOL3');
+                parsedBody.protocols['0'].protocol.should.equal('GENERIC_PROTOCOL3');
                 done();
             });
         });
