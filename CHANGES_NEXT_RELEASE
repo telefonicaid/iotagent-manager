@@ -2,3 +2,5 @@
 - Add Protocol List features (#1)
 - Add Service Update features (#2)
 - Add API for log management (#8)
+- Add RPM and linux service (#3)
+- Add executable (#5)
