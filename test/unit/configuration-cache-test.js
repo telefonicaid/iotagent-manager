@@ -33,7 +33,7 @@ var request = require('request'),
     iotmDb;
 
 
-describe.only('Configuration cache', function() {
+describe('Configuration cache', function() {
     var protocolRequest = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
         method: 'POST',
@@ -108,7 +108,72 @@ describe.only('Configuration cache', function() {
     });
 
     describe('When an IoT Agent updates the registration information with different configurations', function() {
-        it('should store the additional information');
-        it('should remove the older information');
+        var firstProtocolRequest = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+                method: 'POST',
+                json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            },
+            secondProtocolRequest = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+                method: 'POST',
+                json: utils.readExampleFile('./test/examples/protocols/registrationWithNewGroups.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        it('should remove the older information', function(done) {
+            request(firstProtocolRequest, function(error, result, body) {
+                request(secondProtocolRequest, function(error, result, body) {
+                    iotmDb.collection('configurations').find({}).toArray(function(err, docs) {
+                        should.not.exist(err);
+                        should.exist(docs);
+                        should.exist(docs.length);
+
+                        docs.length.should.equal(1);
+
+                        done();
+                    });
+                });
+            });
+        });
+
+        it('should store the additional information', function(done) {
+            request(firstProtocolRequest, function(error, result, body) {
+                request(secondProtocolRequest, function(error, result, body) {
+                    iotmDb.collection('configurations').find({}).toArray(function(err, docs) {
+                        should.exist(docs[0].apikey);
+                        should.exist(docs[0].token);
+                        should.exist(docs[0].type);
+                        should.exist(docs[0].resource);
+                        should.exist(docs[0].service);
+                        should.exist(docs[0].subservice);
+                        should.exist(docs[0].attributes);
+                        should.exist(docs[0].attributes.length);
+
+                        should.exist(docs[0].protocol);
+                        should.exist(docs[0].resource);
+                        should.exist(docs[0].iotagent);
+
+                        docs[0].apikey.should.equal('L23123HJ01230BJ4HV87K0BMSA807898PI9H2');
+                        docs[0].token.should.equal('90DSFLK3Y9032NEQL8970A92HBARW83403H3');
+                        docs[0].type.should.equal('OtherMachine');
+                        docs[0].resource.should.equal('/iot/d');
+                        docs[0].service.should.equal('otherServices');
+                        docs[0].subservice.should.equal('differentPath');
+
+                        docs[0].protocol.should.equal('GENERIC_PROTOCOL');
+                        docs[0].iotagent.should.equal('http://smartGondor.com/iot');
+
+                        done();
+                    });
+                });
+            });
+        });
     });
 });

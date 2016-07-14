@@ -1,0 +1,26 @@
+{
+  "protocol": "GENERIC_PROTOCOL",
+  "description": "A generic protocol",
+  "iotagent": "http://smartGondor.com/iot",
+  "resource": "/iot/d",
+  "services": [
+    {
+      "apikey": "L23123HJ01230BJ4HV87K0BMSA807898PI9H2",
+      "token": "90DSFLK3Y9032NEQL8970A92HBARW83403H3",
+      "entity_type": "OtherMachine",
+      "resource": "/deviceTest",
+      "service": "otherServices",
+      "service_path": "differentPath",
+      "attributes": [
+        {
+          "name": "attr1",
+          "type": "String"
+        },
+        {
+          "name": "attr2",
+          "type": "Number"
+        }
+      ]
+    }
+  ]
+}
