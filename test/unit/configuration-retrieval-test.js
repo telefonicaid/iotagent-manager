@@ -122,11 +122,28 @@ describe('Configuration list', function() {
                 done();
             });
         });
+
         it('should return all the available configurations for its service', function(done) {
             request(options, function(error, response, body) {
                 var parsedBody = JSON.parse(body);
 
                 parsedBody.services.length.should.equal(8);
+                done();
+            });
+        });
+
+        it('should not return any configurations for other services', function(done) {
+            request(options, function(error, response, body) {
+                var parsedBody = JSON.parse(body),
+                    otherServiceFound = false;
+
+                for (var i = 0; i < parsedBody.services.length; i++) {
+                    if (parsedBody.services[i].service !== 'smartGondor') {
+                        otherServiceFound = true;
+                    }
+                }
+
+                otherServiceFound.should.equal(false);
                 done();
             });
         });
@@ -186,7 +203,7 @@ describe('Configuration list', function() {
                 'fiware-servicepath': '/gardens'
             },
             qs: {
-                offset: 'three'
+                limit: 'three'
             },
             method: 'GET'
         };
@@ -200,6 +217,23 @@ describe('Configuration list', function() {
     });
 
     describe('When a configuration list request arrives with a wrong offset', function() {
-        it('should raise a 400 error');
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            qs: {
+                offset: 'three'
+            },
+            method: 'GET'
+        };
+
+        it('should raise a 400 error', function(done) {
+            request(options, function(error, response, body) {
+                response.statusCode.should.equal(400);
+                done();
+            });
+        });
     });
 });
