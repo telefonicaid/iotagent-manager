@@ -22,10 +22,112 @@
  */
 'use strict';
 
-describe('Configuration list', function() {
+var request = require('request'),
+    iotConfig = require('../configTest'),
+    mongoDBUtils = require('../mongoDBUtils'),
+    _ = require('underscore'),
+    mongo = require('mongodb').MongoClient,
+    async = require('async'),
+    should = require('should'),
+    utils = require('../utils'),
+    iotManager = require('../../lib/iotagent-manager'),
+    configurationTemplate = {
+        "apikey": "801230BJKL23Y9090DSFL123HJK09H324HV8732",
+        "token": "8970A9078A803H3BL98PINEQRW8342HBAMS",
+        "entity_type": "SensorMachine",
+        "resource": "/deviceTest",
+        "service": "theService",
+        "service_path": "/gardens",
+        "attributes": [
+            {
+                "name": "status",
+                "type": "Boolean"
+            }
+        ]
+    },
+    iotmDb;
+
+
+describe.only('Configuration list', function() {
+    var protocolRequest = {
+        url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+        method: 'POST',
+        json: utils.readExampleFile('./test/examples/protocols/registrationEmpty.json'),
+        headers: {
+            'fiware-service': 'smartGondor',
+            'fiware-servicepath': '/gardens'
+        }
+    };
+
+    function generateInitialConfigurations(callback) {
+        var newConfiguration,
+            services = ['smartGondor', 'smartMordor'];
+
+        for (var service in services) {
+            for (var i = 0; i < 8; i++) {
+                newConfiguration = _.clone(configurationTemplate);
+                newConfiguration.apikey += "__" + i;
+                newConfiguration.entity_type += "__" + i;
+                newConfiguration.token += "__" + i;
+                newConfiguration.resource += "__" + i;
+                newConfiguration.service = services[service];
+
+                protocolRequest.json.services.push(newConfiguration);
+            }
+        }
+
+        request(protocolRequest, callback);
+    }
+
+    beforeEach(function(done) {
+        async.series([
+            mongoDBUtils.cleanDbs,
+            async.apply(iotManager.start, iotConfig)
+        ], function() {
+            mongo.connect('mongodb://localhost:27017/iotagent-manager', function(err, db) {
+                iotmDb = db;
+
+                generateInitialConfigurations(done);
+            });
+        });
+    });
+
+    afterEach(function(done) {
+        iotmDb.collection('configurations').remove(function(error) {
+            iotmDb.close(function(error) {
+                async.series([
+                    mongoDBUtils.cleanDbs,
+                    iotManager.stop
+                ], done);
+            });
+        });
+    });
+
     describe('When a new configuration list request arrives to the IoTAM', function() {
-        it('should return a 200 OK');
-        it('should return all the available configurations');
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            method: 'GET'
+        };
+
+        it('should return a 200 OK', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+        it('should return all the available configurations for its service', function(done) {
+            request(options, function(error, response, body) {
+                var parsedBody = JSON.parse(body);
+
+                parsedBody.services.length.should.equal(8);
+                done();
+            });
+        });
     });
 
     describe('When a configuration list request with a limit 3 arrives to the IoTAM', function() {
@@ -43,5 +145,4 @@ describe('Configuration list', function() {
     describe('When a configuration list request arrives with a wrong offset', function() {
         it('should raise a 400 error');
     });
-
 });
