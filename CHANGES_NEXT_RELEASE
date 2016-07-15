@@ -4,3 +4,4 @@
 - Add API for log management (#8)
 - Add RPM and linux service (#3)
 - Add executable (#5)
+- Add configurations List features (#7)
