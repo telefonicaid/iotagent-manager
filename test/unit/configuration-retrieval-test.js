@@ -50,7 +50,7 @@ var request = require('request'),
     iotmDb;
 
 
-describe.only('Configuration list', function() {
+describe('Configuration list', function() {
     var protocolRequest = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
         method: 'POST',
@@ -133,7 +133,27 @@ describe.only('Configuration list', function() {
     });
 
     describe('When a configuration list request with a limit 3 arrives to the IoTAM', function() {
-        it('should return just 3 results');
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            qs: {
+                limit: 3
+            },
+            method: 'GET'
+        };
+
+
+        it('should return just 3 results', function(done) {
+            request(options, function(error, response, body) {
+                var parsedBody = JSON.parse(body);
+
+                parsedBody.services.length.should.equal(3);
+                done();
+            });
+        });
     });
 
     describe('When a configuration list request with a offset 3 arrives to the IoTAM', function() {
@@ -141,7 +161,24 @@ describe.only('Configuration list', function() {
     });
 
     describe('When a configuration list request arrives with a wrong limit', function() {
-        it('should raise a 400 error');
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            qs: {
+                limit: 'three'
+            },
+            method: 'GET'
+        };
+
+        it('should raise a 400 error', function(done) {
+            request(options, function(error, response, body) {
+                response.statusCode.should.equal(400);
+                done();
+            });
+        });
     });
 
     describe('When a configuration list request arrives with a wrong offset', function() {
