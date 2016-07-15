@@ -135,7 +135,6 @@ if [ $1 == 0 ]; then
 
   echo "[INFO] Removing application service"
   chkconfig --del %{_service_name}
-  rm -Rf /etc/init.d/%{_service_name}
   echo "Done"
 fi
 
@@ -145,7 +144,7 @@ fi
 # -------------------------------------------------------------------------------------------- #
 %postun
 %clean
-rm -rf $RPM_BUILD_ROOT
+
 
 # -------------------------------------------------------------------------------------------- #
 # Files to add to the RPM
