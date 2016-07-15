@@ -22,6 +22,8 @@
  */
 'use strict';
 
+/* jshint camelcase: false */
+
 var request = require('request'),
     iotConfig = require('../configTest'),
     mongoDBUtils = require('../mongoDBUtils'),
@@ -32,16 +34,16 @@ var request = require('request'),
     utils = require('../utils'),
     iotManager = require('../../lib/iotagent-manager'),
     configurationTemplate = {
-        "apikey": "801230BJKL23Y9090DSFL123HJK09H324HV8732",
-        "token": "8970A9078A803H3BL98PINEQRW8342HBAMS",
-        "entity_type": "SensorMachine",
-        "resource": "/deviceTest",
-        "service": "theService",
-        "service_path": "/gardens",
-        "attributes": [
+        'apikey': '801230BJKL23Y9090DSFL123HJK09H324HV8732',
+        'token': '8970A9078A803H3BL98PINEQRW8342HBAMS',
+        'entity_type': 'SensorMachine',
+        'resource': '/deviceTest',
+        'service': 'theService',
+        'service_path': '/gardens',
+        'attributes': [
             {
-                "name": "status",
-                "type": "Boolean"
+                'name': 'status',
+                'type': 'Boolean'
             }
         ]
     },
@@ -66,10 +68,10 @@ describe.only('Configuration list', function() {
         for (var service in services) {
             for (var i = 0; i < 8; i++) {
                 newConfiguration = _.clone(configurationTemplate);
-                newConfiguration.apikey += "__" + i;
-                newConfiguration.entity_type += "__" + i;
-                newConfiguration.token += "__" + i;
-                newConfiguration.resource += "__" + i;
+                newConfiguration.apikey += '__' + i;
+                newConfiguration.entity_type += '__' + i;
+                newConfiguration.token += '__' + i;
+                newConfiguration.resource += '__' + i;
                 newConfiguration.service = services[service];
 
                 protocolRequest.json.services.push(newConfiguration);
