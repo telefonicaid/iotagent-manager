@@ -130,10 +130,6 @@ if [ $1 == 0 ]; then
   # Log
   [ -d %{_iotamanager_pid_dir} ] && rm -rfv %{_iotamanager_pid_dir}
 
-  echo "[INFO] Removing application files"
-  # Installed files
-  [ -d %{_install_dir} ] && rm -rfv %{_install_dir}
-
   echo "[INFO] Removing application user"
   userdel -fr %{_project_user}
 
