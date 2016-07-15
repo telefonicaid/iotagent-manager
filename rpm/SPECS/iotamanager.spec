@@ -25,7 +25,7 @@ Agents offer different southbound protocols.
 %define _iotamanager_pid_dir /var/run/iotamanager
 %define _iotamanager_conf_dir /etc/iotamanager.d
 
-%define _iotamanager_executable iotagent-manager
+%define _iotamanager_executable iota-manager
 
 # RPM Building folder
 %define _build_root_project %{buildroot}%{_install_dir}
@@ -107,7 +107,7 @@ echo "[INFO] Configuring application"
     # restores old configuration if any
     [ -f /tmp/config.js ] && mv /tmp/config.js %{_install_dir}/config.js
    
-    # Chmod iotagent-manager binary
+    # Chmod iota-manager binary
     chmod guo+x %{_install_dir}/bin/%{_iotamanager_executable}
 
 echo "Done"
