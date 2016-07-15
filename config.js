@@ -30,7 +30,7 @@ var config = {
         port: 27017,
         db: 'iotagent-manager'
     },
-    logLevel: 'FATAL'
+    logLevel: 'INFO'
 };
 
 module.exports = config;
