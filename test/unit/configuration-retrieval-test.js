@@ -145,7 +145,6 @@ describe('Configuration list', function() {
             method: 'GET'
         };
 
-
         it('should return just 3 results', function(done) {
             request(options, function(error, response, body) {
                 var parsedBody = JSON.parse(body);
@@ -157,7 +156,26 @@ describe('Configuration list', function() {
     });
 
     describe('When a configuration list request with a offset 3 arrives to the IoTAM', function() {
-        it('should skip the first 3 results');
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            qs: {
+                offset: 3
+            },
+            method: 'GET'
+        };
+
+        it('should skip the first 3 results', function(done) {
+            request(options, function(error, response, body) {
+                var parsedBody = JSON.parse(body);
+
+                parsedBody.services.length.should.equal(5);
+                done();
+            });
+        });
     });
 
     describe('When a configuration list request arrives with a wrong limit', function() {
@@ -168,7 +186,7 @@ describe('Configuration list', function() {
                 'fiware-servicepath': '/gardens'
             },
             qs: {
-                limit: 'three'
+                offset: 'three'
             },
             method: 'GET'
         };
