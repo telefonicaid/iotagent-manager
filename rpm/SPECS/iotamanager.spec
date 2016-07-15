@@ -154,7 +154,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,%{_project_user},%{_project_user},755)
 %config /etc/init.d/%{_service_name}
 %attr(755, root, root) /etc/init.d/%{_service_name}
-%config /etc/init.d/%{_service_name}
 %config /etc/iotamanager.d/iotamanager.default.conf
 %config /etc/logrotate.d/logrotate-%{_service_name}.conf
 %config /etc/cron.d/cron-logrotate-%{_service_name}-size
