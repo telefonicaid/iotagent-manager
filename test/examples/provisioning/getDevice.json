@@ -1,0 +1,33 @@
+{
+  "device_id": "DevID1",
+  "service": "ServiceTest",
+  "service_path": "/testSubservice",
+  "entity_name": "TheDevice1",
+  "entity_type": "DeviceType",
+  "attributes": [
+    {
+      "object_id": "t",
+      "name": "temperature",
+      "type": "float"
+    },
+    {
+      "object_id": "h",
+      "name": "humidity",
+      "type": "float"
+    }
+  ],
+  "lazy": [
+    {
+      "object_id": "l",
+      "name": "luminosity",
+      "type": "percentage"
+    }
+  ],
+  "static_attributes": [
+    {
+      "name": "serialID",
+      "type": "02598347"
+    }
+  ],
+  "internal_attributes": []
+}

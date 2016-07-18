@@ -198,7 +198,7 @@ describe('Protocol creation tests', function() {
                         parsedBody.protocols[0].description.should.equal(
                             'A generic protocol updated with new information');
 
-                        parsedBody.protocols[0].iotagent.should.equal('http://smartGondor.com/iotNew');
+                        parsedBody.protocols[0].iotagent.should.equal('http://smartGondor.com/New');
 
                         done();
                     });
