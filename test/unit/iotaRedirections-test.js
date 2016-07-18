@@ -33,7 +33,7 @@ var iotConfig = require('../configTest'),
     utils = require('../utils'),
     _ = require('underscore');
 
-describe.only('IoTA Redirections', function() {
+describe('IoTA Redirections', function() {
     var operations = [
             ['GET Device', null, 'GET', '/iot/devices/devId', './test/examples/provisioning/getDevice.json'],
             ['PUT Device', './test/examples/provisioning/putDevice.json', 'PUT', '/iot/devices/devId', null],
@@ -122,6 +122,8 @@ describe.only('IoTA Redirections', function() {
                 request(options, function(error, response, body) {
                     should.not.exist(error);
                     agentMock.done();
+
+                    response.statusCode.should.equal(200);
                     done();
                 });
             });
@@ -132,11 +134,24 @@ describe.only('IoTA Redirections', function() {
         testOperation(operations[i]);
     }
 
-    describe('When a device creation operation arrives without a protocol', function() {
-        it('should fail with a 400 error');
-    });
+    describe('When a request arrives without a protocol', function() {
+        var wrongRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+            method: 'GET',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
-    describe('When a group creation operation arrives without a protocol', function() {
-        it('should fail with a 400 error');
+        it('should fail with a 400 error', function(done) {
+            request(wrongRequest, function(error, response, body) {
+                should.not.exist(error);
+
+                response.statusCode.should.equal(400);
+
+                done();
+            });
+        });
     });
 });

@@ -1,7 +1,7 @@
 {
   "protocol": "GENERIC_PROTOCOL",
   "description": "A generic protocol updated with new information",
-  "iotagent": "http://smartGondor.com/",
+  "iotagent": "http://smartGondor.com/New",
   "resource": "/iot/d",
   "services": [
     {
