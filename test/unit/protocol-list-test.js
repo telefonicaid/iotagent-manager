@@ -45,7 +45,7 @@ describe('Protocol list tests', function() {
     beforeEach(function(done) {
         async.series([
             mongoDBUtils.cleanDbs,
-            async.apply(iotManager.start, iotConfig, done)
+            async.apply(iotManager.start, iotConfig)
         ], done);
     });
 

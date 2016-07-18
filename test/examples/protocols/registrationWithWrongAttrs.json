@@ -1,7 +1,7 @@
 {
   "protocol": "GENERIC_PROTOCOL",
   "description": "A generic protocol",
-  "iotagent": "http://smartGondor.com/iot",
+  "iotagent": "http://smartGondor.com/",
   "APIKey": "567586gyh rtygooytrdytfcy7567",
   "service": "SmartGondor",
   "services": [
