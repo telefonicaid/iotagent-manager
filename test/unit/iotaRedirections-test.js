@@ -30,8 +30,7 @@ var iotConfig = require('../configTest'),
     mongoDBUtils = require('../mongoDBUtils'),
     iotManager = require('../../lib/iotagent-manager'),
     async = require('async'),
-    utils = require('../utils'),
-    _ = require('underscore');
+    utils = require('../utils');
 
 describe('IoTA Redirections', function() {
     var operations = [
@@ -53,7 +52,7 @@ describe('IoTA Redirections', function() {
                 'fiware-servicepath': '/gardens'
             }
         };
-    
+
     beforeEach(function(done) {
         async.series([
             mongoDBUtils.cleanDbs,
@@ -63,8 +62,8 @@ describe('IoTA Redirections', function() {
                 done();
             });
         });
-    }); 
-    
+    });
+
     afterEach(function(done) {
         nock.cleanAll();
 
