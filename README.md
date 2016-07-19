@@ -75,6 +75,22 @@ The IoTA Manager will then be installed as a linux service, and can ve started w
 ```
 service iotamanager start
 ```
+
+### Docker installation
+The Docker automatically starts listening in the API ports, so there is no need to execute any process in order to
+have the application running. The Docker image will automatically start.
+
+In order to run the docker image, first you must have a MongoDB instance running. You can achieve this by executing
+the followin command:
+```
+docker run --name mongodb -d mongo
+```
+
+Once the MongoDB instance is running, you can execute the IoT Manager with the following command:
+```
+docker run -d  --link mongodb:mongo -e "IOTA_LOG_LEVEL=DEBUG" -e "IOTA_MONGO_HOST=mongo" -p 8082:8082 telefonicaiot/iotamanager
+```
+
 ## <a name="usage"/> Usage
 In order to execute the IoT Agent Manager just execute the following command from the root folder:
 ```
