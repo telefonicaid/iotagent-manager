@@ -23,9 +23,12 @@ The IoT Agent Manager main configuration point is the `config.js` file at the ro
 explains each configuration parameter in detail.
 
 ### Configuration parameters
-* *server.port*: port where the server will be listening for connections.
-* *server.host*: address the server will bind to.
-* *logLevel*: set the log level for the internal logger. Its allowed values are: FATAL, ERROR, WARNING, INFO and DEBUG.
+* **server.port**: port where the server will be listening for connections.
+* **server.host**: address the server will bind to.
+* **mongodb.host**: host where the Mongo DB instance is listening.
+* **mongodb.port**: port where the Mongo DB instance is listening.
+* **mongodb.db**: name of the Mongo DB database to use.
+* **logLevel**: set the log level for the internal logger. Its allowed values are: FATAL, ERROR, WARNING, INFO and DEBUG.
 
 ### Environment variables
 Some of the configuration parameters can also be modified using environment variables when starting the process. The
@@ -35,6 +38,9 @@ following table shows the correspondence between allowed environment variables a
 |:------------------------- |:----------------------------------- |
 | IOTA_SERVER_PORT          | server.port                         |
 | IOTA_SERVER_HOST          | server.host                         |
+| IOTA_MONGO_HOST           | mongodb.host                        |
+| IOTA_MONGO_PORT           | mongodb.port                        |
+| IOTA_MONGO_DB             | mongodb.db                          |
 | IOTA_LOG_LEVEL            | logLevel                            |
 
 ## <a name="installation"/> Installation
