@@ -206,4 +206,53 @@ describe('Protocol creation tests', function() {
             });
         });
     });
+
+    describe('When an IoTAgent removal request arrives to the IOTAM', function() {
+        var protocolRequest = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+                method: 'POST',
+                json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            },
+            deleteProtocol = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols/GENERIC_PROTOCOL',
+                method: 'DELETE',
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        it('should return a 200 OK code if the removal was correct', function(done) {
+            request(protocolRequest, function(error, result, body) {
+                request(deleteProtocol, function(error, result, body) {
+                    should.not.exist(error);
+                    result.statusCode.should.equal(200);
+                    done();
+                });
+            });
+        });
+
+        it('should remove the protocol from the manager', function(done) {
+            request(protocolRequest, function(error, result, body) {
+                request(deleteProtocol, function(error, result, body) {
+                    request(listRequest, function(error, result, body) {
+                        var parsedBody;
+
+                        should.not.exist(error);
+                        should.exist(body);
+
+                        parsedBody = JSON.parse(body);
+
+                        should.exist(parsedBody.count);
+                        parsedBody.count.should.equal(0);
+                        done();
+                    });
+                });
+            });
+        });
+    });
 });
