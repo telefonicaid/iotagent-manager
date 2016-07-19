@@ -7,3 +7,4 @@
 - Add configurations List features (#7)
 - Add provisioning request redirection (#7)
 - Add delete protocol features (#1)
+- Add Dockerfile (#14)
