@@ -153,4 +153,55 @@ describe('IoTA Redirections', function() {
             });
         });
     });
+
+    describe('When a request arrives to the manager with an array of protocols', function() {
+        var options = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+                method: 'POST',
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                },
+                json: utils.readExampleFile('./test/examples/provisioning/postGroupArray.json')
+            },
+            secondAgentMock;
+
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            agentMock
+                .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup1.json'))
+                .reply(200, {});
+
+            secondAgentMock = nock('http://anotherprotocol.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            secondAgentMock
+                .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup2.json'))
+                .reply(200, {});
+
+            protocolRequest.json.protocol = 'ANOTHER_PROTOCOL';
+            protocolRequest.json.resource = '/iot/a';
+            protocolRequest.json.iotagent = 'http://anotherProtocol.com';
+
+            request(protocolRequest, function(error, response, body) {
+                protocolRequest.json = utils.readExampleFile('./test/examples/protocols/registrationEmpty.json');
+
+                done();
+            });
+        });
+
+        it('should be redirected to both IoTAgent with a single protocol each', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+    });
 });
