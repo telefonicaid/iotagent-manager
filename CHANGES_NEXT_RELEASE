@@ -11,3 +11,4 @@
 - FIX Support multiple protocols in the `protocol` field (#17)
 - FIX Resource missing in redirection (#21)
 - FIX Wrong result for device group creation (#23)
+- FIX Return all the devices for all the protocols (#25)
