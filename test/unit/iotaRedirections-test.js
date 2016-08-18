@@ -99,19 +99,19 @@ describe('IoTA Redirections', function() {
                 if (operation[2] === 'POST') {
                     agentMock
                         .post(operation[3], utils.readExampleFile(operation[1]))
-                        .reply(200, operation[4] || {});
+                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'PUT') {
                     agentMock
                         .put(operation[3], utils.readExampleFile(operation[1]))
-                        .reply(200, operation[4] || {});
+                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'GET') {
                     agentMock
                         .get(operation[3])
-                        .reply(200, operation[4] || {});
+                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else {
                     agentMock
                         .delete(operation[3])
-                        .reply(200, operation[4] || {});
+                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 }
 
                 done();
@@ -121,6 +121,20 @@ describe('IoTA Redirections', function() {
                 request(options, function(error, response, body) {
                     should.not.exist(error);
                     agentMock.done();
+
+                    response.statusCode.should.equal(200);
+                    done();
+                });
+            });
+
+            it('should be return the appropriate response for GETs', function(done) {
+                request(options, function(error, response, body) {
+                    if (options.method === 'GET') {
+                        var parsedBody = JSON.parse(body),
+                            expectedObj = utils.readExampleFile(operation[4]);
+
+                        should.deepEqual(parsedBody, expectedObj);
+                    }
 
                     response.statusCode.should.equal(200);
                     done();
