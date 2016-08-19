@@ -96,7 +96,7 @@ describe('Configuration cache', function() {
                     docs[0].service.should.equal('theService');
                     docs[0].subservice.should.equal('theSubService');
 
-                    docs[0].protocol.should.equal('GENERIC_PROTOCOL');
+                    docs[0].protocol.should.deepEqual(['GENERIC_PROTOCOL']);
                     docs[0].iotagent.should.equal('http://smartGondor.com/');
 
                     docs[0].attributes.length.should.equal(1);
@@ -167,7 +167,7 @@ describe('Configuration cache', function() {
                         docs[0].service.should.equal('otherServices');
                         docs[0].subservice.should.equal('differentPath');
 
-                        docs[0].protocol.should.equal('GENERIC_PROTOCOL');
+                        docs[0].protocol.should.deepEqual(['GENERIC_PROTOCOL']);
                         docs[0].iotagent.should.equal('http://smartGondor.com/');
 
                         done();
