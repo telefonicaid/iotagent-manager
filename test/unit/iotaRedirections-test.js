@@ -127,7 +127,7 @@ describe('IoTA Redirections', function() {
                 });
             });
 
-            it('should be return the appropriate response for GETs', function(done) {
+            it('should return the appropriate response for GETs', function(done) {
                 request(options, function(error, response, body) {
                     if (options.method === 'GET') {
                         var parsedBody = JSON.parse(body),
@@ -147,7 +147,7 @@ describe('IoTA Redirections', function() {
         testOperation(operations[i]);
     }
 
-    describe('When a request arrives without a protocol', function() {
+    describe('When a GET request arrives without a protocol', function() {
         var wrongRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'GET',
@@ -157,11 +157,23 @@ describe('IoTA Redirections', function() {
             }
         };
 
-        it('should fail with a 400 error', function(done) {
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            agentMock
+                .get('/iot/devices')
+                .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList.json'));
+
+            done();
+        });
+
+        it('should return the combined responses for all the protocols', function(done) {
             request(wrongRequest, function(error, response, body) {
                 should.not.exist(error);
 
-                response.statusCode.should.equal(400);
+                response.statusCode.should.equal(200);
 
                 done();
             });
