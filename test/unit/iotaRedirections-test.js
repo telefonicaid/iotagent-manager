@@ -34,20 +34,14 @@ var iotConfig = require('../configTest'),
 
 describe('IoTA Redirections', function() {
     var operations = [
-           ['GET Device', null, 'GET', '/iot/devices/devId',
-                './test/examples/provisioning/getDevice.json',
-                './test/examples/provisioning/getDevice.json'],
-
-            ['PUT Device', './test/examples/provisioning/putDevice.json', 'PUT', '/iot/devices/devId', null, null],
-            ['GET Device List', null, 'GET', '/iot/devices',
-                './test/examples/provisioning/getDeviceList.json',
-                './test/examples/provisioning/getDeviceList.json'],
-
-            ['DELETE Device', null, 'DELETE', '/iot/devices/devId', null, null],
-            ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices', null, null],
-            ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services', null, null],
-            ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services', null, null],
-            ['DELETE Configuration', null, 'DELETE', '/iot/services', null, null]
+            ['GET Device', null, 'GET', '/iot/devices/devId', './test/examples/provisioning/getDevice.json'],
+            ['PUT Device', './test/examples/provisioning/putDevice.json', 'PUT', '/iot/devices/devId', null],
+            ['GET Device List', null, 'GET', '/iot/devices', './test/examples/provisioning/getDeviceList.json'],
+            ['DELETE Device', null, 'DELETE', '/iot/devices/devId', null],
+            ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices', null],
+            ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services', null],
+            ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services', null],
+            ['DELETE Configuration', null, 'DELETE', '/iot/services', null]
         ],
         protocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
@@ -135,9 +129,9 @@ describe('IoTA Redirections', function() {
 
             it('should return the appropriate response for GETs', function(done) {
                 request(options, function(error, response, body) {
-                    if (options.method === 'GET' && operation[5]) {
+                    if (options.method === 'GET') {
                         var parsedBody = JSON.parse(body),
-                            expectedObj = utils.readExampleFile(operation[5]);
+                            expectedObj = utils.readExampleFile(operation[4]);
 
                         should.deepEqual(parsedBody, expectedObj);
                     }

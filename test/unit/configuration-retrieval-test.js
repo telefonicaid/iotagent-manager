@@ -123,20 +123,6 @@ describe('Configuration list', function() {
             });
         });
 
-        it('should return the protocol in an array', function(done) {
-            request(options, function(error, response, body) {
-                var parsedBody = JSON.parse(body),
-                    allProtocolsAreArrays = true;
-
-                for (var i = 0; i < parsedBody.services.length; i++) {
-                    allProtocolsAreArrays = allProtocolsAreArrays && Array.isArray(parsedBody.services[i].protocol);
-                }
-
-                allProtocolsAreArrays.should.equal(true);
-                done();
-            });
-        });
-
         it('should return all the available configurations for its service', function(done) {
             request(options, function(error, response, body) {
                 var parsedBody = JSON.parse(body);

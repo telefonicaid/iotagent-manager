@@ -13,4 +13,3 @@
 - FIX Wrong result for device group creation (#23)
 - FIX Return all the devices for all the protocols (#25)
 - FIX Presence of etag caused Express to return 304 from the IotAgent (#27)
-- FIX Manager should return array-typed protocols (#29)
