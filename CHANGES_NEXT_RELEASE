@@ -15,3 +15,4 @@
 - FIX Presence of etag caused Express to return 304 from the IotAgent (#27)
 - ADD Device Group GETs should contain a description field (#31)
 - FIX Failed request splitting for Device Creation
+- FIX IoTManager crashes redirecting due to multiple callbacks (#34)
