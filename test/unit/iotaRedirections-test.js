@@ -230,4 +230,36 @@ describe('IoTA Redirections', function() {
             });
         });
     });
+
+    describe('When a device creation request arrives to the manager with protocol in its body', function() {
+        var options = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+                method: 'POST',
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                },
+                json: utils.readExampleFile('./test/examples/provisioning/postDevice.json')
+            };
+
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDevice.json'))
+                .reply(200, {});
+
+            done();
+        });
+
+        it('should be redirected to the appropriate agent', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+    });
 });
