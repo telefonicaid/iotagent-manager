@@ -16,3 +16,4 @@
 - ADD Device Group GETs should contain a description field (#31)
 - FIX Failed request splitting for Device Creation
 - FIX IoTManager crashes redirecting due to multiple callbacks (#34)
+- FIX Can't set headers after they are sent (#37)
