@@ -34,14 +34,17 @@ var iotConfig = require('../configTest'),
 
 describe('IoTA Redirections', function() {
     var operations = [
-            ['GET Device', null, 'GET', '/iot/devices/devId', './test/examples/provisioning/getDevice.json'],
-            ['PUT Device', './test/examples/provisioning/putDevice.json', 'PUT', '/iot/devices/devId', null],
-            ['GET Device List', null, 'GET', '/iot/devices', './test/examples/provisioning/getDeviceList.json'],
-            ['DELETE Device', null, 'DELETE', '/iot/devices/devId', null],
-            ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices', null],
-            ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services', null],
-            ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services', null],
-            ['DELETE Configuration', null, 'DELETE', '/iot/services', null]
+            ['GET Device', null, 'GET', '/iot/devices/devId',
+                './test/examples/provisioning/getDevice.json', './test/examples/provisioning/getDeviceReply.json'],
+            ['PUT Device', './test/examples/provisioning/putDevice.json', 'PUT', '/iot/devices/devId'],
+            ['GET Device List', null, 'GET', '/iot/devices',
+                './test/examples/provisioning/getDeviceList.json', './test/examples/provisioning/getDeviceList.json'],
+
+            ['DELETE Device', null, 'DELETE', '/iot/devices/devId'],
+            ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices'],
+            ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services'],
+            ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
+            ['DELETE Configuration', null, 'DELETE', '/iot/services']
         ],
         protocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
@@ -127,19 +130,18 @@ describe('IoTA Redirections', function() {
                 });
             });
 
-            it('should return the appropriate response for GETs', function(done) {
-                request(options, function(error, response, body) {
-                    if (options.method === 'GET') {
+            if (options.method === 'GET' && operation[5]) {
+                it('should return the appropriate response for GETs', function(done) {
+                    request(options, function(error, response, body) {
                         var parsedBody = JSON.parse(body),
-                            expectedObj = utils.readExampleFile(operation[4]);
+                            expectedObj = utils.readExampleFile(operation[5]);
 
                         should.deepEqual(parsedBody, expectedObj);
-                    }
 
-                    response.statusCode.should.equal(200);
-                    done();
+                        done();
+                    });
                 });
-            });
+            }
         });
     }
 
