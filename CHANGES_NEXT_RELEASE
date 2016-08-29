@@ -18,3 +18,4 @@
 - FIX IoTManager crashes redirecting due to multiple callbacks (#34)
 - FIX Can't set headers after they are sent (#37)
 - FIX Single GET requests should have multiple request syntax (#40)
+- FIX Exception trying to decode empty body.
