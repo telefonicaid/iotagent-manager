@@ -162,7 +162,7 @@ fi
 
 %changelog
 
-* Fri Sep 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.0F.0
+* Fri Sep 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.0.0
 
 - Add Protocol Creation features (#1)
 - Add Protocol List features (#1)
