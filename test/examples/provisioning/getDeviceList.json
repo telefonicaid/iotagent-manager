@@ -1,0 +1,60 @@
+{
+  "count": 2,
+  "devices": [
+    {
+      "device_id": "DevID0",
+      "service": "ServiceTest",
+      "service_path": "/testSubservice",
+      "entity_name": "TheDevice0",
+      "entity_type": "DeviceType",
+      "attributes": [
+        {
+          "type": "float",
+          "name": "temperature",
+          "object_id": "t"
+        },
+        {
+          "type": "float",
+          "name": "humidity",
+          "object_id": "h"
+        }
+      ],
+      "lazy": [],
+      "static_attributes": [],
+      "internal_attributes": []
+    },
+    {
+      "device_id": "DevID1",
+      "service": "ServiceTest",
+      "service_path": "/testSubservice",
+      "entity_name": "TheDevice1",
+      "entity_type": "DeviceType",
+      "attributes": [
+        {
+          "type": "float",
+          "name": "temperature",
+          "object_id": "t"
+        },
+        {
+          "type": "float",
+          "name": "humidity",
+          "object_id": "h"
+        }
+      ],
+      "lazy": [
+        {
+          "type": "percentage",
+          "name": "luminosity",
+          "object_id": "l"
+        }
+      ],
+      "static_attributes": [
+        {
+          "type": "02598347",
+          "name": "serialID"
+        }
+      ],
+      "internal_attributes": []
+    }
+  ]
+}
