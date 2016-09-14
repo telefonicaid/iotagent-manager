@@ -102,18 +102,22 @@ describe('IoTA Redirections', function() {
                 if (operation[2] === 'POST') {
                     agentMock
                         .post(operation[3], utils.readExampleFile(operation[1]))
+                        .query(function(qs) { return true; })
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'PUT') {
                     agentMock
                         .put(operation[3], utils.readExampleFile(operation[1]))
+                        .query(function(qs) { return true; })
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'GET') {
                     agentMock
                         .get(operation[3])
+                        .query(function(qs) { return true; })
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else {
                     agentMock
                         .delete(operation[3])
+                        .query(function(qs) { return true; })
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 }
 
@@ -166,6 +170,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .get('/iot/devices')
+                .query(function(qs) { return true; })
                 .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList.json'));
 
             done();
@@ -201,6 +206,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup1.json'))
+                .query(function(qs) { return true; })
                 .reply(200, {});
 
             secondAgentMock = nock('http://anotherprotocol.com/')
@@ -209,6 +215,7 @@ describe('IoTA Redirections', function() {
 
             secondAgentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup2.json'))
+                .query(function(qs) { return true; })
                 .reply(200, {});
 
             protocolRequest.json.protocol = 'ANOTHER_PROTOCOL';
@@ -249,12 +256,94 @@ describe('IoTA Redirections', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDevice.json'))
+                .query(function(qs) { return true; })
                 .reply(200, {});
 
             done();
         });
 
         it('should be redirected to the appropriate agent', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+    });
+
+    describe('When a group modification request arrives to the IoTManager', function() {
+        var options = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+                method: 'PUT',
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                },
+                qs: {
+                    protocol: 'GENERIC_PROTOCOL',
+                    apikey: '801230BJKL23Y9090DSFL123HJK09H324HV8732'
+                },
+                json: utils.readExampleFile('./test/examples/provisioning/putSingleGroup.json')
+            };
+
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            agentMock
+                .put('/iot/services', utils.readExampleFile('./test/examples/provisioning/putSingleGroup.json'))
+                .query(function(qs) {
+                    return qs.resource === '/iot/d' && qs.apikey === '801230BJKL23Y9090DSFL123HJK09H324HV8732';
+                })
+                .reply(200, {});
+
+            done();
+        });
+
+        it('should redirect the request with the resource and APIKey headers', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+    });
+
+    describe('When a group removal request arrives to the IoTManager', function() {
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            method: 'DELETE',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            qs: {
+                protocol: 'GENERIC_PROTOCOL',
+                apikey: '801230BJKL23Y9090DSFL123HJK09H324HV8732'
+            }
+        };
+
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            agentMock
+                .delete('/iot/services')
+                .query(function(qs) {
+                    return qs.resource === '/iot/d' && qs.apikey === '801230BJKL23Y9090DSFL123HJK09H324HV8732';
+                })
+                .reply(200, {});
+
+            done();
+        });
+
+        it('should redirect the request with the resource and APIKey headers', function(done) {
             request(options, function(error, response, body) {
                 should.not.exist(error);
                 agentMock.done();
