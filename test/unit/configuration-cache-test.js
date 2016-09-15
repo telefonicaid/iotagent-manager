@@ -155,6 +155,8 @@ describe('Configuration cache', function() {
                         should.exist(docs[0].subservice);
                         should.exist(docs[0].attributes);
                         should.exist(docs[0].attributes.length);
+                        should.exist(docs[0].staticAttributes);
+                        should.exist(docs[0].staticAttributes.length);
 
                         should.exist(docs[0].protocol);
                         should.exist(docs[0].description);
@@ -171,6 +173,10 @@ describe('Configuration cache', function() {
                         docs[0].protocol.should.equal('GENERIC_PROTOCOL');
                         docs[0].description.should.equal('A generic protocol');
                         docs[0].iotagent.should.equal('http://smartGondor.com/');
+
+                        docs[0].staticAttributes[0].name.should.equal('cell');
+                        docs[0].staticAttributes[0].type.should.equal('CellID');
+                        docs[0].staticAttributes[0].value.should.equal('EAF54BD231');
 
                         done();
                     });

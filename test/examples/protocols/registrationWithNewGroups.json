@@ -20,6 +20,13 @@
           "name": "attr2",
           "type": "Number"
         }
+      ],
+      "static_attributes": [
+        {
+          "name": "cell",
+          "type": "CellID",
+          "value": "EAF54BD231"
+        }
       ]
     }
   ]
