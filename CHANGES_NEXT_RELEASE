@@ -1,2 +1,3 @@
 - IoTAM Should redirect group operations with the resource and apikey headers (#48)
 - IoTAM Modify Group operation should NOT behave like IoTA's one (#50)
+- Modify Configuration ignores static attributes (#52)
