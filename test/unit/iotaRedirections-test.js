@@ -43,7 +43,9 @@ describe('IoTA Redirections', function() {
             ['DELETE Device', null, 'DELETE', '/iot/devices/devId'],
             ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices'],
             ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services'],
-            ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
+            ['PUT Configuration', './test/examples/provisioning/putSingleGroup.json', 'PUT', '/iot/services',
+                './test/examples/provisioning/putGroupIoTA.json'],
+
             ['DELETE Configuration', null, 'DELETE', '/iot/services']
         ],
         protocolRequest = {
@@ -106,7 +108,7 @@ describe('IoTA Redirections', function() {
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'PUT') {
                     agentMock
-                        .put(operation[3], utils.readExampleFile(operation[1]))
+                        .put(operation[3], utils.readExampleFile(operation[4] || operation[1]))
                         .query(function(qs) { return true; })
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'GET') {
@@ -294,7 +296,7 @@ describe('IoTA Redirections', function() {
                 .matchHeader('fiware-servicepath', '/gardens');
 
             agentMock
-                .put('/iot/services', utils.readExampleFile('./test/examples/provisioning/putSingleGroup.json'))
+                .put('/iot/services', utils.readExampleFile('./test/examples/provisioning/putGroupIoTA.json'))
                 .query(function(qs) {
                     return qs.resource === '/iot/d' && qs.apikey === '801230BJKL23Y9090DSFL123HJK09H324HV8732';
                 })
@@ -312,6 +314,14 @@ describe('IoTA Redirections', function() {
                 done();
             });
         });
+    });
+
+    describe('When a group modification with the protocol in the body arrives', function() {
+        it('should be redirected normally');
+    });
+
+    describe('When a group modification with multiple groups arrives to the IoTAM', function() {
+        it('should send a request for each individual group to the IoTA');
     });
 
     describe('When a group removal request arrives to the IoTManager', function() {
