@@ -74,11 +74,29 @@ describe('Configuration list', function() {
                 newConfiguration.resource += '__' + i;
                 newConfiguration.service = services[service];
 
+                newConfiguration.attributes = [
+                    {
+                        name: 'attr' + i,
+                        type: 'type' + i,
+                        value: 'The ' + i + ' value'
+                    }
+                ];
+
+                newConfiguration.static_attributes = [
+                    {
+                        name: 'attr' + i,
+                        type: 'type' + i,
+                        value: 'The ' + i + ' value'
+                    }
+                ];
+
                 protocolRequest.json.services.push(newConfiguration);
             }
         }
 
-        request(protocolRequest, callback);
+        request(protocolRequest, function(error) {
+            callback();
+        });
     }
 
     beforeEach(function(done) {
@@ -128,6 +146,19 @@ describe('Configuration list', function() {
                 var parsedBody = JSON.parse(body);
 
                 parsedBody.services.length.should.equal(8);
+                done();
+            });
+        });
+
+        it('should return all the fields for each configuration', function(done) {
+            request(options, function(error, response, body) {
+                var parsedBody = JSON.parse(body);
+
+                parsedBody.services[5].apikey.should.equal('801230BJKL23Y9090DSFL123HJK09H324HV8732__5');
+                parsedBody.services[5].description.should.equal('A generic protocol');
+                parsedBody.services[5].attributes.length.should.equal(1);
+                parsedBody.services[5].static_attributes.length.should.equal(1);
+
                 done();
             });
         });
