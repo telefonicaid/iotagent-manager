@@ -43,7 +43,9 @@ describe('IoTA Redirections', function() {
             ['DELETE Device', null, 'DELETE', '/iot/devices/devId'],
             ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices'],
             ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services'],
-            ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
+            ['PUT Configuration', './test/examples/provisioning/putSingleGroup.json', 'PUT', '/iot/services',
+                './test/examples/provisioning/putGroupIoTA.json'],
+
             ['DELETE Configuration', null, 'DELETE', '/iot/services']
         ],
         protocolRequest = {
@@ -106,7 +108,7 @@ describe('IoTA Redirections', function() {
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'PUT') {
                     agentMock
-                        .put(operation[3], utils.readExampleFile(operation[1]))
+                        .put(operation[3], utils.readExampleFile(operation[4] || operation[1]))
                         .query(function(qs) { return true; })
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'GET') {
@@ -294,7 +296,7 @@ describe('IoTA Redirections', function() {
                 .matchHeader('fiware-servicepath', '/gardens');
 
             agentMock
-                .put('/iot/services', utils.readExampleFile('./test/examples/provisioning/putSingleGroup.json'))
+                .put('/iot/services', utils.readExampleFile('./test/examples/provisioning/putGroupIoTA.json'))
                 .query(function(qs) {
                     return qs.resource === '/iot/d' && qs.apikey === '801230BJKL23Y9090DSFL123HJK09H324HV8732';
                 })
@@ -304,6 +306,58 @@ describe('IoTA Redirections', function() {
         });
 
         it('should redirect the request with the resource and APIKey headers', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+    });
+
+    describe('When a group modification with the protocol in the body arrives', function() {
+        it('should be redirected normally');
+    });
+
+    describe('When a group modification with multiple groups arrives to the IoTAM', function() {
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            method: 'PUT',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            qs: {
+                protocol: 'GENERIC_PROTOCOL',
+                apikey: '801230BJKL23Y9090DSFL123HJK09H324HV8732'
+            },
+            json: utils.readExampleFile('./test/examples/provisioning/putGroup.json')
+        };
+
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            agentMock
+                .put('/iot/services')
+                .query(function(qs) {
+                    return qs.resource === '/iot/d' && qs.apikey === '23HJK3Y9090DSFL173209HV8801232';
+                })
+                .reply(200, {});
+
+            agentMock
+                .put('/iot/services')
+                .query(function(qs) {
+                    return qs.resource === '/iot/d' && qs.apikey === '801230BJKL23Y9090DSFL123HJK09H324HV8732';
+                })
+                .reply(200, {});
+
+            done();
+        });
+
+        it('should send a request for each individual group to the IoTA', function(done) {
             request(options, function(error, response, body) {
                 should.not.exist(error);
                 agentMock.done();
