@@ -321,7 +321,51 @@ describe('IoTA Redirections', function() {
     });
 
     describe('When a group modification with multiple groups arrives to the IoTAM', function() {
-        it('should send a request for each individual group to the IoTA');
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            method: 'PUT',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            qs: {
+                protocol: 'GENERIC_PROTOCOL',
+                apikey: '801230BJKL23Y9090DSFL123HJK09H324HV8732'
+            },
+            json: utils.readExampleFile('./test/examples/provisioning/putGroup.json')
+        };
+
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            agentMock
+                .put('/iot/services')
+                .query(function(qs) {
+                    return qs.resource === '/iot/d' && qs.apikey === '23HJK3Y9090DSFL173209HV8801232';
+                })
+                .reply(200, {});
+
+            agentMock
+                .put('/iot/services')
+                .query(function(qs) {
+                    return qs.resource === '/iot/d' && qs.apikey === '801230BJKL23Y9090DSFL123HJK09H324HV8732';
+                })
+                .reply(200, {});
+
+            done();
+        });
+
+        it('should send a request for each individual group to the IoTA', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
     });
 
     describe('When a group removal request arrives to the IoTManager', function() {
