@@ -28,8 +28,7 @@ explains each configuration parameter in detail.
 * **mongodb.host**: host where the Mongo DB instance is listening.
 * **mongodb.port**: port where the Mongo DB instance is listening.
 * **mongodb.db**: name of the Mongo DB database to use.
-* **mongodb.db**: name of the Mongo DB database to use.
-* **mongodb.db**: name of the Mongo DB database to use.
+* **mongodb.replicaSet**: name of the Mongo DB replicaSet to use when using multiple Mongo instances.
 * **logLevel**: set the log level for the internal logger. Its allowed values are: FATAL, ERROR, WARNING, INFO and DEBUG.
 
 ### Environment variables
