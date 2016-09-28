@@ -28,6 +28,8 @@ explains each configuration parameter in detail.
 * **mongodb.host**: host where the Mongo DB instance is listening.
 * **mongodb.port**: port where the Mongo DB instance is listening.
 * **mongodb.db**: name of the Mongo DB database to use.
+* **mongodb.db**: name of the Mongo DB database to use.
+* **mongodb.db**: name of the Mongo DB database to use.
 * **logLevel**: set the log level for the internal logger. Its allowed values are: FATAL, ERROR, WARNING, INFO and DEBUG.
 
 ### Environment variables
@@ -41,6 +43,7 @@ following table shows the correspondence between allowed environment variables a
 | IOTA_MONGO_HOST           | mongodb.host                        |
 | IOTA_MONGO_PORT           | mongodb.port                        |
 | IOTA_MONGO_DB             | mongodb.db                          |
+| IOTA_MONGO_REPLICASET     | mongodb.replicaSet                  |
 | IOTA_LOG_LEVEL            | logLevel                            |
 
 ## <a name="installation"/> Installation
