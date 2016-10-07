@@ -6,7 +6,7 @@
 # description: IoT Agent Manager for Telefonica's IoT Platform
 ### BEGIN INIT INFO
 # Provides: iotamanager
-# Required-Start: $local_fs $syslog
+# Required-Start: $local_fs $syslog $network
 # Required-Stop: $local_fs $syslog
 # Default-Start:  345
 # Default-Stop: 90
@@ -36,7 +36,7 @@
 # iot_support at tid dot es
 
 NAME=iotamanager
-IOTA_USER=""
+IOTA_USER="iotamanager"
 BASE_DIR=/opt/$NAME
 PID_DIR=/var/run/$NAME
 LOG_DIR=/var/log/$NAME
