@@ -1,7 +1,7 @@
 {
   "name": "iotagent-manager",
   "description": "IoT Agent Manager proxy",
-  "version": "1.0.0",
+  "version": "1.0.0-next",
   "homepage": "https://github.com/dmj/iotagent-manager",
   "author": {
     "name": "Daniel Moran",
