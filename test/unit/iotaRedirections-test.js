@@ -264,4 +264,47 @@ describe('IoTA Redirections', function() {
             });
         });
     });
+
+    describe('When a device creation request arrives for a protocol with the "/iot" prefix', function() {
+        var options = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+                method: 'POST',
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                },
+                json: utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json')
+            },
+            secondAgentMock;
+
+        beforeEach(function(done) {
+            secondAgentMock = nock('http://anotherprotocol.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            secondAgentMock
+                .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json'))
+                .reply(200, {});
+
+            protocolRequest.json.protocol = 'PREFIX_PROTOCOL';
+            protocolRequest.json.resource = '/iot/a';
+            protocolRequest.json.iotagent = 'http://anotherProtocol.com/iot';
+
+            request(protocolRequest, function(error, response, body) {
+                protocolRequest.json = utils.readExampleFile('./test/examples/protocols/registrationEmpty.json');
+
+                done();
+            });
+        });
+
+        it('should be redirected to the appropriate agent', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                secondAgentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+    });
 });
