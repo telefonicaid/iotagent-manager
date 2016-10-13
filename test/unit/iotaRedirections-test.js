@@ -102,18 +102,22 @@ describe('IoTA Redirections', function() {
                 if (operation[2] === 'POST') {
                     agentMock
                         .post(operation[3], utils.readExampleFile(operation[1]))
+                        .query({resource: '/iot/d'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'PUT') {
                     agentMock
                         .put(operation[3], utils.readExampleFile(operation[1]))
+                        .query({resource: '/iot/d'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'GET') {
                     agentMock
                         .get(operation[3])
+                        .query({resource: '/iot/d'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else {
                     agentMock
                         .delete(operation[3])
+                        .query({resource: '/iot/d'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 }
 
@@ -166,6 +170,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .get('/iot/devices')
+                .query({resource: '/iot/d'})
                 .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList.json'));
 
             done();
@@ -201,6 +206,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup1.json'))
+                .query({resource: '/iot/d'})
                 .reply(200, {});
 
             secondAgentMock = nock('http://anotherprotocol.com/')
@@ -209,6 +215,7 @@ describe('IoTA Redirections', function() {
 
             secondAgentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup2.json'))
+                .query({resource: '/iot/a'})
                 .reply(200, {});
 
             protocolRequest.json.protocol = 'ANOTHER_PROTOCOL';
@@ -249,6 +256,7 @@ describe('IoTA Redirections', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDevice.json'))
+                .query({resource: '/iot/d'})
                 .reply(200, {});
 
             done();
@@ -284,6 +292,7 @@ describe('IoTA Redirections', function() {
 
             secondAgentMock
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json'))
+                .query({resource: '/iot/a'})
                 .reply(200, {});
 
             protocolRequest.json.protocol = 'PREFIX_PROTOCOL';
