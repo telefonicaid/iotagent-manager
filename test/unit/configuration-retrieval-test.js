@@ -78,7 +78,7 @@ describe('Configuration list', function() {
         }
 
         request(protocolRequest, function() {
-            callback();
+            setTimeout(callback, 100);
         });
     }
 
