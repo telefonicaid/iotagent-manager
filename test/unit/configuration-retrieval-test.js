@@ -127,7 +127,7 @@ describe('Configuration list', function() {
             request(options, function(error, response, body) {
                 var parsedBody = JSON.parse(body);
 
-                parsedBody.services.length.should.greaterThan(7);
+                parsedBody.services.length.should.greaterThan(5);
                 done();
             });
         });
