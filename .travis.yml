@@ -1,5 +1,7 @@
 language: node_js
 
+sudo: false
+
 node_js:
  - "0.10"
  - "4"
@@ -11,6 +13,13 @@ branches:
 
 services:
  - mongodb
+
+addons:
+  apt:
+    sources:
+    - mongodb-3.0-precise
+    packages:
+    - mongodb-org-server
 
 install:
  - npm install

@@ -78,7 +78,9 @@ describe('Configuration list', function() {
             }
         }
 
-        request(protocolRequest, callback);
+        request(protocolRequest, function() {
+            callback();
+        });
     }
 
     beforeEach(function(done) {
