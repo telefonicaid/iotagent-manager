@@ -127,7 +127,7 @@ describe('Configuration list', function() {
             request(options, function(error, response, body) {
                 var parsedBody = JSON.parse(body);
 
-                parsedBody.services.length.should.greaterThan(5);
+                parsedBody.services.length.should.equal(8);
                 done();
             });
         });
@@ -189,7 +189,7 @@ describe('Configuration list', function() {
             request(options, function(error, response, body) {
                 var parsedBody = JSON.parse(body);
 
-                parsedBody.services.length.should.greaterThan(3);
+                parsedBody.services.length.should.equal(5);
                 done();
             });
         });
