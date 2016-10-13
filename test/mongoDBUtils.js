@@ -41,7 +41,9 @@ function cleanDb(host, name, callback) {
 function cleanDbs(callback) {
     async.series([
         async.apply(cleanDb, 'localhost', 'iotagent-manager')
-    ], callback);
+    ], function() {
+        setTimeout(callback, 100);
+    });
 }
 
 function populate(host, dbName, entityList, collectionName, callback) {
