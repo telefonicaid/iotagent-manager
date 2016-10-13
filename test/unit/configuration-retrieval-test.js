@@ -51,19 +51,18 @@ var request = require('request'),
 
 
 describe('Configuration list', function() {
-    var protocolRequest = {
-        url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
-        method: 'POST',
-        json: utils.readExampleFile('./test/examples/protocols/registrationEmpty.json'),
-        headers: {
-            'fiware-service': 'smartGondor',
-            'fiware-servicepath': '/gardens'
-        }
-    };
-
     function generateInitialConfigurations(callback) {
         var newConfiguration,
-            services = ['smartGondor', 'smartMordor'];
+            services = ['smartGondor', 'smartMordor'],
+            protocolRequest = {
+                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+                method: 'POST',
+                json: utils.readExampleFile('./test/examples/protocols/registrationEmpty.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
 
         for (var service in services) {
             for (var i = 0; i < 8; i++) {
