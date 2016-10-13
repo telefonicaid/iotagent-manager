@@ -106,7 +106,7 @@ describe('Configuration list', function() {
         });
     });
 
-    describe('When a new configuration list request arrives to the IoTAM', function() {
+    describe.only('When a new configuration list request arrives to the IoTAM', function() {
         var options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
