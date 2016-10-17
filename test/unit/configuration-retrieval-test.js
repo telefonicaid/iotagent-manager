@@ -133,6 +133,23 @@ describe('Configuration list', function() {
             });
         });
 
+        it('should map the attributes for the configurations appropriately', function(done) {
+            request(options, function(error, response, body) {
+                var parsedBody = JSON.parse(body);
+
+                for (var i = 0; i < parsedBody.services.length; i++) {
+                    should.exist(parsedBody.services[i].entity_type);
+                    should.not.exist(parsedBody.services[i].type);
+                    should.exist(parsedBody.services[i].service_path);
+                    should.not.exist(parsedBody.services[i].subservice);
+                    should.exist(parsedBody.services[i].internal_attributes);
+                    should.not.exist(parsedBody.services[i].internalAttributes);
+                }
+
+                done();
+            });
+        });
+
         it('should not return any configurations for other services', function(done) {
             request(options, function(error, response, body) {
                 var parsedBody = JSON.parse(body),
