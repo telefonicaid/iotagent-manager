@@ -102,22 +102,22 @@ describe('IoTA Redirections', function() {
                 if (operation[2] === 'POST') {
                     agentMock
                         .post(operation[3], utils.readExampleFile(operation[1]))
-                        .query({resource: '/iot/d'})
+                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'PUT') {
                     agentMock
                         .put(operation[3], utils.readExampleFile(operation[1]))
-                        .query({resource: '/iot/d'})
+                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'GET') {
                     agentMock
                         .get(operation[3])
-                        .query({resource: '/iot/d'})
+                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 } else {
                     agentMock
                         .delete(operation[3])
-                        .query({resource: '/iot/d'})
+                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
                         .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
                 }
 
