@@ -86,6 +86,22 @@ the followin command:
 docker run --name mongodb -d mongo
 ```
 
+### Build your own Docker image
+There is also the possibility to build your own local Docker image of the IOTagent-manager component.
+
+To do it, follow the next steps once you have installed Docker in your machine:
+
+1. Navigate to the path where the component repository was cloned.
+2. Launch a Docker build
+    * Using the default NodeJS version of the operating system used defined in FROM keyword of Dockerfile:
+    ```bash
+    sudo docker build -f Dockerfile .
+    ```
+    * Using an alternative NodeJS version:
+    ```bash
+    sudo docker build --build-arg NODEJS_VERSION=0.10.46 -f Dockerfile .
+    ```
+
 Once the MongoDB instance is running, you can execute the IoT Manager with the following command:
 ```
 docker run -d  --link mongodb:mongo -e "IOTA_LOG_LEVEL=DEBUG" -e "IOTA_MONGO_HOST=mongo" -p 8082:8082 telefonicaiot/iotamanager
