@@ -64,7 +64,7 @@ describe('Configuration list', function() {
                 }
             };
 
-        for (var service in services) {
+        for (var service = 0; service < services.length; service++) {
             for (var i = 0; i < 8; i++) {
                 newConfiguration = _.clone(configurationTemplate);
                 newConfiguration.apikey += '__' + i;
