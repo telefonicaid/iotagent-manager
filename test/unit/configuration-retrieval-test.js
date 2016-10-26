@@ -41,7 +41,7 @@ var request = require('request'),
         'service': 'theService',
         'service_path': '/gardens',
         'attributes': [
-            {
+           {
                 'name': 'status',
                 'type': 'Boolean'
             }
@@ -73,6 +73,7 @@ describe('Configuration list', function() {
                 newConfiguration.resource += '__' + i;
                 newConfiguration.service = services[service];
 
+                protocolRequest.headers['fiware-service'] = service;
                 protocolRequest.json.services.push(newConfiguration);
             }
         }
