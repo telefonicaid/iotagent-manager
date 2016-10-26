@@ -34,7 +34,7 @@ var request = require('request'),
     utils = require('../utils'),
     iotManager = require('../../lib/iotagent-manager'),
     configurationTemplate = {
-        'apikey': '801230BJKL23Y9090DSFL123HJK09H324HV8732',
+        'apikey': '801230BJKL23Y9090DSFL123HJK09H324HV873',
         'token': '8970A9078A803H3BL98PINEQRW8342HBAMS',
         'entity_type': 'SensorMachine',
         'resource': '/deviceTest',
@@ -67,10 +67,10 @@ describe('Configuration list', function() {
         for (var service = 0; service < services.length; service++) {
             for (var i = 0; i < 8; i++) {
                 newConfiguration = _.clone(configurationTemplate);
-                newConfiguration.apikey += '__' + i;
-                newConfiguration.entity_type += '__' + i;
-                newConfiguration.token += '__' + i;
-                newConfiguration.resource += '__' + i;
+                newConfiguration.apikey += i.toString();
+                newConfiguration.entity_type += '__' + i.toString();
+                newConfiguration.token += '__' + i.toString();
+                newConfiguration.resource += '__' + i.toString();
                 newConfiguration.service = services[service];
 
                 protocolRequest.headers['fiware-service'] = services[service];
