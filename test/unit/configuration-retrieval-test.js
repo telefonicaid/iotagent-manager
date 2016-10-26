@@ -71,9 +71,10 @@ describe('Configuration list', function() {
                 newConfiguration.entity_type += '__' + i;
                 newConfiguration.token += '__' + i;
                 newConfiguration.resource += '__' + i;
-                newConfiguration.service = services[service];
+                newConfiguration.service = 'smartGondor';
 
-                protocolRequest.headers['fiware-service'] = service;
+                protocolRequest.headers['fiware-service'] = 'smartGondor';
+                protocolRequest.headers['fiware-servicepath'] = newConfiguration.service_path;
                 protocolRequest.json.services.push(newConfiguration);
             }
         }
