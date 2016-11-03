@@ -1,1 +1,10 @@
 - ADD Configurable IoTManager path
+- ADD mongodb retries
+- FIX total count of results / devices
+- FIX update protocol apikey param
+- FIX missed resource in header redirected to iota
+- FIX protocol filter in get protocols
+- FIX protocol filter in list protocols
+- FIX translation body iota redirector
+- FIX way to handle non 500 errors
+- FIX format for duplicated conform IOTA cpp
