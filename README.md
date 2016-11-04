@@ -18,6 +18,8 @@ to the appropriate IoTAgent based on the declared protocol.
 The IoTAgent Manager also offers a cache of all the provided device Configurations, to fasten the retrieval of certain
 information from the Agents.
 
+Additional information about operating the component can be found in the [Operations: logs and alarms](docs/operations.md) document.
+
 ## <a name="configuration"/> Configuration
 The IoT Agent Manager main configuration point is the `config.js` file at the root of the project. The following section
 explains each configuration parameter in detail.
