@@ -8,3 +8,4 @@
 - FIX translation body iota redirector
 - FIX way to handle non 500 errors
 - FIX format for duplicated conform IOTA cpp
+- ADD operations manual (#87)
