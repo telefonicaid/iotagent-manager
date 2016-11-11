@@ -3,6 +3,7 @@
 
 * [Overview](#overview)
 * [Logs](#logs)
+* [Alarms](#alarms)
 * [Error naming code](#errorcode)
 
 ## <a name="overview"/>  Overview
@@ -59,11 +60,21 @@ status as well as the load balancer status.
 
 - By a bug in the IoTA code. In this case, contact the development team.
 
+## <a name="alarms"/> Alarms
+
+The following table shows the alarms that can be raised in the IoTAgent library. All the alarms are signaled by a
+error log starting with the prefix "Raising [%s]:" (where %s is the alarm name). All the alarms are released by an info
+log with the prefix "Releasing [%s]".
+
+| Alarm name            | Description            |
+|:--------------------- |:---------------------- |
+| MONGO-ALARM           | Indicates an error in the MongoDB connectivity |
 
 ## <a name="errorcode"/> Error naming code
 Every error has a code composed of a prefix and an ID, codified with the following table:
 
 | Prefix           | Type of operation             |
 |:---------------- |:----------------------------- |
-| MONGODB          |  |
-| REDIRECTION      |  |
+| MONGODB          | Errors related with the MongoDB connection |
+| REDIRECTION      | Errors raised during request redirection |
+
