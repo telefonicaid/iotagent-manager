@@ -2,7 +2,7 @@
 #
 # iotamanager         Start/Stop the IoT Agent Manager
 #
-# chkconfig: 2345 99 60
+# chkconfig: 2345 98 61
 # description: IoT Agent Manager for Telefonica's IoT Platform
 ### BEGIN INIT INFO
 # Provides: iotamanager
