@@ -162,6 +162,12 @@ fi
 
 %changelog
 
+* Fri Nov 16 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.1.1
+
+- FIX include protocol in query url iota devices (#104)
+
+
+
 * Fri Nov 11 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.1.0
 
 - ADD Configurable IoTManager path
@@ -175,6 +181,7 @@ fi
 - FIX way to handle non 500 errors
 - FIX format for duplicated conform IOTA cpp
 - ADD operations manual (#87)
+
 
 
 * Fri Sep 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.0.0

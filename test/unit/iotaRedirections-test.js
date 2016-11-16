@@ -170,7 +170,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .get('/iot/devices')
-                .query({resource: '/iot/d'})
+                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
                 .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList.json'));
 
             done();
@@ -206,7 +206,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup1.json'))
-                .query({resource: '/iot/d'})
+                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
                 .reply(200, {});
 
             secondAgentMock = nock('http://anotherprotocol.com/')
@@ -215,7 +215,7 @@ describe('IoTA Redirections', function() {
 
             secondAgentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup2.json'))
-                .query({resource: '/iot/a'})
+                .query({resource: '/iot/a', protocol: 'ANOTHER_PROTOCOL'})
                 .reply(200, {});
 
             protocolRequest.json.protocol = 'ANOTHER_PROTOCOL';
@@ -256,7 +256,7 @@ describe('IoTA Redirections', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDevice.json'))
-                .query({resource: '/iot/d'})
+                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
                 .reply(200, {});
 
             done();
@@ -292,7 +292,7 @@ describe('IoTA Redirections', function() {
 
             secondAgentMock
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json'))
-                .query({resource: '/iot/a'})
+                .query({resource: '/iot/a', protocol: 'PREFIX_PROTOCOL'})
                 .reply(200, {});
 
             protocolRequest.json.protocol = 'PREFIX_PROTOCOL';
