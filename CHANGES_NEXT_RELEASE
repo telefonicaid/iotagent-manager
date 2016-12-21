@@ -12,3 +12,4 @@
 - FIX iotalib version info in /version (#108)
 - FIX include protocol in query url iota devices (#104)
 - FIX changed service priority on startup & shutdown
+- FIX total count of devices
