@@ -118,6 +118,7 @@ module.exports = function(grunt) {
             unit: {
                 options: {
                     ui: 'bdd',
+                    timeout: 4000,
                     reporter: 'spec'
                 },
                 src: [
@@ -130,6 +131,7 @@ module.exports = function(grunt) {
                     ui: 'bdd',
                     reporter: 'tap',
                     quiet: true,
+                    timeout: 4000,
                     captureFile: '<%= clean.reportTest[0] %>/unit_tests.tap'
                 },
                 src: [

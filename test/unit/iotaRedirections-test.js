@@ -273,6 +273,39 @@ describe('IoTA Redirections', function() {
         });
     });
 
+    describe('When the creation of multiple devices arrives to the manager', function() {
+        var options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+            method: 'POST',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            json: utils.readExampleFile('./test/examples/provisioning/postDeviceMultiple.json')
+        };
+
+        beforeEach(function(done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDeviceMultiple.json'))
+                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
+                .reply(200, {});
+
+            done();
+        });
+
+        it('should redirect a multiple device creation', function(done) {
+            request(options, function(error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+    });
+
     describe('When a device creation request arrives for a protocol with the "/iot" prefix', function() {
         var options = {
                 url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
