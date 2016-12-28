@@ -1,15 +1,1 @@
-- ADD Configurable IoTManager path
-- ADD mongodb retries
-- FIX total count of results / devices
-- FIX update protocol apikey param
-- FIX missed resource in header redirected to iota
-- FIX protocol filter in get protocols
-- FIX protocol filter in list protocols
-- FIX translation body iota redirector
-- FIX way to handle non 500 errors
-- FIX format for duplicated conform IOTA cpp
-- ADD operations manual (#87)
-- FIX iotalib version info in /version (#108)
-- FIX include protocol in query url iota devices (#104)
-- FIX changed service priority on startup & shutdown
-- FIX total count of devices
+- FIX IoTAManager does not handle multiple provisionings #115
