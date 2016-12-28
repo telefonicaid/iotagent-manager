@@ -273,7 +273,7 @@ describe('IoTA Redirections', function() {
         });
     });
 
-    describe('When the creation of multiple devices arrives to the manager', function() {
+    describe('When the creation of multiple devices arrive to the manager', function() {
         var options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'POST',
