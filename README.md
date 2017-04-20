@@ -3,7 +3,7 @@
 ## Index
 
 * [Overview](#overview)
-* [Configuration] (#configuration)
+* [Configuration](#configuration)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Subscription API](#subscriptionapi)
