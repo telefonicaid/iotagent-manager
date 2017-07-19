@@ -42,6 +42,7 @@ following table shows the correspondence between allowed environment variables a
 | IOTA_SERVER_HOST          | server.host                         |
 | IOTA_MONGO_HOST           | mongodb.host                        |
 | IOTA_MONGO_PORT           | mongodb.port                        |
+| IOTA_MONGO_REPLICASET     | mongodb.replicaSet                  |
 | IOTA_MONGO_DB             | mongodb.db                          |
 | IOTA_LOG_LEVEL            | logLevel                            |
 
