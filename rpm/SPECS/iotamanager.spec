@@ -163,11 +163,12 @@ fi
 
 %changelog
 
+* Wed Oct 28 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.0
+- FEATURE update node version to 4.8.4
+- Update MongoDB driver in order to fix NODE-818 error (#120)
+
 * Fri Nov 16 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.1.1
-
 - FIX include protocol in query url iota devices (#104)
-
-
 
 * Fri Nov 11 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.1.0
 
@@ -182,8 +183,6 @@ fi
 - FIX way to handle non 500 errors
 - FIX format for duplicated conform IOTA cpp
 - ADD operations manual (#87)
-
-
 
 * Fri Sep 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.0.0
 
