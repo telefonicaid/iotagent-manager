@@ -162,6 +162,8 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Nov 17 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.1
+- Update iotagent-node-lib to 2.5.x
 
 * Wed Oct 28 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.0
 - FEATURE update node version to 4.8.4
