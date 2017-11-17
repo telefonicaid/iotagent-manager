@@ -162,6 +162,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Nov 17 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.2
+- Update iotagent-node-lib to 2.5.1 in packaging artifacts (npm-shrinkwrap.json)
+
 * Fri Nov 17 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.1
 - Update iotagent-node-lib to 2.5.x
 
