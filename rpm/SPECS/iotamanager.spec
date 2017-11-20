@@ -162,6 +162,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Nov 20 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.3
+- Fix mongodb dependency in packages.json for production deployment
+
 * Fri Nov 17 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.2
 - Update iotagent-node-lib to 2.5.1 in packaging artifacts (npm-shrinkwrap.json)
 
