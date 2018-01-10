@@ -125,11 +125,11 @@ if [ $1 == 0 ]; then
 
   echo "[INFO] Removing application log files"
   # Log
-  [ -d %{_iotamanager_log_dir} ] && rm -rfv %{_iotamanager_log_dir}
+  [ -d %{_iotamanager_log_dir} ] && rm -rf %{_iotamanager_log_dir}
 
   echo "[INFO] Removing application run files"
   # Log
-  [ -d %{_iotamanager_pid_dir} ] && rm -rfv %{_iotamanager_pid_dir}
+  [ -d %{_iotamanager_pid_dir} ] && rm -rf %{_iotamanager_pid_dir}
 
   echo "[INFO] Removing application user"
   userdel -fr %{_project_user}
