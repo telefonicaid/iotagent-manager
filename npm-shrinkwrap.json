@@ -1,6 +1,6 @@
 {
   "name": "iotagent-manager",
-  "version": "1.3.0",
+  "version": "1.3.0-next",
   "dependencies": {
     "async": {
       "version": "2.0.1",
