@@ -162,6 +162,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Tue Feb 27 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.3.0
+- Update ioagent-node-lib to 2.6.x
+- FIx: add mongodb dependence into dependencies in package.json
 
 * Wed Oct 28 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.2.0
 - FEATURE update node version to 4.8.4
