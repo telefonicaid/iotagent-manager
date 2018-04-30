@@ -30,11 +30,9 @@
     "revalidator": "^0.3.1",
     "mongoose": "^4.1.5",
     "async": "2.0.1",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
-    "mongodb": "2.2.10"
+    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master"
   },
   "devDependencies": {
-    "mongodb": "2.2.10",
     "grunt": "0.4.5",
     "closure-linter-wrapper": "1.0.1",
     "grunt-contrib-clean": "0.7.0",
