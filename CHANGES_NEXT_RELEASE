@@ -1,3 +1,4 @@
+- Fix: handle syntax error [#144] 
 - Fix: check protocol on creation device before use it [#142]
 - Fix: static_attributes protocol from iota are not retrieved [#140]
 - Remove mongodb dependence from packages.json (already in iota-node-lib)
