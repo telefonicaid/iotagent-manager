@@ -163,6 +163,14 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Aug 06 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.4.0
+- Update iotagent-node-lib to 2.7.x
+- Fix: handle syntax error (#144)
+- Fix: check protocol on creation device before use it (#142)
+- Fix: static_attributes protocol from iota are not retrieved (#140)
+- Using precise dependencies (~=) in packages.json
+- Remove mongodb dependence from packages.json (already in iota-node-lib)
+
 * Tue Feb 27 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.3.0
 - Update ioagent-node-lib to 2.6.x
 - FIx: add mongodb dependence into dependencies in package.json
