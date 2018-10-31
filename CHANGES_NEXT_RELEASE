@@ -1,2 +1,3 @@
 - Upgrade Dockerfile to use NodeJS 8
+- Add: use PM2 in Dockerfile
 - Upgrade mongoose dependency to 4.13.14
