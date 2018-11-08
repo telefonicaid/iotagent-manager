@@ -2,7 +2,8 @@
 - Save cbHost in configuration
 - Upgrade Dockerfile to use NodeJS 8
 - Add: use PM2 in Dockerfile
-- Upgrade mongoose dependency to 4.13.14
+- Upgrade mongoose dependency from ~4.1.15 to 4.13.14
+- Upgrade logops dependency from 1.0.0 to 2.1.0
 - Remove: old unused development dependencies
   * grunt and grunt related module
   * closure-linter-wrapper
