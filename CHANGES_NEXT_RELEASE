@@ -11,3 +11,6 @@
 - Remove: old unused development dependencies
   * grunt and grunt related module
   * closure-linter-wrapper
+  * chai
+  * sinon
+  * sinon-chai
