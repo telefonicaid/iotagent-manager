@@ -3,7 +3,6 @@
 - Upgrade Dockerfile to use NodeJS 8
 - Add: use PM2 in Dockerfile
 - Upgrade mongoose dependency from ~4.1.15 to 4.13.14
-- Upgrade logops dependency from 1.0.0 to 2.1.0
 - Upgrade requests dependency from 2.74.0 to 2.88.0
 - Upgrade express dependency from ~4.11.2 to 4.16.4
 - Upgrade mocha dev dependency from 2.4.5 to 5.2.0
