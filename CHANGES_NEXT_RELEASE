@@ -1,4 +1,15 @@
+- Set Nodejs 8.12.0 as minimum version in packages.json
 - Save cbHost in configuration
 - Upgrade Dockerfile to use NodeJS 8
 - Add: use PM2 in Dockerfile
-- Upgrade mongoose dependency to 4.13.14
+- Upgrade mongoose dependency from ~4.1.15 to 4.13.14
+- Upgrade requests dependency from 2.74.0 to 2.88.0
+- Upgrade express dependency from ~4.11.2 to 4.16.4
+- Upgrade mocha dev dependency from 2.4.5 to 5.2.0
+- Upgrade istanbul dev dependency from ~0.1.34 to 0.4.5
+- Remove: old unused development dependencies
+  * grunt and grunt related module
+  * closure-linter-wrapper
+  * chai
+  * sinon
+  * sinon-chai
