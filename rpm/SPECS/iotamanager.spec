@@ -163,6 +163,19 @@ fi
 %{_install_dir}
 
 %changelog
+* Wed Dec 19 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.5.0
+- Set Nodejs 8.12.0 as minimum version in packages.json (effectively removing Nodev4 and Nodev6 as supported versions)
+- Fix: save cbHost in configuration
+- Add: use NodeJS 8 in Dockerfile
+- Add: use PM2 in Dockerfile
+- Upgrade: iotagent-node-lib dependence from x to 2.8.1
+- Upgrade: mongoose dependence from ~4.1.15 to 4.13.14
+- Upgrade: requests dependence from 2.74.0 to 2.88.0
+- Upgrade: express dependence from ~4.11.2 to 4.16.4
+- Upgrade: mocha development dependence from 2.4.5 to 5.2.0
+- Upgrade: istanbul development dependence from ~0.1.34 to 0.4.5
+- Remove: old unused development dependencies (closure-linter-wrapper, chai, sinon, sinon-chai, grunt and grunt related module)
+
 * Mon Aug 06 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.4.0
 - Update iotagent-node-lib to 2.7.x
 - Fix: handle syntax error (#144)
