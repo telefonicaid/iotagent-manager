@@ -14,6 +14,11 @@
       "type": "string",
       "required": true
     },
+    "transports": {
+      "description": "The transport protocols supported by the IoT Agent",
+      "type": "array",
+      "required": false
+    },
     "iotagent": {
       "description": "URL Where the IoTAgent is listening",
       "type": "string",
