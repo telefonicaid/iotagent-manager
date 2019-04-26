@@ -163,6 +163,8 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Apr 26 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.4.50
+
 * Mon Aug 06 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.4.0
 - Update iotagent-node-lib to 2.7.x
 - Fix: handle syntax error (#144)
