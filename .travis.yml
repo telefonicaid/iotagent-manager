@@ -1,8 +1,8 @@
 language: node_js
 
 node_js:
- - "4"
- - "6"
+ - "8"
+ - "10"
 
 branches:
   only:
@@ -21,7 +21,5 @@ addons:
 install:
  - npm install
 
-before_install:
- - npm install -g grunt-cli
-
-
+before_script:
+ - npm run lint
