@@ -19,7 +19,7 @@
 # For those usages not covered by the GNU Affero General Public License
 # please contact with: [daniel.moranjimenez@telefonica.com]
 
-FROM node:8.15.1-slim
+FROM node:8.16.0-slim
 
 MAINTAINER FIWARE IoTAgent Team. TelefÃ³nica I+D
 
