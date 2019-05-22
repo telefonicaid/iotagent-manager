@@ -163,6 +163,11 @@ fi
 %{_install_dir}
 
 %changelog
+* Wed May 22 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.6.0
+- Upgrade from node:8.12.0-slim to node:8.16.0-slim as base image in Dockerfile
+- Upgrade logops dependency from 1.0.0 to 2.1.0
+- Upgrade iotagent-node-lib dependency from 2.8.1 to 2.9.0
+
 * Wed Dec 19 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.5.0
 - Set Nodejs 8.12.0 as minimum version in packages.json (effectively removing Nodev4 and Nodev6 as supported versions)
 - Fix: save cbHost in configuration
