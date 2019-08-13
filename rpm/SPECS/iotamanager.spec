@@ -165,7 +165,7 @@ fi
 %changelog
 * Tue Aug 13 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
 - Fix: add `type` to query about configuration protocol
-- Upgrade iotagent-node-lib dependency from 2.8.1 to 2.9.0
+- Upgrade iotagent-node-lib dependency from 2.9.0 to 2.10.0
 
 * Wed May 22 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.6.0
 - Upgrade from node:8.12.0-slim to node:8.16.0-slim as base image in Dockerfile
