@@ -35,7 +35,7 @@
     "revalidator": "~0.3.1",
     "mongoose": "4.13.14",
     "async": "2.0.1",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master"
+    "iotagent-node-lib": "git://github.com/flopezag/iotagent-node-lib.git#feature/cluster-support"
   },
   "devDependencies": {
     "jshint": "~2.9.6",
