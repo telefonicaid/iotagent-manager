@@ -40,7 +40,7 @@
   "devDependencies": {
     "jshint": "~2.9.6",
     "mocha": "5.2.0",
-    "mongodb": "2.2.35",
+    "mongodb": "3.2.3",
     "should": "8.2.2",
     "istanbul": "0.4.5",
     "timekeeper": "0.0.5",

@@ -48,7 +48,7 @@ describe('Configuration cache', function() {
             mongoDBUtils.cleanDbs,
             async.apply(iotManager.start, iotConfig)
         ], function() {
-            mongo.connect('mongodb://localhost:27017/iotagent-manager', function(err, db) {
+            mongo.connect('mongodb://localhost:27017/iotagent-manager', { useNewUrlParser: true }, function(err, db) {
                 iotmDb = db;
                 done();
             });
@@ -56,7 +56,7 @@ describe('Configuration cache', function() {
     });
 
     afterEach(function(done) {
-        iotmDb.collection('configurations').remove(function(error) {
+        iotmDb.db().collection('configurations').remove(function(error) {
             iotmDb.close(function(error) {
                 async.series([
                     mongoDBUtils.cleanDbs,
@@ -69,7 +69,7 @@ describe('Configuration cache', function() {
     describe('When an IoT Agent sends a registration with configurations', function() {
         it('should store the configurations in MongoDB', function(done) {
             request(protocolRequest, function(error, result, body) {
-                iotmDb.collection('configurations').find({}).toArray(function(err, docs) {
+                iotmDb.db().collection('configurations').find({}).toArray(function(err, docs) {
                     should.not.exist(err);
                     should.exist(docs);
                     should.exist(docs.length);
@@ -130,7 +130,7 @@ describe('Configuration cache', function() {
         it('should remove the older information', function(done) {
             request(firstProtocolRequest, function(error, result, body) {
                 request(secondProtocolRequest, function(error, result, body) {
-                    iotmDb.collection('configurations').find({}).toArray(function(err, docs) {
+                    iotmDb.db().collection('configurations').find({}).toArray(function(err, docs) {
                         should.not.exist(err);
                         should.exist(docs);
                         should.exist(docs.length);
@@ -146,7 +146,7 @@ describe('Configuration cache', function() {
         it('should store the additional information', function(done) {
             request(firstProtocolRequest, function(error, result, body) {
                 request(secondProtocolRequest, function(error, result, body) {
-                    iotmDb.collection('configurations').find({}).toArray(function(err, docs) {
+                    iotmDb.db().collection('configurations').find({}).toArray(function(err, docs) {
                         should.exist(docs[0].apikey);
                         should.exist(docs[0].token);
                         should.exist(docs[0].type);
