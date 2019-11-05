@@ -98,7 +98,7 @@ describe('Configuration list', function() {
     });
 
     afterEach(function(done) {
-        iotmDb.db().collection('configurations').remove(function(error) {
+        iotmDb.db().collection('configurations').deleteOne(function(error) {
             iotmDb.close(function(error) {
                 async.series([
                     mongoDBUtils.cleanDbs,
