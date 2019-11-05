@@ -1,1 +1,2 @@
+Upgrade mongodb dev dependency from 2.3.35 to 3.2.3 and tests
 Fix: replset options was never used
