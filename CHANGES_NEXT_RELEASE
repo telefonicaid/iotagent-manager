@@ -1,2 +1,3 @@
+Upgrade mongoose dependency from 4.13.4 to 5.7.5
 Upgrade mongodb dev dependency from 2.3.35 to 3.2.3 and tests
 Fix: replset options was never used
