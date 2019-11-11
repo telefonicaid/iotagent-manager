@@ -163,6 +163,19 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Nov 11 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.8.0
+- Fix: replace remove deleteOne in tests due to was deprecated by mongo
+- Fix: replset options was never used
+- Upgrade iotagent-node-lib dependency from 2.9.0 to 2.11.0
+- Upgrade mongoose dependency from 4.13.14 to 5.7.7
+- Upgrade body-parser dependency from ~1.11.0 to ~1.19.0
+- Upgrade async dependency from 2.0.1 to 2.6.2
+- Upgrade jshint dev dependency from ~2.9.6 to ~2.10.2
+- Upgrade mocha dev dependency from 5.2.0 to 6.1.4
+- Upgrade should dev dependency  from 8.2.2 to 13.2.3
+- Upgrade timekeeper dev dependency from 0.0.5 to 2.2.0
+- Upgrade mongodb dev dependency from 2.3.35 to 3.2.3 and tests
+
 * Tue Aug 13 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
 - Fix: add `type` to query about configuration protocol
 - Upgrade iotagent-node-lib dependency from 2.9.0 to 2.10.0
