@@ -21,7 +21,7 @@
  * please contact with::daniel.moranjimenez@telefonica.com
  */
 
-var config = {
+const config = {
     server: {
         port: 8082
     },

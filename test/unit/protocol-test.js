@@ -20,18 +20,19 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::daniel.moranjimenez@telefonica.com
  */
-'use strict';
 
-var request = require('request'),
-    iotConfig = require('../configTest'),
-    mongoDBUtils = require('../mongoDBUtils'),
-    async = require('async'),
-    should = require('should'),
-    utils = require('../utils'),
-    iotManager = require('../../lib/iotagent-manager');
+/* eslint-disable no-unused-vars */
+
+const request = require('request');
+const iotConfig = require('../configTest');
+const mongoDBUtils = require('../mongoDBUtils');
+const async = require('async');
+const should = require('should');
+const utils = require('../utils');
+const iotManager = require('../../lib/iotagent-manager');
 
 describe('Protocol creation tests', function() {
-    var listRequest = {
+    const listRequest = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
         method: 'GET',
         headers: {
@@ -45,14 +46,11 @@ describe('Protocol creation tests', function() {
     });
 
     afterEach(function(done) {
-        async.series([
-            mongoDBUtils.cleanDbs,
-            iotManager.stop
-        ], done);
+        async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
     });
 
     describe('When a new IoTAgent protocol registration request arrives to the IOTAM', function() {
-        var protocolRequest = {
+        const protocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'POST',
             json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
@@ -73,12 +71,10 @@ describe('Protocol creation tests', function() {
         it('should appear in subsequent listings', function(done) {
             request(protocolRequest, function(error, result, body) {
                 request(listRequest, function(error, result, body) {
-                    var parsedBody;
-
                     should.not.exist(error);
                     should.exist(body);
 
-                    parsedBody = JSON.parse(body);
+                    const parsedBody = JSON.parse(body);
 
                     result.statusCode.should.equal(200);
                     should.exist(parsedBody.protocols);
@@ -91,7 +87,7 @@ describe('Protocol creation tests', function() {
     });
 
     describe('When a protocol registration arrives with missing attributes', function() {
-        var protocolRequest = {
+        const protocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'POST',
             json: utils.readExampleFile('./test/examples/protocols/registrationWithMissingAttrs.json'),
@@ -112,7 +108,7 @@ describe('Protocol creation tests', function() {
     });
 
     describe('When a protocol registration arrives with extra attributes', function() {
-        var protocolRequest = {
+        const protocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'POST',
             json: utils.readExampleFile('./test/examples/protocols/registrationWithWrongAttrs.json'),
@@ -133,24 +129,24 @@ describe('Protocol creation tests', function() {
     });
 
     describe('When an already existing registration arrives to the IoTAM', function() {
-        var protocolRequest = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
-                method: 'POST',
-                json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            },
-            protocolRequest2 = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
-                method: 'POST',
-                json: utils.readExampleFile('./test/examples/protocols/registrationWithGroupsUpdate.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+        const protocolRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const protocolRequest2 = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithGroupsUpdate.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         it('should return a 200 OK', function(done) {
             request(protocolRequest, function(error, result, body) {
@@ -167,12 +163,10 @@ describe('Protocol creation tests', function() {
             request(protocolRequest, function(error, result, body) {
                 request(protocolRequest2, function(error, result, body) {
                     request(listRequest, function(error, result, body) {
-                        var parsedBody;
-
                         should.not.exist(error);
                         should.exist(body);
 
-                        parsedBody = JSON.parse(body);
+                        const parsedBody = JSON.parse(body);
 
                         result.statusCode.should.equal(200);
                         should.exist(parsedBody.protocols);
@@ -188,15 +182,14 @@ describe('Protocol creation tests', function() {
             request(protocolRequest, function(error, result, body) {
                 request(protocolRequest2, function(error, result, body) {
                     request(listRequest, function(error, result, body) {
-                        var parsedBody;
-
                         should.not.exist(error);
                         should.exist(body);
 
-                        parsedBody = JSON.parse(body);
+                        const parsedBody = JSON.parse(body);
 
                         parsedBody.protocols[0].description.should.equal(
-                            'A generic protocol updated with new information');
+                            'A generic protocol updated with new information'
+                        );
 
                         parsedBody.protocols[0].iotagent.should.equal('http://smartGondor.com/New');
 
@@ -208,23 +201,23 @@ describe('Protocol creation tests', function() {
     });
 
     describe('When an IoTAgent removal request arrives to the IOTAM', function() {
-        var protocolRequest = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
-                method: 'POST',
-                json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            },
-            deleteProtocol = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols/GENERIC_PROTOCOL',
-                method: 'DELETE',
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+        const protocolRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const deleteProtocol = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols/GENERIC_PROTOCOL',
+            method: 'DELETE',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         it('should return a 200 OK code if the removal was correct', function(done) {
             request(protocolRequest, function(error, result, body) {
@@ -240,12 +233,10 @@ describe('Protocol creation tests', function() {
             request(protocolRequest, function(error, result, body) {
                 request(deleteProtocol, function(error, result, body) {
                     request(listRequest, function(error, result, body) {
-                        var parsedBody;
-
                         should.not.exist(error);
                         should.exist(body);
 
-                        parsedBody = JSON.parse(body);
+                        const parsedBody = JSON.parse(body);
 
                         should.exist(parsedBody.count);
                         parsedBody.count.should.equal(0);
