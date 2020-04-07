@@ -163,6 +163,10 @@ fi
 %{_install_dir}
 
 %changelog
+* Tue Apr 07 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.9.0
+- Upgrade iotagent-node-lib dependency from 2.11.0 to 2.12.0
+- Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life 
+
 * Mon Nov 11 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.8.0
 - Fix: replace remove deleteOne in tests due to was deprecated by mongo
 - Fix: replset options was never used
