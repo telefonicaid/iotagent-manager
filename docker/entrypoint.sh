@@ -18,7 +18,7 @@
 # License along with iotagent-manager. If not, see http://www.gnu.org/licenses/.
 #
 # For those usages not covered by the GNU Affero General Public License please contact
-# with iot_support at tid dot es
+# with sc_support at telefonica dot com
 #
 
 # usage: file_env VAR [DEFAULT]
