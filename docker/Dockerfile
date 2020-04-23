@@ -17,7 +17,7 @@
 # If not, see http://www.gnu.org/licenses/.
 #
 # For those usages not covered by the GNU Affero General Public License
-# please contact with: [daniel.moranjimenez@telefonica.com]
+# please contact with: [sc_support at telefonica dot com]
 
 ARG NODE_VERSION=10.19.0-slim
 FROM node:${NODE_VERSION}
