@@ -110,6 +110,20 @@ Once the MongoDB instance is running, you can execute the IoT Manager with the f
 docker run -d  --link mongodb:mongo -e "IOTA_LOG_LEVEL=DEBUG" -e "IOTA_MONGO_HOST=mongo" -p 8082:8082 telefonicaiot/iotamanager
 ```
 
+### Using PM2
+
+The IoT Agent Manager within the Docker image can be run encapsulated within the [pm2](http://pm2.keymetrics.io/) Process
+Manager by adding the `PM2_ENABLED` environment variable.
+
+```console
+docker run --name iotagent -e PM2_ENABLED=true -d fiware/iotagent-manager
+```
+
+Use of pm2 is **disabled** by default. It is unnecessary and counterproductive to add an additional process manager if
+your dockerized environment is already configured to restart Node.js processes whenever they exit (e.g. when using
+[Kubernetes](https://kubernetes.io/))
+
+
 ## <a name="usage"/> Usage
 In order to execute the IoT Agent Manager just execute the following command from the root folder:
 ```

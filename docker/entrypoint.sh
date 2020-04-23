@@ -43,9 +43,6 @@ file_env() {
 	unset "$fileVar"
 }
 
-file_env 'IOTA_MONGO_USER'
-file_env 'IOTA_MONGO_PASSWORD'
-
 
 if [[  -z "$PM2_ENABLED" ]]; then
     echo "INFO: IoT Agent running standalone"
