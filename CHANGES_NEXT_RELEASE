@@ -1,1 +1,3 @@
-Set Nodejs 10 as minimum version in packages.json (effectively removing Nodev8 from supported versions)
+- Set Nodejs 10 as minimum version in packages.json (effectively removing Nodev8 from supported versions)
+- Make optional PM2 usage in docker entrypoint [#202]
+- Upgrade NodeJS version from 10.17.0 to 10.19.0 in Dockerfile
