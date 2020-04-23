@@ -52,7 +52,7 @@ if [[  -z "$PM2_ENABLED" ]]; then
     node /opt/iotaManager/bin/iota-manager
 else
     echo "***********************************************"
-    echo "INFO: IoT Agent encapsulated by pm2-runtime see https://pm2.io/doc/en/runtime/integration/docker/"
+    echo "INFO: IoT Agent Manager encapsulated by pm2-runtime see https://pm2.io/doc/en/runtime/integration/docker/"
     echo "***********************************************"
     pm2-runtime /opt/iotaManager/bin/iota-manager
 fi
