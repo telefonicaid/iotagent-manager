@@ -116,7 +116,7 @@ The IoT Agent Manager within the Docker image can be run encapsulated within the
 Manager by adding the `PM2_ENABLED` environment variable.
 
 ```console
-docker run --name iotagent -e PM2_ENABLED=true -d fiware/iotagent-manager
+docker run --name iotagent-manager -e PM2_ENABLED=true -d fiware/iotagent-manager
 ```
 
 Use of pm2 is **disabled** by default. It is unnecessary and counterproductive to add an additional process manager if
