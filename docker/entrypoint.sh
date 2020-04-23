@@ -51,5 +51,6 @@ else
     echo "***********************************************"
     echo "INFO: IoT Agent Manager encapsulated by pm2-runtime see https://pm2.io/doc/en/runtime/integration/docker/"
     echo "***********************************************"
+    npm install pm2@3.2.2 -g
     pm2-runtime /opt/iotaManager/bin/iota-manager
 fi
