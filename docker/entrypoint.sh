@@ -45,7 +45,7 @@ file_env() {
 
 
 if [[  -z "$PM2_ENABLED" ]]; then
-    echo "INFO: IoT Agent running standalone"
+    echo "INFO: IoT Agent Manager running standalone"
     node /opt/iotaManager/bin/iota-manager
 else
     echo "***********************************************"
