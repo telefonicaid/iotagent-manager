@@ -1,7 +1,7 @@
 {
   "name": "iotagent-manager",
   "description": "IoT Agent Manager proxy",
-  "version": "1.9.0-next",
+  "version": "1.10.0",
   "homepage": "https://github.com/dmj/iotagent-manager",
   "author": {
     "name": "Daniel Moran",
@@ -35,7 +35,7 @@
     "revalidator": "~0.3.1",
     "mongoose": "5.7.7",
     "async": "2.6.2",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master"
+    "iotagent-node-lib": "2.12.0"
   },
   "devDependencies": {
     "jshint": "~2.10.2",

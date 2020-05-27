@@ -163,6 +163,11 @@ fi
 %{_install_dir}
 
 %changelog
+* Wed May 27 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.10.0
+- Set Nodejs 10 as minimum version in packages.json (effectively removing Nodev8 from supported versions)
+- Make optional PM2 usage in docker entrypoint [#202]
+- Upgrade NodeJS version from 10.17.0 to 10.19.0 in Dockerfile
+
 * Tue Apr 07 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.9.0
 - Upgrade iotagent-node-lib dependency from 2.11.0 to 2.12.0
 - Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life 
