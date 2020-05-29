@@ -142,6 +142,7 @@ Whenever a new IoT Agent wants to register itself into the IoTAgent Manager, it 
 the following path: ``, indicating the following information:
 * *protocol*: Name of the protocol served by the IoTAgent.
 * *description*: Textual description for its display in portals.
+* *transports*: List of transport protocols supported by the IoT Agent.
 * *iotagent*: URL address where requests for this IoT Agent will be redirected.
 * *resource*: Unique string used to identify different IoT Agents for the same protocol.
 * *services*: List of device Configurations available in the IoT Agent. The IoTA Manager saves a cache for all the
@@ -153,6 +154,7 @@ IoT Agent:
 {
   "protocol": "GENERIC_PROTOCOL",
   "description": "A generic protocol",
+  "transports": ["HTTP", "MQTP"],
   "iotagent": "http://smartGondor.com/iot",
   "resource": "/iot/d",
   "services": [
@@ -188,6 +190,7 @@ response from the server:
      {
        "protocol" : "PDI-IoTA-UltraLight",
        "description" : "UL2",
+       "transports" : ["HTTP", "MQTP"],
        "endpoints" : [
           { "endpoint" : "http://127.0.0.1:8080/iot",
             "identifier" : "idcl1:8080",
