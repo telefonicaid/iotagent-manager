@@ -20,52 +20,50 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::daniel.moranjimenez@telefonica.com
  */
-'use strict';
 
-/* jshint camelcase: false */
+/* eslint-disable no-unused-vars */
 
-var request = require('request'),
-    iotConfig = require('../configTest'),
-    mongoDBUtils = require('../mongoDBUtils'),
-    _ = require('underscore'),
-    mongo = require('mongodb').MongoClient,
-    async = require('async'),
-    should = require('should'),
-    utils = require('../utils'),
-    iotManager = require('../../lib/iotagent-manager'),
-    configurationTemplate = {
-        'apikey': '801230BJKL23Y9090DSFL123HJK09H324HV873',
-        'token': '8970A9078A803H3BL98PINEQRW8342HBAMS',
-        'entity_type': 'SensorMachine',
-        'resource': '/deviceTest',
-        'service': 'theService',
-        'service_path': '/gardens',
-        'attributes': [
-           {
-                'name': 'status',
-                'type': 'Boolean'
-            }
-        ]
-    },
-    iotmDb;
-
+const request = require('request');
+const iotConfig = require('../configTest');
+const mongoDBUtils = require('../mongoDBUtils');
+const _ = require('underscore');
+const mongo = require('mongodb').MongoClient;
+const async = require('async');
+const should = require('should');
+const utils = require('../utils');
+const iotManager = require('../../lib/iotagent-manager');
+const configurationTemplate = {
+    apikey: '801230BJKL23Y9090DSFL123HJK09H324HV873',
+    token: '8970A9078A803H3BL98PINEQRW8342HBAMS',
+    entity_type: 'SensorMachine',
+    resource: '/deviceTest',
+    service: 'theService',
+    service_path: '/gardens',
+    attributes: [
+        {
+            name: 'status',
+            type: 'Boolean'
+        }
+    ]
+};
+let iotmDb;
 
 describe('Configuration list', function() {
     function generateInitialConfigurations(callback) {
-        var newConfiguration,
-            services = ['smartGondor', 'smartMordor'],
-            protocolRequest = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
-                method: 'POST',
-                json: utils.readExampleFile('./test/examples/protocols/registrationEmpty.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+        let newConfiguration;
+        const services = ['smartGondor', 'smartMordor'];
+        const protocolRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/protocols/registrationEmpty.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
-        for (var service = 0; service < services.length; service++) {
-            for (var i = 0; i < 8; i++) {
+        for (let service = 0; service < services.length; service++) {
+            for (let i = 0; i < 8; i++) {
                 newConfiguration = _.clone(configurationTemplate);
                 newConfiguration.apikey += i.toString();
                 newConfiguration.entity_type += '__' + i.toString();
@@ -85,31 +83,32 @@ describe('Configuration list', function() {
     }
 
     beforeEach(function(done) {
-        async.series([
-            mongoDBUtils.cleanDbs,
-            async.apply(iotManager.start, iotConfig)
-        ], function() {
-            mongo.connect('mongodb://localhost:27017/iotagent-manager', { useNewUrlParser: true }, function(err, db) {
-                iotmDb = db;
+        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function() {
+            mongo.connect(
+                'mongodb://localhost:27017/iotagent-manager',
+                { useNewUrlParser: true },
+                function(err, db) {
+                    iotmDb = db;
 
-                generateInitialConfigurations(done);
-            });
+                    generateInitialConfigurations(done);
+                }
+            );
         });
     });
 
     afterEach(function(done) {
-        iotmDb.db().collection('configurations').deleteOne(function(error) {
-            iotmDb.close(function(error) {
-                async.series([
-                    mongoDBUtils.cleanDbs,
-                    iotManager.stop
-                ], done);
+        iotmDb
+            .db()
+            .collection('configurations')
+            .deleteOne(function(error) {
+                iotmDb.close(function(error) {
+                    async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
+                });
             });
-        });
     });
 
     describe('When a new configuration list request arrives to the IoTAM', function() {
-        var options = {
+        const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
                 'fiware-service': 'smartGondor',
@@ -128,7 +127,7 @@ describe('Configuration list', function() {
 
         it('should return all the available configurations for its service', function(done) {
             request(options, function(error, response, body) {
-                var parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
                 // It should be greather than 7 but due to some mongodb-travis isses was fixed to 2
                 parsedBody.services.length.should.greaterThan(2);
@@ -138,9 +137,9 @@ describe('Configuration list', function() {
 
         it('should map the attributes for the configurations appropriately', function(done) {
             request(options, function(error, response, body) {
-                var parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
-                for (var i = 0; i < parsedBody.services.length; i++) {
+                for (let i = 0; i < parsedBody.services.length; i++) {
                     should.exist(parsedBody.services[i].entity_type);
                     should.not.exist(parsedBody.services[i].type);
                     should.exist(parsedBody.services[i].service_path);
@@ -155,10 +154,10 @@ describe('Configuration list', function() {
 
         it('should not return any configurations for other services', function(done) {
             request(options, function(error, response, body) {
-                var parsedBody = JSON.parse(body),
-                    otherServiceFound = false;
+                const parsedBody = JSON.parse(body);
+                let otherServiceFound = false;
 
-                for (var i = 0; i < parsedBody.services.length; i++) {
+                for (let i = 0; i < parsedBody.services.length; i++) {
                     if (parsedBody.services[i].service !== 'smartGondor') {
                         otherServiceFound = true;
                     }
@@ -171,7 +170,7 @@ describe('Configuration list', function() {
     });
 
     describe('When a configuration list request with a limit 3 arrives to the IoTAM', function() {
-        var options = {
+        const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
                 'fiware-service': 'smartGondor',
@@ -185,7 +184,7 @@ describe('Configuration list', function() {
 
         it('should return just 3 results', function(done) {
             request(options, function(error, response, body) {
-                var parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
                 parsedBody.services.length.should.equal(3);
                 done();
@@ -194,7 +193,7 @@ describe('Configuration list', function() {
     });
 
     describe('When a configuration list request with a offset 3 arrives to the IoTAM', function() {
-        var options = {
+        const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
                 'fiware-service': 'smartGondor',
@@ -208,7 +207,7 @@ describe('Configuration list', function() {
 
         it('should skip the first 3 results', function(done) {
             request(options, function(error, response, body) {
-                var parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
                 // It should be greather than 3 but due to some mongodb-travis isses was fixed to 0
                 parsedBody.services.length.should.greaterThan(-1);
@@ -218,7 +217,7 @@ describe('Configuration list', function() {
     });
 
     describe('When a configuration list request arrives with a wrong limit', function() {
-        var options = {
+        const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
                 'fiware-service': 'smartGondor',
@@ -239,7 +238,7 @@ describe('Configuration list', function() {
     });
 
     describe('When a configuration list request arrives with a wrong offset', function() {
-        var options = {
+        const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
                 'fiware-service': 'smartGondor',

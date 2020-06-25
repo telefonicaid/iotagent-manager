@@ -22,17 +22,16 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
-'use strict';
 
-var iotaManager = require('../lib/iotagent-manager'),
-    info = require('../package.json'),
-    context = {
-        op: 'IoTAManager.Executable'
-    },
-    logger = require('logops');
+const iotaManager = require('../lib/iotagent-manager');
+const info = require('../package.json');
+const context = {
+    op: 'IoTAManager.Executable'
+};
+const logger = require('logops');
 
 function start() {
-    var config;
+    let config;
 
     if (process.argv.length === 3) {
         config = require('../' + process.argv[2]);
@@ -42,7 +41,7 @@ function start() {
 
     config.iotaVersion = info.version;
 
-    iotaManager.start(config, function (error) {
+    iotaManager.start(config, function(error) {
         if (error) {
             logger.error(context, 'Error starting IoT Agent Manager: [%s] Exiting process', error);
         } else {

@@ -20,47 +20,57 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::daniel.moranjimenez@telefonica.com
  */
-'use strict';
 
-var iotConfig = require('../configTest'),
-    nock = require('nock'),
-    request = require('request'),
-    agentMock,
-    should = require('should'),
-    mongoDBUtils = require('../mongoDBUtils'),
-    iotManager = require('../../lib/iotagent-manager'),
-    async = require('async'),
-    utils = require('../utils');
+/* eslint-disable no-unused-vars */
+
+const iotConfig = require('../configTest');
+const nock = require('nock');
+const request = require('request');
+let agentMock;
+const should = require('should');
+const mongoDBUtils = require('../mongoDBUtils');
+const iotManager = require('../../lib/iotagent-manager');
+const async = require('async');
+const utils = require('../utils');
 
 describe('IoTA Redirections', function() {
-    var operations = [
-            ['GET Device', null, 'GET', '/iot/devices/devId',
-                './test/examples/provisioning/getDevice.json', './test/examples/provisioning/getDeviceReply.json'],
-            ['PUT Device', './test/examples/provisioning/putDevice.json', 'PUT', '/iot/devices/devId'],
-            ['GET Device List', null, 'GET', '/iot/devices',
-                './test/examples/provisioning/getDeviceList.json', './test/examples/provisioning/getDeviceList.json'],
-
-            ['DELETE Device', null, 'DELETE', '/iot/devices/devId'],
-            ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices'],
-            ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services'],
-            ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
-            ['DELETE Configuration', null, 'DELETE', '/iot/services']
+    const operations = [
+        [
+            'GET Device',
+            null,
+            'GET',
+            '/iot/devices/devId',
+            './test/examples/provisioning/getDevice.json',
+            './test/examples/provisioning/getDeviceReply.json'
         ],
-        protocolRequest = {
-            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
-            method: 'POST',
-            json: utils.readExampleFile('./test/examples/protocols/registrationEmpty.json'),
-            headers: {
-                'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens'
-            }
-        };
+        ['PUT Device', './test/examples/provisioning/putDevice.json', 'PUT', '/iot/devices/devId'],
+        [
+            'GET Device List',
+            null,
+            'GET',
+            '/iot/devices',
+            './test/examples/provisioning/getDeviceList.json',
+            './test/examples/provisioning/getDeviceList.json'
+        ],
+
+        ['DELETE Device', null, 'DELETE', '/iot/devices/devId'],
+        ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices'],
+        ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services'],
+        ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
+        ['DELETE Configuration', null, 'DELETE', '/iot/services']
+    ];
+    const protocolRequest = {
+        url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+        method: 'POST',
+        json: utils.readExampleFile('./test/examples/protocols/registrationEmpty.json'),
+        headers: {
+            'fiware-service': 'smartGondor',
+            'fiware-servicepath': '/gardens'
+        }
+    };
 
     beforeEach(function(done) {
-        async.series([
-            mongoDBUtils.cleanDbs,
-            async.apply(iotManager.start, iotConfig)
-        ], function(error) {
+        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function(error) {
             request(protocolRequest, function(error, response, body) {
                 done();
             });
@@ -70,15 +80,12 @@ describe('IoTA Redirections', function() {
     afterEach(function(done) {
         nock.cleanAll();
 
-        async.series([
-            mongoDBUtils.cleanDbs,
-            iotManager.stop
-        ], done);
+        async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
     });
 
     function testOperation(operation) {
         describe('When a ' + operation[0] + ' operation arrives to the manager', function() {
-            var options = {
+            const options = {
                 url: 'http://localhost:' + iotConfig.server.port + operation[3],
                 method: operation[2],
                 headers: {
@@ -102,23 +109,23 @@ describe('IoTA Redirections', function() {
                 if (operation[2] === 'POST') {
                     agentMock
                         .post(operation[3], utils.readExampleFile(operation[1]))
-                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
-                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
+                        .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
+                        .reply(200, operation[4] ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'PUT') {
                     agentMock
                         .put(operation[3], utils.readExampleFile(operation[1]))
-                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
-                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
+                        .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
+                        .reply(200, operation[4] ? utils.readExampleFile(operation[4]) : {});
                 } else if (operation[2] === 'GET') {
                     agentMock
                         .get(operation[3])
-                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
-                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
+                        .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
+                        .reply(200, operation[4] ? utils.readExampleFile(operation[4]) : {});
                 } else {
                     agentMock
                         .delete(operation[3])
-                        .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
-                        .reply(200, (operation[4]) ? utils.readExampleFile(operation[4]) : {});
+                        .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
+                        .reply(200, operation[4] ? utils.readExampleFile(operation[4]) : {});
                 }
 
                 done();
@@ -137,8 +144,8 @@ describe('IoTA Redirections', function() {
             if (options.method === 'GET' && operation[5]) {
                 it('should return the appropriate response for GETs', function(done) {
                     request(options, function(error, response, body) {
-                        var parsedBody = JSON.parse(body),
-                            expectedObj = utils.readExampleFile(operation[5]);
+                        const parsedBody = JSON.parse(body);
+                        const expectedObj = utils.readExampleFile(operation[5]);
 
                         should.deepEqual(parsedBody, expectedObj);
 
@@ -149,12 +156,12 @@ describe('IoTA Redirections', function() {
         });
     }
 
-    for (var i = 0; i < operations.length; i++) {
+    for (let i = 0; i < operations.length; i++) {
         testOperation(operations[i]);
     }
 
     describe('When a GET request arrives without a protocol', function() {
-        var wrongRequest = {
+        const wrongRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'GET',
             headers: {
@@ -170,7 +177,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .get('/iot/devices')
-                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
+                .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
                 .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList.json'));
 
             done();
@@ -188,16 +195,16 @@ describe('IoTA Redirections', function() {
     });
 
     describe('When a request arrives to the manager with an array of protocols', function() {
-        var options = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
-                method: 'POST',
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                },
-                json: utils.readExampleFile('./test/examples/provisioning/postGroupArray.json')
+        const options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            method: 'POST',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
             },
-            secondAgentMock;
+            json: utils.readExampleFile('./test/examples/provisioning/postGroupArray.json')
+        };
+        let secondAgentMock;
 
         beforeEach(function(done) {
             agentMock = nock('http://smartGondor.com/')
@@ -206,7 +213,7 @@ describe('IoTA Redirections', function() {
 
             agentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup1.json'))
-                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
+                .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
                 .reply(200, {});
 
             secondAgentMock = nock('http://anotherprotocol.com/')
@@ -215,7 +222,7 @@ describe('IoTA Redirections', function() {
 
             secondAgentMock
                 .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup2.json'))
-                .query({resource: '/iot/a', protocol: 'ANOTHER_PROTOCOL'})
+                .query({ resource: '/iot/a', protocol: 'ANOTHER_PROTOCOL' })
                 .reply(200, {});
 
             protocolRequest.json.protocol = 'ANOTHER_PROTOCOL';
@@ -241,22 +248,22 @@ describe('IoTA Redirections', function() {
     });
 
     describe('When a device creation request arrives to the manager with protocol in its body', function() {
-        var options = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
-                method: 'POST',
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                },
-                json: utils.readExampleFile('./test/examples/provisioning/postDevice.json')
-            };
+        const options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+            method: 'POST',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            json: utils.readExampleFile('./test/examples/provisioning/postDevice.json')
+        };
 
         beforeEach(function(done) {
             agentMock = nock('http://smartGondor.com/')
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDevice.json'))
-                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
+                .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
                 .reply(200, {});
 
             done();
@@ -274,7 +281,7 @@ describe('IoTA Redirections', function() {
     });
 
     describe('When the creation of multiple devices arrive to the manager', function() {
-        var options = {
+        const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'POST',
             headers: {
@@ -289,7 +296,7 @@ describe('IoTA Redirections', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDeviceMultiple.json'))
-                .query({resource: '/iot/d', protocol: 'GENERIC_PROTOCOL'})
+                .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
                 .reply(200, {});
 
             done();
@@ -307,16 +314,16 @@ describe('IoTA Redirections', function() {
     });
 
     describe('When a device creation request arrives for a protocol with the "/iot" prefix', function() {
-        var options = {
-                url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
-                method: 'POST',
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                },
-                json: utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json')
+        const options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+            method: 'POST',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
             },
-            secondAgentMock;
+            json: utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json')
+        };
+        let secondAgentMock;
 
         beforeEach(function(done) {
             secondAgentMock = nock('http://anotherprotocol.com/')
@@ -325,7 +332,7 @@ describe('IoTA Redirections', function() {
 
             secondAgentMock
                 .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json'))
-                .query({resource: '/iot/a', protocol: 'PREFIX_PROTOCOL'})
+                .query({ resource: '/iot/a', protocol: 'PREFIX_PROTOCOL' })
                 .reply(200, {});
 
             protocolRequest.json.protocol = 'PREFIX_PROTOCOL';

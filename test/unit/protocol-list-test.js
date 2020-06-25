@@ -20,19 +20,20 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::daniel.moranjimenez@telefonica.com
  */
-'use strict';
 
-var request = require('request'),
-    iotConfig = require('../configTest'),
-    should = require('should'),
-    mongoDBUtils = require('../mongoDBUtils'),
-    iotManager = require('../../lib/iotagent-manager'),
-    async = require('async'),
-    utils = require('../utils'),
-    _ = require('underscore');
+/* eslint-disable no-unused-vars */
+
+const request = require('request');
+const iotConfig = require('../configTest');
+const should = require('should');
+const mongoDBUtils = require('../mongoDBUtils');
+const iotManager = require('../../lib/iotagent-manager');
+const async = require('async');
+const utils = require('../utils');
+const _ = require('underscore');
 
 describe('Protocol list tests', function() {
-    var exampleCreation = {
+    const exampleCreation = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
         method: 'POST',
         json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
@@ -43,24 +44,18 @@ describe('Protocol list tests', function() {
     };
 
     beforeEach(function(done) {
-        async.series([
-            mongoDBUtils.cleanDbs,
-            async.apply(iotManager.start, iotConfig)
-        ], done);
+        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], done);
     });
 
     afterEach(function(done) {
-        async.series([
-            mongoDBUtils.cleanDbs,
-            iotManager.stop
-        ], done);
+        async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
     });
 
     function generateProtocols(number) {
-        var protocolExecutionList = [],
-            protocol;
+        const protocolExecutionList = [];
+        let protocol;
 
-        for (var i = 0; i < number; i++) {
+        for (let i = 0; i < number; i++) {
             protocol = _.clone(exampleCreation);
             protocol.json = _.clone(exampleCreation.json);
             protocol.json.protocol += i;
@@ -72,7 +67,7 @@ describe('Protocol list tests', function() {
     }
 
     describe('When a simple protocol list request arrives to a database without protocols', function() {
-        var listRequest = {
+        const listRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'GET',
             headers: {
@@ -83,9 +78,7 @@ describe('Protocol list tests', function() {
 
         it('should return the list of the protocols', function(done) {
             request(listRequest, function(error, result, body) {
-                var parsedBody;
-
-                parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
                 should.exist(parsedBody.protocols);
                 should.exist(parsedBody.count);
@@ -105,7 +98,7 @@ describe('Protocol list tests', function() {
     });
 
     describe('When a simple protocol list request arrives to a database with two protocols', function() {
-        var listRequest = {
+        const listRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'GET',
             headers: {
@@ -115,7 +108,7 @@ describe('Protocol list tests', function() {
         };
 
         beforeEach(function(done) {
-            var protocolCreationRequests = generateProtocols(2);
+            const protocolCreationRequests = generateProtocols(2);
 
             async.series(protocolCreationRequests, function(error, results) {
                 done();
@@ -124,9 +117,7 @@ describe('Protocol list tests', function() {
 
         it('should return the complete list of the protocols', function(done) {
             request(listRequest, function(error, result, body) {
-                var parsedBody;
-
-                parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
                 should.exist(parsedBody.protocols);
                 should.exist(parsedBody.count);
@@ -139,7 +130,7 @@ describe('Protocol list tests', function() {
     });
 
     describe('When a protocol list request with an offset = 3 arrives to the IOTAM', function() {
-        var listRequest = {
+        const listRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'GET',
             qs: {
@@ -152,7 +143,7 @@ describe('Protocol list tests', function() {
         };
 
         beforeEach(function(done) {
-            var protocolCreationRequests = generateProtocols(10);
+            const protocolCreationRequests = generateProtocols(10);
 
             async.series(protocolCreationRequests, function(error, results) {
                 done();
@@ -161,9 +152,7 @@ describe('Protocol list tests', function() {
 
         it('should skip the 3 first registers', function(done) {
             request(listRequest, function(error, result, body) {
-                var parsedBody;
-
-                parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
                 should.exist(parsedBody.protocols);
                 should.exist(parsedBody.count);
@@ -176,7 +165,7 @@ describe('Protocol list tests', function() {
     });
 
     describe('When a protocol list request arreives with a limit of 4', function() {
-        var listRequest = {
+        const listRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'GET',
             qs: {
@@ -189,7 +178,7 @@ describe('Protocol list tests', function() {
         };
 
         beforeEach(function(done) {
-            var protocolCreationRequests = generateProtocols(10);
+            const protocolCreationRequests = generateProtocols(10);
 
             async.series(protocolCreationRequests, function(error, results) {
                 done();
@@ -198,9 +187,7 @@ describe('Protocol list tests', function() {
 
         it('should return just 4 records', function(done) {
             request(listRequest, function(error, result, body) {
-                var parsedBody;
-
-                parsedBody = JSON.parse(body);
+                const parsedBody = JSON.parse(body);
 
                 should.exist(parsedBody.protocols);
                 should.exist(parsedBody.count);
