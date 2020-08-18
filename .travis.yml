@@ -1,21 +1,43 @@
 language: node_js
-
-node_js:
- - "10"
- - "12"
+sudo: required
 
 branches:
   only:
     - master
 
 services:
- - mongodb
+  - mongodb
+  - docker
 
-install:
- # It seems to be a good idea to clean before install
- # see https://travis-ci.community/t/i-needed-an-explicit-cleanup-before-starting-my-tests-to-have-then-working-again-is-that-normal/5512/2
- - npm run clean
- - npm install
 
-before_script:
- - npm run lint
+jobs:
+  include:
+    - stage: test
+      name: "Unit Tests: Node 10"
+      node_js: 10
+
+      before_install:
+        - npm run clean
+
+      before_script:
+        - npm run lint
+
+    - stage: test
+      name: "Unit Tests: Node 12"
+      node_js: 12
+
+      before_install:
+        - npm run clean
+
+      before_script:
+        - npm run lint
+
+
+    - stage: test
+      name: "Dockerfile Tests"
+      language: bash
+      install:
+        - docker pull hadolint/hadolint
+      script:
+        - docker run --rm -i hadolint/hadolint < ./docker/Dockerfile
+

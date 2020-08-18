@@ -1,6 +1,6 @@
 # Copyright 2015 Telefónica Investigación y Desarrollo, S.A.U
 #
-# This file is part of the IoT Agent for the Ultralight 2.0 protocol (IOTAManager) component
+# This file is part of iotagent-manager
 #
 # IOTAManager is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as
@@ -19,41 +19,48 @@
 # For those usages not covered by the GNU Affero General Public License
 # please contact with: [sc_support at telefonica dot com]
 
-ARG NODE_VERSION=10.19.0-slim
-FROM node:${NODE_VERSION}
+ARG NODE_VERSION=10
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=iotagent-manager
 ARG DOWNLOAD=latest
 ARG SOURCE_BRANCH=master
 
-# Copying Build time arguments to environment variables so they are persisted at run time and can be 
-# inspected within a running container.
-# see: https://vsupalov.com/docker-build-time-env-values/  for a deeper explanation.
-
-ENV GITHUB_ACCOUNT=${GITHUB_ACCOUNT}
-ENV GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
-ENV DOWNLOAD=${DOWNLOAD}
-
-MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
-
+########################################################################################
 #
-# The following RUN command retrieves the source code from GitHub.
-# 
-# To obtain the latest stable release run this Docker file with the parameters
+# This build stage retrieves the source code from GitHub. The default download is the 
+# latest tip of the master of the named repository on GitHub.
+#
+# To obtain the latest stable release run this Docker file with the parameters:
 # --no-cache --build-arg DOWNLOAD=stable
-# To obtain any speciifc version of a release run this Docker file with the parameters
+#
+# To obtain any specific version of a release run this Docker file with the parameters:
 # --no-cache --build-arg DOWNLOAD=1.7.0
 #
-# The default download is the latest tip of the master of the named repository on GitHub
+# For development purposes, to create a development image including a running Distro, 
+# run this Docker file with the parameter:
 #
-# Alternatively for local development, just copy this Dockerfile into file the root of the repository and 
-# replace the whole RUN statement by the following COPY statement in your local source using :
+# --target=builder
+#
+######################################################################################## 
+FROM node:${NODE_VERSION} AS builder
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG DOWNLOAD
+ARG SOURCE_BRANCH
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# As an Alternative for local development, just copy this Dockerfile into file the root of 
+# the repository and replace the whole RUN statement below by the following COPY statement 
+# in your local source using :
 #
 # COPY . /opt/iotaManager/
 #
-RUN apt-get update && \
-	# Ensure that unzip, wget and curl are installed
-	apt-get install -y --no-install-recommends unzip ca-certificates curl wget && \
+
+# hadolint ignore=DL3008
+RUN \
+	# Ensure that unzip is installed prior to downloading
+	apt-get install -y --no-install-recommends unzip && \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
@@ -67,8 +74,8 @@ RUN apt-get update && \
 	 	echo "INFO: Building Release: ${RELEASE}"; \
 	fi && \
 	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
-	wget --no-check-certificate -O source.zip https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip && \
-	unzip source.zip && \
+	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
+	unzip source.zip -x "*/test/**" "*/rpm/**" "*/ghpages/**" "*/docs/**" "*/.*" && \
 	rm source.zip && \
 	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaManager && \
 	# Remove unzip and clean apt cache
@@ -79,23 +86,92 @@ RUN apt-get update && \
 
 WORKDIR /opt/iotaManager
 
+# hadolint ignore=DL3008
 RUN \
 	# Ensure that Git is installed prior to running npm install
-	apt-get update && \
-	apt-get install -y git && \
+	apt-get install -y --no-install-recommends git && \
 	echo "INFO: npm install --production..." && \
-	npm install --production && \
+	npm install --only=prod --no-package-lock --no-optional && \
 	# Remove Git and clean apt cache
 	apt-get clean && \
 	apt-get remove -y git && \
-	apt-get -y autoremove && \
-	chmod +x docker/entrypoint.sh
+	apt-get -y autoremove
 
 USER node
-ENV NODE_ENV=production
-
-# Expose 8082 for SERVER PORT
+ENV NODE_ENV=development
+# Expose 8082 for NORTH PORT
 EXPOSE ${IOTA_SERVER_PORT:-8082}
+CMD ["node", "/opt/iotaManager/bin/iota-manager", "-- ", "config.js"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
+   CMD npm run healthcheck
 
-ENTRYPOINT ["docker/entrypoint.sh"]
-CMD ["-- ", "config.js"]
+########################################################################################
+#
+# This build stage installs PM2 if required.
+# 
+# To create an image using PM2 run this Docker file with the parameter:
+#
+# --target=pm2-install
+#
+########################################################################################
+FROM node:${NODE_VERSION}-slim AS pm2-install
+
+COPY --from=builder /opt/iotaManager /opt/iotaManager
+RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
+
+USER node
+ENV NODE_ENV=development
+# Expose 8082 for NORTH PORT
+EXPOSE ${IOTA_SERVER_PORT:-8082}
+CMD ["pm2-runtime", "/opt/iotaManager/bin/iota-manager", "-- ", "config.js"]
+
+########################################################################################
+#
+# This build stage creates an anonymous user to be used with the distroless build
+# as defined below.
+#
+########################################################################################
+FROM node:${NODE_VERSION} AS anon-user
+RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
+    && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
+
+########################################################################################
+#
+# This build stage creates a distroless image for production.
+#
+# IMPORTANT: For production environments use Docker Secrets to protect values of the 
+# sensitive ENV variables defined below, by adding _FILE to the name of the relevant 
+# variable.
+#
+# - IOTA_AUTH_USER, IOTA_AUTH_PASSWORD - when using Keystone Security 
+# - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
+#
+########################################################################################
+FROM gcr.io/distroless/nodejs:${NODE_VERSION}
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG NODE_VERSION
+
+LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+LABEL "org.opencontainers.image.documentation"="https://github.com/telefonicaid/iotagent-manager/blob/master/README.md"
+LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+LABEL "org.opencontainers.image.title"="FIWARE IoT Agent Manager"
+LABEL "org.opencontainers.image.description"="The IoT Agent Manager works as a proxy for scenarios where multiple IoT Agents offer different southbound protocols. The IoTA Manager appears as a single administration endpoint for provisioning tasks, redirecting provisioning requests to the appropriate IoTAgent based on the declared protocol."
+LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+LABEL "org.nodejs.version"="${NODE_VERSION}"
+
+COPY --from=builder /opt/iotaManager /opt/iotaManager
+COPY --from=anon-user /etc/passwd /etc/shadow /etc/group /etc/
+WORKDIR /opt/iotaManager
+
+USER nobody
+ENV NODE_ENV=production
+# Expose 8082 for IOTA_SERVER_PORT
+EXPOSE ${IOTA_SERVER_PORT:-8082}
+CMD ["./bin/iota-manager", "-- ", "config.js"]
+HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
+  CMD ["/nodejs/bin/node", "./bin/healthcheck"]
+
+
