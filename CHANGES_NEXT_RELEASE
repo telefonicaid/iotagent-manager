@@ -1,4 +1,5 @@
 -  Update Docker security practices (Add HEALTHCHECK, Use Anonymous User, Use two-stage build)
+- Overall update of dev package dependencies
 - Add extra fields to configuration (timestamp, languageExpression, explicitAttrs)
 - Update codebase to use ES6
     -  Remove JSHint and jshint overrides
