@@ -163,6 +163,18 @@ fi
 %{_install_dir}
 
 %changelog
+* Tue Sep 15 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.11.0
+- Add: extra fields to configuration (timestamp, languageExpression, explicitAttrs)
+- Fix: set service subservice in logs of redirector and configurations
+- Fix: set new trans and corr or use it if provided in logs
+- Upgrade iotagent-node-lib dependency from 2.12.0 to 2.13.0
+- Overall update of dev package dependencies
+- Update codebase to use ES6
+    -  Remove JSHint and jshint overrides
+    -  Add esLint using standard tamia presets
+    -  Replace var with let/const
+    -  Fix or disable eslint errors
+
 * Wed May 27 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.10.0
 - Set Nodejs 10 as minimum version in packages.json (effectively removing Nodev8 from supported versions)
 - Make optional PM2 usage in docker entrypoint [#202]
