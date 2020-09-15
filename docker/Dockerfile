@@ -97,13 +97,6 @@ RUN \
 	apt-get remove -y git && \
 	apt-get -y autoremove
 
-USER node
-ENV NODE_ENV=development
-# Expose 8082 for NORTH PORT
-EXPOSE ${IOTA_SERVER_PORT:-8082}
-CMD ["node", "/opt/iotaManager/bin/iota-manager", "-- ", "config.js"]
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
-   CMD npm run healthcheck
 
 ########################################################################################
 #
@@ -114,13 +107,26 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
 # --target=pm2-install
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS pm2-install
+FROM node:${NODE_VERSION}-slim AS pm2
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG NODE_VERSION
+
+LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+LABEL "org.opencontainers.image.documentation"="https://github.com/telefonicaid/iotagent-manager/blob/master/README.md"
+LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+LABEL "org.opencontainers.image.title"="FIWARE IoT Agent Manager with PM2"
+LABEL "org.opencontainers.image.description"="The IoT Agent Manager works as a proxy for scenarios where multiple IoT Agents offer different southbound protocols. The IoTA Manager appears as a single administration endpoint for provisioning tasks, redirecting provisioning requests to the appropriate IoTAgent based on the declared protocol."
+LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 COPY --from=builder /opt/iotaManager /opt/iotaManager
 RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
 
 USER node
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 # Expose 8082 for NORTH PORT
 EXPOSE ${IOTA_SERVER_PORT:-8082}
 CMD ["pm2-runtime", "/opt/iotaManager/bin/iota-manager", "-- ", "config.js"]
@@ -147,7 +153,7 @@ RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
 # - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
 #
 ########################################################################################
-FROM gcr.io/distroless/nodejs:${NODE_VERSION}
+FROM gcr.io/distroless/nodejs:${NODE_VERSION} AS distroless
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
@@ -157,7 +163,7 @@ LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
 LABEL "org.opencontainers.image.documentation"="https://github.com/telefonicaid/iotagent-manager/blob/master/README.md"
 LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
 LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
-LABEL "org.opencontainers.image.title"="FIWARE IoT Agent Manager"
+LABEL "org.opencontainers.image.title"="FIWARE IoT Agent Manager (Distroless)"
 LABEL "org.opencontainers.image.description"="The IoT Agent Manager works as a proxy for scenarios where multiple IoT Agents offer different southbound protocols. The IoTA Manager appears as a single administration endpoint for provisioning tasks, redirecting provisioning requests to the appropriate IoTAgent based on the declared protocol."
 LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
 LABEL "org.nodejs.version"="${NODE_VERSION}"
@@ -175,3 +181,40 @@ HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
   CMD ["/nodejs/bin/node", "./bin/healthcheck"]
 
 
+########################################################################################
+#
+# This build stage creates a node-slim image for production.
+#
+# IMPORTANT: For production environments use Docker Secrets to protect values of the 
+# sensitive ENV variables defined below, by adding _FILE to the name of the relevant 
+# variable.
+#
+# - IOTA_AUTH_USER, IOTA_AUTH_PASSWORD - when using Keystone Security 
+# - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
+#
+########################################################################################
+FROM node:${NODE_VERSION}-slim AS slim
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG NODE_VERSION
+
+LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+LABEL "org.opencontainers.image.documentation"="https://github.com/telefonicaid/iotagent-manager/blob/master/README.md"
+LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+LABEL "org.opencontainers.image.title"="FIWARE IoT Agent Manager"
+LABEL "org.opencontainers.image.description"="The IoT Agent Manager works as a proxy for scenarios where multiple IoT Agents offer different southbound protocols. The IoTA Manager appears as a single administration endpoint for provisioning tasks, redirecting provisioning requests to the appropriate IoTAgent based on the declared protocol."
+LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+LABEL "org.nodejs.version"="${NODE_VERSION}"
+
+COPY --from=builder /opt/iotaManager /opt/iotaManager
+WORKDIR /opt/iotaManager
+
+USER node
+ENV NODE_ENV=production
+# Expose 8082 for NORTH PORT
+EXPOSE ${IOTA_SERVER_PORT:-8082}
+CMD ["node", "/opt/iotaManager/bin/iota-manager", "-- ", "config.js"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
+   CMD ["npm", "run", "healthcheck"]
