@@ -1,3 +1,5 @@
+- Fix: set service subservice in logs of redirector and configurations
+- Fix: set new trans and corr or use it if provided
 - Add extra fields to configuration (timestamp, languageExpression, explicitAttrs)
 - Update codebase to use ES6
     -  Remove JSHint and jshint overrides
