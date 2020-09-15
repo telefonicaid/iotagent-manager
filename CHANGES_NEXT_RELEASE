@@ -1,5 +1,5 @@
 - Fix: set service subservice in logs of redirector and configurations
-- Fix: set new trans and corr or use it if provided
+- Fix: set new trans and corr or use it if provided in logs
 - Overall update of dev package dependencies
 - Add extra fields to configuration (timestamp, languageExpression, explicitAttrs)
 - Update codebase to use ES6
