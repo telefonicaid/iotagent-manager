@@ -60,14 +60,7 @@ COPY . /opt/iotaManager/
 
 Full instructions can be found within the `Dockerfile` itself.
 
-### Using PM2 /Distroless
-
-The IoT Agent within the Docker image can be run encapsulated within the [pm2](http://pm2.keymetrics.io/) Process
-Manager by using the associated `pm2` Image.
-
-```console
-docker run --name iotagent -d fiware/iotagent-manager-pm2
-```
+### Using Distroless
 
 The IoT Agent within the Docker image can be run from a distroless container Manager by using the associated
 `distroless` Image.
