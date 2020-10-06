@@ -33,7 +33,7 @@ const utils = require('../utils');
 const iotManager = require('../../lib/iotagent-manager');
 let iotmDb;
 
-describe('Configuration cache', function() {
+describe('Configuration cache', function () {
     const protocolRequest = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
         method: 'POST',
@@ -43,38 +43,34 @@ describe('Configuration cache', function() {
             'fiware-servicepath': '/gardens'
         }
     };
-    beforeEach(function(done) {
-        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function() {
-            mongo.connect(
-                'mongodb://localhost:27017/iotagent-manager',
-                { useNewUrlParser: true },
-                function(err, db) {
-                    iotmDb = db;
-                    done();
-                }
-            );
+    beforeEach(function (done) {
+        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function () {
+            mongo.connect('mongodb://localhost:27017/iotagent-manager', { useNewUrlParser: true }, function (err, db) {
+                iotmDb = db;
+                done();
+            });
         });
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         iotmDb
             .db()
             .collection('configurations')
-            .deleteOne(function(error) {
-                iotmDb.close(function(error) {
+            .deleteOne(function (error) {
+                iotmDb.close(function (error) {
                     async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
                 });
             });
     });
 
-    describe('When an IoT Agent sends a registration with configurations', function() {
-        it('should store the configurations in MongoDB', function(done) {
-            request(protocolRequest, function(error, result, body) {
+    describe('When an IoT Agent sends a registration with configurations', function () {
+        it('should store the configurations in MongoDB', function (done) {
+            request(protocolRequest, function (error, result, body) {
                 iotmDb
                     .db()
                     .collection('configurations')
                     .find({})
-                    .toArray(function(err, docs) {
+                    .toArray(function (err, docs) {
                         should.not.exist(err);
                         should.exist(docs);
                         should.exist(docs.length);
@@ -112,7 +108,7 @@ describe('Configuration cache', function() {
         });
     });
 
-    describe('When an IoT Agent updates the registration information with different configurations', function() {
+    describe('When an IoT Agent updates the registration information with different configurations', function () {
         const firstProtocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'POST',
@@ -132,14 +128,14 @@ describe('Configuration cache', function() {
             }
         };
 
-        it('should remove the older information', function(done) {
-            request(firstProtocolRequest, function(error, result, body) {
-                request(secondProtocolRequest, function(error, result, body) {
+        it('should remove the older information', function (done) {
+            request(firstProtocolRequest, function (error, result, body) {
+                request(secondProtocolRequest, function (error, result, body) {
                     iotmDb
                         .db()
                         .collection('configurations')
                         .find({})
-                        .toArray(function(err, docs) {
+                        .toArray(function (err, docs) {
                             should.not.exist(err);
                             should.exist(docs);
                             should.exist(docs.length);
@@ -152,14 +148,14 @@ describe('Configuration cache', function() {
             });
         });
 
-        it('should store the additional information', function(done) {
-            request(firstProtocolRequest, function(error, result, body) {
-                request(secondProtocolRequest, function(error, result, body) {
+        it('should store the additional information', function (done) {
+            request(firstProtocolRequest, function (error, result, body) {
+                request(secondProtocolRequest, function (error, result, body) {
                     iotmDb
                         .db()
                         .collection('configurations')
                         .find({})
-                        .toArray(function(err, docs) {
+                        .toArray(function (err, docs) {
                             should.exist(docs[0].apikey);
                             should.exist(docs[0].token);
                             should.exist(docs[0].type);
@@ -182,7 +178,7 @@ describe('Configuration cache', function() {
                             docs[0].subservice.should.equal('differentPath');
 
                             docs[0].protocol.should.equal('GENERIC_PROTOCOL');
-                            docs[0].description.should.equal('A generic protocol');
+                            docs[0].description.should.equal('A specific group protocol');
                             docs[0].iotagent.should.equal('http://smartGondor.com/');
 
                             done();
