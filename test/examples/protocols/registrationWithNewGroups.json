@@ -11,6 +11,7 @@
       "resource": "/deviceTest",
       "service": "otherServices",
       "service_path": "differentPath",
+      "description": "A specific group protocol",
       "attributes": [
         {
           "name": "attr1",

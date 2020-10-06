@@ -11,6 +11,7 @@
       "resource": "/deviceTest",
       "service": "theService",
       "service_path": "theSubService",
+      "description": "A group protocol",
       "attributes": [
         {
           "name": "status",
