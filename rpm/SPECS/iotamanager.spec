@@ -163,6 +163,11 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Nov 16 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
+- Add: include `description` field in configuration
+- Add: include `from` in log context based on forwarded header
+- Update Docker security practices (Add HEALTHCHECK, Use Anonymous User, Use two-stage build)
+
 * Tue Sep 15 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.11.0
 - Add: extra fields to configuration (timestamp, languageExpression, explicitAttrs)
 - Fix: set service subservice in logs of redirector and configurations

@@ -1,3 +1,0 @@
-Add: include `description` field in configuration
-Add: include `from` in log context based on forwarded header
-Update Docker security practices (Add HEALTHCHECK, Use Anonymous User, Use two-stage build)
