@@ -166,6 +166,7 @@ fi
 * Mon Nov 16 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
 - Add: include `description` field in configuration
 - Add: include `from` in log context based on forwarded header
+- Upgrade iotagent-node-lib dependency from 2.13.0 to 2.14.0
 - Update Docker security practices (Add HEALTHCHECK, Use Anonymous User, Use two-stage build)
 
 * Tue Sep 15 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.11.0
