@@ -1,5 +1,7 @@
 # iotagent-manager
 
+[![Coverage Status](https://coveralls.io/repos/github/telefonicaid/iotagent-manager/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/iotagent-manager?branch=master)
+
 ## Index
 
 * [Overview](#overview)
