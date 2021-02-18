@@ -163,6 +163,10 @@ fi
 %{_install_dir}
 
 %changelog
+* Thu Feb 18 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.13.0
+- Check if device before service in Combine results (due both has apikey)
+- Upgrade iotagent-node-lib dependency from 2.14.0 to 2.15.0
+
 * Mon Nov 16 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
 - Add: include `description` field in configuration
 - Add: include `from` in log context based on forwarded header
