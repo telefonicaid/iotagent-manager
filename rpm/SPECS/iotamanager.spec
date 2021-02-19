@@ -163,7 +163,7 @@ fi
 %{_install_dir}
 
 %changelog
-* Thu Feb 18 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.13.0
+* Thu Feb 18 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.13.0
 - Check if device before service in Combine results (due both has apikey)
 - Upgrade iotagent-node-lib dependency from 2.14.0 to 2.15.0
 
