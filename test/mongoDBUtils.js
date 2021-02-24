@@ -31,7 +31,7 @@ function cleanDb(host, name, callback) {
 
     MongoClient.connect(
         url,
-        { useNewUrlParser: true },
+        { useNewUrlParser: true, useUnifiedTopology: true },
         function(err, db) {
             if (db && db.db()) {
                 db.db().dropDatabase(function(err, result) {
@@ -52,7 +52,7 @@ function populate(host, dbName, entityList, collectionName, callback) {
 
     MongoClient.connect(
         url,
-        { useNewUrlParser: true },
+        { useNewUrlParser: true, useUnifiedTopology: true },
         function(err, db) {
             if (db) {
                 db.db()

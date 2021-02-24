@@ -86,7 +86,7 @@ describe('Configuration list', function() {
         async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function() {
             mongo.connect(
                 'mongodb://localhost:27017/iotagent-manager',
-                { useNewUrlParser: true },
+                { useNewUrlParser: true, useUnifiedTopology: true },
                 function(err, db) {
                     iotmDb = db;
 
