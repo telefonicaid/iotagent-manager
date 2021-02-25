@@ -45,7 +45,7 @@ describe('Configuration cache', function () {
     };
     beforeEach(function (done) {
         async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function () {
-            mongo.connect('mongodb://localhost:27017/iotagent-manager', { useNewUrlParser: true }, function (err, db) {
+            mongo.connect('mongodb://localhost:27017/iotagent-manager', { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
                 iotmDb = db;
                 done();
             });

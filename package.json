@@ -19,10 +19,10 @@
     "node": ">=12"
   },
   "scripts": {
-    "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage",
+    "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage && rm -rf .nyc_output",
     "healthcheck": "node ./bin/healthcheck",
     "lint": "eslint lib/ bin/iota-manager test/ --cache --fix",
-    "test": "nyc --reporter=text mocha --recursive 'test/**/*.js' --reporter spec --timeout 3000 --ui bdd --exit",
+    "test": "nyc --reporter=text mocha --recursive 'test/**/*.js' --reporter spec --timeout 3000 --ui bdd --exit --color true",
     "test:coverage": "nyc --reporter=lcov mocha -- --recursive 'test/**/*.js' --reporter spec --exit",
     "test:watch": "npm run test -- -w ./lib",
     "watch": "watch 'npm test && npm run lint' ./lib ./test"
@@ -34,7 +34,7 @@
     "logops": "2.1.0",
     "underscore": "~1.7.0",
     "revalidator": "~0.3.1",
-    "mongoose": "5.7.7",
+    "mongoose": "5.11.18",
     "async": "2.6.2",
     "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master"
   },
@@ -45,7 +45,7 @@
     "husky": "~4.2.5",
     "lint-staged": "~10.2.11",
     "mocha": "8.0.1",
-    "mongodb": "3.5.9",
+    "mongodb": "3.6.4",
     "nock": "13.0.3",
     "nyc": "~15.1.0",
     "prettier": "~2.0.5",
