@@ -1,3 +1,4 @@
+- Print URI in logs about redirection error (#232)
 - Upgrade NodeJS version from 10 to 12 in Dockerfile due to Node 10 End-of-Life
 - Set Nodejs 12 as minimum version in packages.json (effectively removing Nodev10 from supported versions)
 - Upgrade mongodb dev dependency from 3.5.9 to 3.6.4
