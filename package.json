@@ -36,7 +36,7 @@
     "revalidator": "~0.3.1",
     "mongoose": "5.11.18",
     "async": "2.6.2",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master"
+    "iotagent-node-lib": "git://github.com/jason-fox/iotagent-node-lib.git#feature/ngsi-v1"
   },
   "devDependencies": {
     "eslint": "~7.5.0",
