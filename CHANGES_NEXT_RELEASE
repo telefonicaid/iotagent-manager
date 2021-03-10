@@ -1,3 +1,4 @@
+- Log db uri and options in mongo connection
 - Fix: log about getProtocol result
 - Fix: ensure protocol exists before remove it (#234)
 - Fix: print URI in logs about redirection error (#232)
