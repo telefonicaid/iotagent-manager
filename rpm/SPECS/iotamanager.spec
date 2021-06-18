@@ -163,6 +163,18 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Jun 18 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.14.0
+- Add: db uri and options in mongo connection log INFO trace
+- Fix: log about getProtocol result
+- Fix: ensure protocol exists before remove it (#234)
+- Fix: print URI in logs about redirection error (#232)
+- Upgrade underscore dependency from 1.7.0 to 1.12.1
+- Upgrade mongoose dependency from 5.7.7 to 5.11.20
+- Upgrade iotagent-node-lib dependency from 2.15.0 to 2.16.0
+- Upgrade mongodb dev dependency from 3.5.9 to 3.6.8
+- Upgrade NodeJS version from 10 to 12 in Dockerfile due to Node 10 End-of-Life
+- Set Nodejs 12 as minimum version in packages.json (effectively removing Nodev10 from supported versions)
+
 * Thu Feb 18 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.13.0
 - Check if device before service in Combine results (due both has apikey)
 - Upgrade iotagent-node-lib dependency from 2.14.0 to 2.15.0
