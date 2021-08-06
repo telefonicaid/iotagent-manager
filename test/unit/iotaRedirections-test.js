@@ -33,7 +33,7 @@ const iotManager = require('../../lib/iotagent-manager');
 const async = require('async');
 const utils = require('../utils');
 
-describe('IoTA Redirections', function() {
+describe('IoTA Redirections', function () {
     const operations = [
         [
             'GET Device',
@@ -69,22 +69,22 @@ describe('IoTA Redirections', function() {
         }
     };
 
-    beforeEach(function(done) {
-        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function(error) {
-            request(protocolRequest, function(error, response, body) {
+    beforeEach(function (done) {
+        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function (error) {
+            request(protocolRequest, function (error, response, body) {
                 done();
             });
         });
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         nock.cleanAll();
 
         async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
     });
 
     function testOperation(operation) {
-        describe('When a ' + operation[0] + ' operation arrives to the manager', function() {
+        describe('When a ' + operation[0] + ' operation arrives to the manager', function () {
             const options = {
                 url: 'http://localhost:' + iotConfig.server.port + operation[3],
                 method: operation[2],
@@ -97,7 +97,7 @@ describe('IoTA Redirections', function() {
                 }
             };
 
-            beforeEach(function(done) {
+            beforeEach(function (done) {
                 if (operation[1] !== null) {
                     options.json = utils.readExampleFile(operation[1]);
                 }
@@ -131,8 +131,8 @@ describe('IoTA Redirections', function() {
                 done();
             });
 
-            it('should be redirected to the appropriate IoTAgent based on the protocol', function(done) {
-                request(options, function(error, response, body) {
+            it('should be redirected to the appropriate IoTAgent based on the protocol', function (done) {
+                request(options, function (error, response, body) {
                     should.not.exist(error);
                     agentMock.done();
 
@@ -142,8 +142,8 @@ describe('IoTA Redirections', function() {
             });
 
             if (options.method === 'GET' && operation[5]) {
-                it('should return the appropriate response for GETs', function(done) {
-                    request(options, function(error, response, body) {
+                it('should return the appropriate response for GETs', function (done) {
+                    request(options, function (error, response, body) {
                         const parsedBody = JSON.parse(body);
                         const expectedObj = utils.readExampleFile(operation[5]);
 
@@ -160,20 +160,20 @@ describe('IoTA Redirections', function() {
         testOperation(operations[i]);
     }
 
-    describe('When a GET request arrives without a protocol', function() {
+    describe('When a GET request arrives without a protocol', function () {
         const wrongRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'GET',
             headers: {
-                'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens'
+                'fiware-service': 'ServiceTest',
+                'fiware-servicepath': '/testSubservice'
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             agentMock = nock('http://smartGondor.com/')
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens');
+                .matchHeader('fiware-service', 'ServiceTest')
+                .matchHeader('fiware-servicepath', '/testSubservice');
 
             agentMock
                 .get('/iot/devices')
@@ -183,8 +183,8 @@ describe('IoTA Redirections', function() {
             done();
         });
 
-        it('should return the combined responses for all the protocols', function(done) {
-            request(wrongRequest, function(error, response, body) {
+        it('should return the combined responses for all the protocols', function (done) {
+            request(wrongRequest, function (error, response, body) {
                 should.not.exist(error);
 
                 response.statusCode.should.equal(200);
@@ -194,7 +194,7 @@ describe('IoTA Redirections', function() {
         });
     });
 
-    describe('When a request arrives to the manager with an array of protocols', function() {
+    describe('When a request arrives to the manager with an array of protocols', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             method: 'POST',
@@ -206,7 +206,7 @@ describe('IoTA Redirections', function() {
         };
         let secondAgentMock;
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             agentMock = nock('http://smartGondor.com/')
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens');
@@ -229,15 +229,15 @@ describe('IoTA Redirections', function() {
             protocolRequest.json.resource = '/iot/a';
             protocolRequest.json.iotagent = 'http://anotherProtocol.com';
 
-            request(protocolRequest, function(error, response, body) {
+            request(protocolRequest, function (error, response, body) {
                 protocolRequest.json = utils.readExampleFile('./test/examples/protocols/registrationEmpty.json');
 
                 done();
             });
         });
 
-        it('should be redirected to both IoTAgent with a single protocol each', function(done) {
-            request(options, function(error, response, body) {
+        it('should be redirected to both IoTAgent with a single protocol each', function (done) {
+            request(options, function (error, response, body) {
                 should.not.exist(error);
                 agentMock.done();
 
@@ -247,7 +247,7 @@ describe('IoTA Redirections', function() {
         });
     });
 
-    describe('When a device creation request arrives to the manager with protocol in its body', function() {
+    describe('When a device creation request arrives to the manager with protocol in its body', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'POST',
@@ -258,7 +258,7 @@ describe('IoTA Redirections', function() {
             json: utils.readExampleFile('./test/examples/provisioning/postDevice.json')
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             agentMock = nock('http://smartGondor.com/')
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -269,8 +269,8 @@ describe('IoTA Redirections', function() {
             done();
         });
 
-        it('should be redirected to the appropriate agent', function(done) {
-            request(options, function(error, response, body) {
+        it('should be redirected to the appropriate agent', function (done) {
+            request(options, function (error, response, body) {
                 should.not.exist(error);
                 agentMock.done();
 
@@ -280,7 +280,7 @@ describe('IoTA Redirections', function() {
         });
     });
 
-    describe('When the creation of multiple devices arrive to the manager', function() {
+    describe('When the creation of multiple devices arrive to the manager', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'POST',
@@ -291,7 +291,7 @@ describe('IoTA Redirections', function() {
             json: utils.readExampleFile('./test/examples/provisioning/postDeviceMultiple.json')
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             agentMock = nock('http://smartGondor.com/')
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -302,8 +302,8 @@ describe('IoTA Redirections', function() {
             done();
         });
 
-        it('should redirect a multiple device creation', function(done) {
-            request(options, function(error, response, body) {
+        it('should redirect a multiple device creation', function (done) {
+            request(options, function (error, response, body) {
                 should.not.exist(error);
                 agentMock.done();
 
@@ -313,7 +313,7 @@ describe('IoTA Redirections', function() {
         });
     });
 
-    describe('When a device creation request arrives for a protocol with the "/iot" prefix', function() {
+    describe('When a device creation request arrives for a protocol with the "/iot" prefix', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'POST',
@@ -325,7 +325,7 @@ describe('IoTA Redirections', function() {
         };
         let secondAgentMock;
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             secondAgentMock = nock('http://anotherprotocol.com/')
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens');
@@ -339,15 +339,15 @@ describe('IoTA Redirections', function() {
             protocolRequest.json.resource = '/iot/a';
             protocolRequest.json.iotagent = 'http://anotherProtocol.com/iot';
 
-            request(protocolRequest, function(error, response, body) {
+            request(protocolRequest, function (error, response, body) {
                 protocolRequest.json = utils.readExampleFile('./test/examples/protocols/registrationEmpty.json');
 
                 done();
             });
         });
 
-        it('should be redirected to the appropriate agent', function(done) {
-            request(options, function(error, response, body) {
+        it('should be redirected to the appropriate agent', function (done) {
+            request(options, function (error, response, body) {
                 should.not.exist(error);
                 secondAgentMock.done();
 
