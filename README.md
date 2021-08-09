@@ -227,6 +227,8 @@ Module mocking during testing can be done with [proxyquire](https://github.com/t
 To run tests, type
 
 ```bash
+docker run -d -p 27017:27017 mongo:4.2
+
 npm test
 ```
 
