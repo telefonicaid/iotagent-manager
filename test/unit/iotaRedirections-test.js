@@ -160,7 +160,7 @@ describe('IoTA Redirections', function () {
         testOperation(operations[i]);
     }
 
-    describe('When a GET request arrives without a protocol', function () {
+    describe('When a GET request arrives without a protocol and no groups are defined', function () {
         const wrongRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
             method: 'GET',
@@ -178,17 +178,63 @@ describe('IoTA Redirections', function () {
             agentMock
                 .get('/iot/devices')
                 .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
-                .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList.json'));
+                .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList2.json'));
 
             done();
         });
 
-        it('should return the combined responses for all the protocols', function (done) {
+        it('should return the combined responses for all the protocols configured', function (done) {
             request(wrongRequest, function (error, response, body) {
                 should.not.exist(error);
 
                 response.statusCode.should.equal(200);
 
+                done();
+            });
+        });
+    });
+
+    describe('When a GET request arrives without a protocol and a group is defined', function () {
+        const protocolRequest = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
+            method: 'POST',
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
+            headers: {
+                'fiware-service': 'ServiceTest',
+                'fiware-servicepath': '/testSubservice'
+            }
+        };
+        const options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+            method: 'GET',
+            headers: {
+                'fiware-service': 'ServiceTest',
+                'fiware-servicepath': '/testSubservice'
+            }
+        };
+        let secondAgentMock;
+
+        beforeEach(function (done) {
+            agentMock = nock('http://smartGondor.com/')
+                .matchHeader('fiware-service', 'ServiceTest')
+                .matchHeader('fiware-servicepath', '/testSubservice');
+
+            agentMock
+                .get('/iot/devices')
+                .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
+                .reply(200, utils.readExampleFile('./test/examples/provisioning/getDeviceList.json'));
+
+            request(protocolRequest, function (error, response, body) {
+                done();
+            });
+        });
+
+        it('should be redirected to both IoTAgent with a single protocol each', function (done) {
+            request(options, function (error, response, body) {
+                should.not.exist(error);
+                agentMock.done();
+
+                response.statusCode.should.equal(200);
                 done();
             });
         });
