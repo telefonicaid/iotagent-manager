@@ -4,7 +4,7 @@
     {
       "device_id": "DevID0",
       "service": "ServiceTest",
-      "subservice": "/testSubservice",
+      "service_path": "/testSubservice",
       "entity_name": "TheDevice0",
       "entity_type": "DeviceType",
       "attributes": [

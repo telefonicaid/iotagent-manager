@@ -198,7 +198,7 @@ describe('IoTA Redirections', function () {
         const protocolRequest = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
             method: 'POST',
-            json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups.json'),
+            json: utils.readExampleFile('./test/examples/protocols/registrationWithGroups2.json'),
             headers: {
                 'fiware-service': 'ServiceTest',
                 'fiware-servicepath': '/testSubservice'
