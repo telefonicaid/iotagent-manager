@@ -163,6 +163,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Aug 30 18 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.15.0
+ - Upgrade iotagent-node-lib dependency from 2.16.0 to 2.17.0
+
 * Fri Jun 18 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.14.0
 - Add: db uri and options in mongo connection log INFO trace
 - Fix: log about getProtocol result
