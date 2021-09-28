@@ -1,1 +1,2 @@
+- Fix: try return valid results when several status codes are returned by iotagents
 - Fix: return target error code instead of 500 error code (#167)
