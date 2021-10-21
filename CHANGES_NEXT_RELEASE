@@ -1,9 +1,2 @@
-- Add: db uri and options in mongo connection log INFO trace
-- Fix: log about getProtocol result
-- Fix: ensure protocol exists before remove it (#234)
-- Fix: print URI in logs about redirection error (#232)
-- Upgrade NodeJS version from 10 to 12 in Dockerfile due to Node 10 End-of-Life
-- Set Nodejs 12 as minimum version in packages.json (effectively removing Nodev10 from supported versions)
-- Upgrade mongodb dev dependency from 3.5.9 to 3.6.4
-- Upgrade mongoose dependency from 5.7.7 to 5.11.18
+- Fix: return target error code instead of 500 error code (#167)
 - Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
