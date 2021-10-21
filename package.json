@@ -28,15 +28,15 @@
     "watch": "watch 'npm test && npm run lint' ./lib ./test"
   },
   "dependencies": {
-    "request": "2.88.0",
+    "async": "2.6.2",
     "body-parser": "~1.19.0",
     "express": "4.16.4",
+    "iotagent-node-lib": "git://github.com/jason-fox/iotagent-node-lib.git#feature/request-shim",
     "logops": "2.1.0",
-    "underscore": "~1.7.0",
     "revalidator": "~0.3.1",
     "mongoose": "5.11.18",
-    "async": "2.6.2",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master"
+    "underscore": "~1.7.0",
+    "request": "2.88.0"
   },
   "devDependencies": {
     "eslint": "~7.5.0",
@@ -60,16 +60,13 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --config .prettierrc.json --write",
-      "git add"
+      "prettier --config .prettierrc.json --write"
     ],
     "*.md": [
-      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
-      "git add"
+      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always"
     ],
     "*.yml": [
-      "prettier --no-config --write",
-      "git add"
+      "prettier --no-config --write"
     ]
   },
   "keywords": []

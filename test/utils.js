@@ -22,6 +22,7 @@
  */
 
 const fs = require('fs');
+const request = require('iotagent-node-lib').request;
 
 function readExampleFile(name, raw) {
     const text = fs.readFileSync(name, 'UTF8');
@@ -33,3 +34,4 @@ function readExampleFile(name, raw) {
 }
 
 exports.readExampleFile = readExampleFile;
+exports.request = request;
