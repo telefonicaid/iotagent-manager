@@ -34,8 +34,8 @@
     "iotagent-node-lib": "git://github.com/jason-fox/iotagent-node-lib.git#feature/request-shim",
     "logops": "2.1.0",
     "revalidator": "~0.3.1",
-    "mongoose": "5.11.18",
-    "underscore": "~1.7.0"
+    "mongoose": "5.11.20",
+    "underscore": "~1.12.1"
   },
   "devDependencies": {
     "eslint": "~7.5.0",
