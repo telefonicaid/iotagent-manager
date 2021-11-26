@@ -163,7 +163,11 @@ fi
 %{_install_dir}
 
 %changelog
-* Mon Aug 30 18 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.15.0
+* Fri Nov 12 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.16.0
+- Fix: return target error code instead of 500 error code (#167)
+- Upgrade iotagent-node-lib dependency from 2.17.0 to 2.18.0
+
+* Mon Aug 30 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.15.0
  - Upgrade iotagent-node-lib dependency from 2.16.0 to 2.17.0
 
 * Fri Jun 18 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.14.0

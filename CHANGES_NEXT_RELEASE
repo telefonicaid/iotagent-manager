@@ -1,2 +1,1 @@
-- Fix: return target error code instead of 500 error code (#167)
 - Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
