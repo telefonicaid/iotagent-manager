@@ -244,7 +244,7 @@ The following sections show the available options in detail.
 
 ### Start
 
-Runs a local version of the IoT Agent
+Runs a local version of the IoT Manager
 
 ```bash
 npm start
