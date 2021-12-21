@@ -103,7 +103,7 @@ The Docker automatically starts listening in the API ports, so there is no need 
 the application running. The Docker image will automatically start.
 
 In order to run the docker image, first you must have a MongoDB instance running. You can achieve this by executing the
-followin command:
+following command:
 
 ```console
 docker run --name mongodb -d mongo
