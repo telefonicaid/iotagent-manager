@@ -353,4 +353,46 @@ describe('IoTA Redirections', function () {
             });
         });
     });
+
+    describe('When a device creation response is not valid JSON', function () {
+        const options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/devices',
+            method: 'POST',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            json: utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json')
+        };
+        let secondAgentMock;
+
+        beforeEach(function (done) {
+            secondAgentMock = nock('http://anotherprotocol.com/')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens');
+
+            secondAgentMock
+                .post('/iot/devices', utils.readExampleFile('./test/examples/provisioning/postDeviceWithPrefix.json'))
+                .query({ resource: '/iot/a', protocol: 'PREFIX_PROTOCOL' })
+                .reply(200, 'NOT JSON');
+
+            protocolRequest.json.protocol = 'PREFIX_PROTOCOL';
+            protocolRequest.json.resource = '/iot/a';
+            protocolRequest.json.iotagent = 'http://anotherProtocol.com/iot';
+
+            request(protocolRequest, function (error, response, body) {
+                protocolRequest.json = utils.readExampleFile('./test/examples/protocols/registrationEmpty.json');
+
+                done();
+            });
+        });
+
+        it('should return an error', function (done) {
+            request(options, function (error, response, body) {
+                response.statusCode.should.equal(500);
+                secondAgentMock.done();
+                done();
+            });
+        });
+    });
 });
