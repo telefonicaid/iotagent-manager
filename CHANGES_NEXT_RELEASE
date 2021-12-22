@@ -1,1 +1,2 @@
 - Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
+- FIX: Add graceful shutdown listening to SIGINT (#263)

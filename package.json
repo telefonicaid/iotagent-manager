@@ -22,6 +22,7 @@
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage && rm -rf .nyc_output",
     "healthcheck": "node ./bin/healthcheck",
     "lint": "eslint lib/ bin/iota-manager test/ --cache --fix",
+    "start": "node ./bin/iotagent-manager",
     "test": "nyc --reporter=text mocha --recursive 'test/**/*.js' --reporter spec --timeout 3000 --ui bdd --exit --color true",
     "test:coverage": "nyc --reporter=lcov mocha -- --recursive 'test/**/*.js' --reporter spec --exit",
     "test:watch": "npm run test -- -w ./lib",
