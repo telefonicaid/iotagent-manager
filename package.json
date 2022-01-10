@@ -32,7 +32,7 @@
     "async": "2.6.2",
     "body-parser": "~1.19.0",
     "express": "4.16.4",
-    "iotagent-node-lib": "git://github.com/jason-fox/iotagent-node-lib.git#feature/request-shim",
+    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
     "logops": "2.1.0",
     "revalidator": "~0.3.1",
     "mongoose": "5.11.20",
