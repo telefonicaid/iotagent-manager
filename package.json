@@ -2,17 +2,17 @@
   "name": "iotagent-manager",
   "description": "IoT Agent Manager proxy",
   "version": "1.16.0-next",
-  "homepage": "https://github.com/dmj/iotagent-manager",
+  "homepage": "https://github.com/telefonicaid/iotagent-manager",
   "author": {
     "name": "Daniel Moran",
     "email": "dmj@tid.es"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/dmj/iotagent-manager.git"
+    "url": "git://github.com/telefonicaid/iotagent-manager.git"
   },
   "bugs": {
-    "url": "https://github.com/dmj/iotagent-manager/issues"
+    "url": "https://github.com/telefonicaid/iotagent-manager/issues"
   },
   "main": "lib/iotagent-manager",
   "engines": {
@@ -32,10 +32,10 @@
     "async": "2.6.2",
     "body-parser": "~1.19.0",
     "express": "4.16.4",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
-    "logops": "2.1.0",
-    "revalidator": "~0.3.1",
+    "iotagent-node-lib": "https://github.com/telefonicaid/iotagent-node-lib.git#master",
+    "logops": "2.1.2",
     "mongoose": "5.11.20",
+    "revalidator": "~0.3.1",
     "underscore": "~1.12.1"
   },
   "devDependencies": {
