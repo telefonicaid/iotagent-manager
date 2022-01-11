@@ -23,7 +23,6 @@
 
 /* eslint-disable no-unused-vars */
 
-const request = require('request');
 const iotConfig = require('../configTest');
 const mongoDBUtils = require('../mongoDBUtils');
 const _ = require('underscore');
@@ -31,6 +30,7 @@ const mongo = require('mongodb').MongoClient;
 const async = require('async');
 const should = require('should');
 const utils = require('../utils');
+const request = utils.request;
 const iotManager = require('../../lib/iotagent-manager');
 const configurationTemplate = {
     apikey: '801230BJKL23Y9090DSFL123HJK09H324HV873',
@@ -48,7 +48,7 @@ const configurationTemplate = {
 };
 let iotmDb;
 
-describe('Configuration list', function() {
+describe('Configuration list', function () {
     function generateInitialConfigurations(callback) {
         let newConfiguration;
         const services = ['smartGondor', 'smartMordor'];
@@ -77,17 +77,17 @@ describe('Configuration list', function() {
             }
         }
 
-        request(protocolRequest, function() {
+        request(protocolRequest, function () {
             setTimeout(callback, 200);
         });
     }
 
-    beforeEach(function(done) {
-        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function() {
+    beforeEach(function (done) {
+        async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function () {
             mongo.connect(
                 'mongodb://localhost:27017/iotagent-manager',
                 { useNewUrlParser: true, useUnifiedTopology: true },
-                function(err, db) {
+                function (err, db) {
                     iotmDb = db;
 
                     generateInitialConfigurations(done);
@@ -96,18 +96,18 @@ describe('Configuration list', function() {
         });
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         iotmDb
             .db()
             .collection('configurations')
-            .deleteOne(function(error) {
-                iotmDb.close(function(error) {
+            .deleteOne(function (error) {
+                iotmDb.close(function (error) {
                     async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
                 });
             });
     });
 
-    describe('When a new configuration list request arrives to the IoTAM', function() {
+    describe('When a new configuration list request arrives to the IoTAM', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
@@ -117,48 +117,43 @@ describe('Configuration list', function() {
             method: 'GET'
         };
 
-        it('should return a 200 OK', function(done) {
-            request(options, function(error, response, body) {
+        it('should return a 200 OK', function (done) {
+            request(options, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
 
-        it('should return all the available configurations for its service', function(done) {
-            request(options, function(error, response, body) {
-                const parsedBody = JSON.parse(body);
-
+        it('should return all the available configurations for its service', function (done) {
+            request(options, function (error, response, body) {
                 // It should be greather than 7 but due to some mongodb-travis isses was fixed to 2
-                parsedBody.services.length.should.greaterThan(2);
+                body.services.length.should.greaterThan(2);
                 done();
             });
         });
 
-        it('should map the attributes for the configurations appropriately', function(done) {
-            request(options, function(error, response, body) {
-                const parsedBody = JSON.parse(body);
-
-                for (let i = 0; i < parsedBody.services.length; i++) {
-                    should.exist(parsedBody.services[i].entity_type);
-                    should.not.exist(parsedBody.services[i].type);
-                    should.exist(parsedBody.services[i].service_path);
-                    should.not.exist(parsedBody.services[i].subservice);
-                    should.exist(parsedBody.services[i].internal_attributes);
-                    should.not.exist(parsedBody.services[i].internalAttributes);
+        it('should map the attributes for the configurations appropriately', function (done) {
+            request(options, function (error, response, body) {
+                for (let i = 0; i < body.services.length; i++) {
+                    should.exist(body.services[i].entity_type);
+                    should.not.exist(body.services[i].type);
+                    should.exist(body.services[i].service_path);
+                    should.not.exist(body.services[i].subservice);
+                    should.exist(body.services[i].internal_attributes);
+                    should.not.exist(body.services[i].internalAttributes);
                 }
 
                 done();
             });
         });
 
-        it('should not return any configurations for other services', function(done) {
-            request(options, function(error, response, body) {
-                const parsedBody = JSON.parse(body);
+        it('should not return any configurations for other services', function (done) {
+            request(options, function (error, response, body) {
                 let otherServiceFound = false;
 
-                for (let i = 0; i < parsedBody.services.length; i++) {
-                    if (parsedBody.services[i].service !== 'smartGondor') {
+                for (let i = 0; i < body.services.length; i++) {
+                    if (body.services[i].service !== 'smartGondor') {
                         otherServiceFound = true;
                     }
                 }
@@ -169,7 +164,7 @@ describe('Configuration list', function() {
         });
     });
 
-    describe('When a configuration list request with a limit 3 arrives to the IoTAM', function() {
+    describe('When a configuration list request with a limit 3 arrives to the IoTAM', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
@@ -182,17 +177,15 @@ describe('Configuration list', function() {
             method: 'GET'
         };
 
-        it('should return just 3 results', function(done) {
-            request(options, function(error, response, body) {
-                const parsedBody = JSON.parse(body);
-
-                parsedBody.services.length.should.equal(3);
+        it('should return just 3 results', function (done) {
+            request(options, function (error, response, body) {
+                body.services.length.should.equal(3);
                 done();
             });
         });
     });
 
-    describe('When a configuration list request with a offset 3 arrives to the IoTAM', function() {
+    describe('When a configuration list request with a offset 3 arrives to the IoTAM', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
@@ -205,18 +198,16 @@ describe('Configuration list', function() {
             method: 'GET'
         };
 
-        it('should skip the first 3 results', function(done) {
-            request(options, function(error, response, body) {
-                const parsedBody = JSON.parse(body);
-
+        it('should skip the first 3 results', function (done) {
+            request(options, function (error, response, body) {
                 // It should be greather than 3 but due to some mongodb-travis isses was fixed to 0
-                parsedBody.services.length.should.greaterThan(-1);
+                body.services.length.should.greaterThan(-1);
                 done();
             });
         });
     });
 
-    describe('When a configuration list request arrives with a wrong limit', function() {
+    describe('When a configuration list request arrives with a wrong limit', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
@@ -229,15 +220,15 @@ describe('Configuration list', function() {
             method: 'GET'
         };
 
-        it('should raise a 400 error', function(done) {
-            request(options, function(error, response, body) {
+        it('should raise a 400 error', function (done) {
+            request(options, function (error, response, body) {
                 response.statusCode.should.equal(400);
                 done();
             });
         });
     });
 
-    describe('When a configuration list request arrives with a wrong offset', function() {
+    describe('When a configuration list request arrives with a wrong offset', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
@@ -250,8 +241,8 @@ describe('Configuration list', function() {
             method: 'GET'
         };
 
-        it('should raise a 400 error', function(done) {
-            request(options, function(error, response, body) {
+        it('should raise a 400 error', function (done) {
+            request(options, function (error, response, body) {
                 response.statusCode.should.equal(400);
                 done();
             });

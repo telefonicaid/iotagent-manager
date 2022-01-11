@@ -23,13 +23,13 @@
 
 /* eslint-disable no-unused-vars */
 
-const request = require('request');
 const iotConfig = require('../configTest');
 const mongoDBUtils = require('../mongoDBUtils');
 const mongo = require('mongodb').MongoClient;
 const async = require('async');
 const should = require('should');
 const utils = require('../utils');
+const request = utils.request;
 const iotManager = require('../../lib/iotagent-manager');
 let iotmDb;
 
@@ -45,10 +45,14 @@ describe('Configuration cache', function () {
     };
     beforeEach(function (done) {
         async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function () {
-            mongo.connect('mongodb://localhost:27017/iotagent-manager', { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
-                iotmDb = db;
-                done();
-            });
+            mongo.connect(
+                'mongodb://localhost:27017/iotagent-manager',
+                { useNewUrlParser: true, useUnifiedTopology: true },
+                function (err, db) {
+                    iotmDb = db;
+                    done();
+                }
+            );
         });
     });
 
