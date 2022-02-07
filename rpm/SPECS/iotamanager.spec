@@ -163,6 +163,12 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Feb 7 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
+- Fix: add graceful shutdown listening to SIGINT (#263)
+- Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
+- Upgrade logops dep from 2.1.0 to 2.1.2 due to colors dependency corruption
+- Upgrade iotagent-node-lib dependency from 2.18.0 to 2.19.0
+
 * Fri Nov 12 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.16.0
 - Fix: return target error code instead of 500 error code (#167)
 - Upgrade iotagent-node-lib dependency from 2.17.0 to 2.18.0
