@@ -164,8 +164,8 @@ fi
 
 %changelog
 * Mon Feb 7 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
+- Fix: add graceful shutdown listening to SIGINT (#263)
 - Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
-- FIX: Add graceful shutdown listening to SIGINT (#263)
 - Upgrade logops dep from 2.1.0 to 2.1.2 due to colors dependency corruption
 - Upgrade iotagent-node-lib dependency from 2.18.0 to 2.19.0
 
