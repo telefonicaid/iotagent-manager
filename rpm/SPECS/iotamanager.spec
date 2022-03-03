@@ -163,6 +163,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Thu Mar 3 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.1
+- Upgrade iotagent-node-lib dependency from 2.19.0 to 2.20.0
+
 * Mon Feb 7 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
 - Fix: add graceful shutdown listening to SIGINT (#263)
 - Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
