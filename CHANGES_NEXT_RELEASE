@@ -1,1 +1,2 @@
+- Fix: replace git:// url for https:// url in npm dependences
 - Upgrade NodeJS version from 12 to 14 in Dockerfile
