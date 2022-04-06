@@ -163,6 +163,11 @@ fi
 %{_install_dir}
 
 %changelog
+* Wed Apr 6 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.18.0
+- Add: extend explicitAttrs configuration model to allow JEXL expression for conditional propagation of measures (iota-node-lib#1179)
+- Fix: replace git:// url for https:// url in npm dependences
+- Upgrade NodeJS version from 12 to 14 in Dockerfile
+
 * Mon Feb 7 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
 - Fix: add graceful shutdown listening to SIGINT (#263)
 - Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
