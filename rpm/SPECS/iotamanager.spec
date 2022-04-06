@@ -166,6 +166,7 @@ fi
 * Wed Apr 6 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.18.0
 - Add: extend explicitAttrs configuration model to allow JEXL expression for conditional propagation of measures (iota-node-lib#1179)
 - Fix: replace git:// url for https:// url in npm dependences
+- Upgrade iotagent-node-lib dependency from 2.19.0 to 2.20.0
 - Upgrade NodeJS version from 12 to 14 in Dockerfile
 
 * Mon Feb 7 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
