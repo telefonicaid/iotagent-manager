@@ -163,6 +163,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Apr 29 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.19.0
+- Upgrade async dep from 2.6.2 to 2.6.4 due to security vulnerability (CWE-1321)
+
 * Wed Apr 6 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.18.0
 - Add: extend explicitAttrs configuration model to allow JEXL expression for conditional propagation of measures (iota-node-lib#1179)
 - Fix: replace git:// url for https:// url in npm dependences
