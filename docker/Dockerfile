@@ -57,7 +57,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # COPY . /opt/iotaManager/
 #
 
-# hadolint ignore=DL3008
+# hadolint ignore=DL3008,DL3005
 RUN \
 	# Install security updates
 	apt-get update -y && \
@@ -89,7 +89,7 @@ RUN \
 
 WORKDIR /opt/iotaManager
 
-# hadolint ignore=DL3008,DL3005
+# hadolint ignore=DL3008
 RUN \
 	# Ensure that Git is installed prior to running npm install
 	apt-get install -y --no-install-recommends git && \
