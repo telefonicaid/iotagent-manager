@@ -45,14 +45,10 @@ describe('Configuration cache', function () {
     };
     beforeEach(function (done) {
         async.series([mongoDBUtils.cleanDbs, async.apply(iotManager.start, iotConfig)], function () {
-            mongo.connect(
-                'mongodb://localhost:27017/iotagent-manager',
-                { useNewUrlParser: true, useUnifiedTopology: true },
-                function (err, db) {
-                    iotmDb = db;
-                    done();
-                }
-            );
+            mongo.connect('mongodb://localhost:27017/iotagent-manager', function (err, db) {
+                iotmDb = db;
+                done();
+            });
         });
     });
 
@@ -60,7 +56,7 @@ describe('Configuration cache', function () {
         iotmDb
             .db()
             .collection('configurations')
-            .deleteOne(function (error) {
+            .deleteOne({}, function (error) {
                 iotmDb.close(function (error) {
                     async.series([mongoDBUtils.cleanDbs, iotManager.stop], done);
                 });
