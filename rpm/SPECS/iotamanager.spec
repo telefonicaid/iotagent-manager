@@ -163,6 +163,12 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Jul 15 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
+- Add: entityNameExp to Configuration Model to allow define device.name using expressions
+- Fix: Dockerfile to include initial packages upgrade
+- Upgrade mongodb dev dep from 3.6.8 to 4.7.0
+- Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
+
 * Fri Apr 29 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.19.0
 - Upgrade async dep from 2.6.2 to 2.6.4 due to security vulnerability (CWE-1321)
 - Upgrade iotagent-node-lib dependency from 2.19.0 to 2.21.0
