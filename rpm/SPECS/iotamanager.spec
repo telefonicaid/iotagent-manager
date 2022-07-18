@@ -167,6 +167,7 @@ fi
 - Add: entityNameExp to Configuration Model to allow define device.name using expressions
 - Fix: Dockerfile to include initial packages upgrade
 - Upgrade mongodb dev dep from 3.6.8 to 4.7.0
+- Upgrade iotagent-node-lib dependency from 2.21.0 to 2.22.0
 - Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
 
 * Fri Apr 29 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.19.0
