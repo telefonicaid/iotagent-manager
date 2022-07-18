@@ -1,4 +1,1 @@
-- Add: entityNameExp to Configuration Model to allow define device.name using expressions
-- Fix: Dockerfile to include initial packages upgrade
-- Upgrade mongodb dev dep from 3.6.8 to 4.7.0
-- Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
+
