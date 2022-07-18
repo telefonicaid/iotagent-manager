@@ -1,7 +1,7 @@
 {
   "name": "iotagent-manager",
   "description": "IoT Agent Manager proxy",
-  "version": "1.20.0",
+  "version": "1.20.0-next",
   "homepage": "https://github.com/telefonicaid/iotagent-manager",
   "author": {
     "name": "Daniel Moran",
@@ -32,7 +32,7 @@
     "async": "2.6.4",
     "body-parser": "~1.19.0",
     "express": "4.16.4",
-    "iotagent-node-lib": "2.22.0",
+    "iotagent-node-lib": "https://github.com/telefonicaid/iotagent-node-lib.git#master",
     "logops": "2.1.2",
     "mongoose": "5.11.20",
     "revalidator": "~0.3.1",
