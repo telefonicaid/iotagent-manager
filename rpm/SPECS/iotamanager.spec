@@ -163,7 +163,7 @@ fi
 %{_install_dir}
 
 %changelog
-* Fri Jul 15 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
+* Mon Jul 18 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
 - Add: entityNameExp to Configuration Model to allow define device.name using expressions
 - Fix: Dockerfile to include initial packages upgrade
 - Upgrade mongodb dev dep from 3.6.8 to 4.7.0
