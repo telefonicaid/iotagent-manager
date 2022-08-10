@@ -32,7 +32,8 @@ var config = {
         retries: 5,
         retryTime: 5
     },
-    logLevel: 'INFO'
+    logLevel: 'INFO',
+    bodyParserLimit: '5mb'
 };
 
 module.exports = config;
