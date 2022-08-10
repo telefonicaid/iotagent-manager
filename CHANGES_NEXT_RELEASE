@@ -1,2 +1,2 @@
-- FIX: set bodyparser limit from 100Kbs to 5Mb
+- Fix: bodyparser limit no longer a hardwired 100Kbs setting (now is configurable with bodyParserLimit / IOTA_BODYPARSER_LIMIT with a default of 5Mb)
 - Fix: overlogging in DEBUG level (#294)
