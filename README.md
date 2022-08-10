@@ -37,6 +37,7 @@ explains each configuration parameter in detail.
 -   **mongodb.host**: host where the Mongo DB instance is listening.
 -   **mongodb.port**: port where the Mongo DB instance is listening.
 -   **mongodb.db**: name of the Mongo DB database to use.
+-   **bodyParserLimit**: set bodyParser limit. Default is 5Mb.
 -   **logLevel**: set the log level for the internal logger. Its allowed values are: FATAL, ERROR, WARNING, INFO and
     DEBUG.
 
@@ -53,6 +54,7 @@ following table shows the correspondence between allowed environment variables a
 | IOTA_MONGO_PORT       | mongodb.port            |
 | IOTA_MONGO_REPLICASET | mongodb.replicaSet      |
 | IOTA_MONGO_DB         | mongodb.db              |
+| IOTA_BODYPARSER_LIMIT | bodyParserLimit         |
 | IOTA_LOG_LEVEL        | logLevel                |
 
 ## <a name="installation"/> Installation
