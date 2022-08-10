@@ -1,1 +1,2 @@
 - FIX: set bodyparser limit from 100Kbs to 5Mb
+- Fix: overlogging in DEBUG level (#294)
