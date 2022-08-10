@@ -1,1 +1,2 @@
 - Fix: overlogging in DEBUG level (#294)
+- Fix: log as warn (not as debug) all errors handling requests
