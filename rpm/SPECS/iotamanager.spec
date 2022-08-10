@@ -163,6 +163,12 @@ fi
 %{_install_dir}
 
 %changelog
+* Wed Ago 10 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
+- Fix: bodyparser limit no longer a hardwired 100Kbs setting (now is configurable with bodyParserLimit / IOTA_BODYPARSER_LIMIT with a default of 5Mb)
+- Fix: overlogging in DEBUG level (#294)
+- Fix: log as warn (not as debug) all errors handling requests
+- Upgrade iotagent-node-lib dependency from 2.22.0 to 2.23.0    
+
 * Mon Jul 18 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
 - Add: entityNameExp to Configuration Model to allow define device.name using expressions
 - Fix: Dockerfile to include initial packages upgrade
