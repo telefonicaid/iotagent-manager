@@ -163,6 +163,10 @@ fi
 %{_install_dir}
 
 %changelog
+* Tue Jan 24 2023 Fermin Galan <fermin.galanmarquez@telefonica.com>
+- Upgrade iotagent-node-lib dependency from 2.24.0 to 2.25.0
+- Set Nodejs 14 as minimum version in packages.json (effectively removing Nodev12 from supported versions)
+
 * Fri Sep 02 2022 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.22.0
 - Upgrade iotagent-node-lib dependency from 2.23.0 to 2.24.0
 
