@@ -23,7 +23,8 @@
 
 const config = {
     server: {
-        port: 8082
+        port: 8082,
+        host: 'localhost'
     },
     mongodb: {
         host: '127.0.0.1',
