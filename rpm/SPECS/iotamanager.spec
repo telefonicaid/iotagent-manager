@@ -163,6 +163,11 @@ fi
 %{_install_dir}
 
 %changelog
+* Thu May 23 2023 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 2.1.0
+- Set Nodejs 16 as minimum version in packages.json (effectively removing Nodev14 from supported versions)
+- Add support to run tests with node 18
+- Upgrade iotagent-node-lib dependency from 3.0.0 to 3.2.0
+
 * Thu Mar 30 2023 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 2.0.0
 - Upgrade iotagent-node-lib dependency from 2.25.0 to 3.0.0
 

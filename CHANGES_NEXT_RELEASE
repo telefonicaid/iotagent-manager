@@ -1,2 +1,1 @@
-- Set Nodejs 16 as minimum version in packages.json (effectively removing Nodev14 from supported versions)
-- Add support to run tests with node 18
+
