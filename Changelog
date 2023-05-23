@@ -1,0 +1,210 @@
+2.1.0 (May 23rd, 2023)
+
+- Set Nodejs 16 as minimum version in packages.json (effectively removing Nodev14 from supported versions)
+- Add support to run tests with node 18
+- Upgrade iotagent-node-lib dependency from 3.0.0 to 3.2.0
+
+2.0.0 (March 30th, 2023)
+
+- Upgrade iotagent-node-lib dependency from 2.25.0 to 3.0.0
+
+1.23.0 (January 24th, 2023)
+
+- Upgrade iotagent-node-lib dependency from 2.24.0 to 2.25.0
+- Set Nodejs 14 as minimum version in packages.json (effectively removing Nodev12 from supported versions)
+
+1.22.0 (September 2nd, 2022)
+
+- Upgrade iotagent-node-lib dependency from 2.23.0 to 2.24.0
+
+1.21.0 (August 10th, 2022)
+
+- Fix: bodyparser limit no longer a hardwired 100Kbs setting (now is configurable with bodyParserLimit / IOTA_BODYPARSER_LIMIT with a default of 5Mb)
+- Fix: overlogging in DEBUG level (#294)
+- Fix: log as warn (not as debug) all errors handling requests
+- Upgrade iotagent-node-lib dependency from 2.22.0 to 2.23.0
+
+1.20.0 (July 18th, 2022)
+
+- Add: entityNameExp to Configuration Model to allow define device.name using expressions
+- Fix: Dockerfile to include initial packages upgrade
+- Upgrade mongodb dev dep from 3.6.8 to 4.7.0
+- Upgrade iotagent-node-lib dependency from 2.21.0 to 2.22.0
+- Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
+
+1.19.0 (April 29th, 2022)
+
+- Upgrade async dep from 2.6.2 to 2.6.4 due to security vulnerability (CWE-1321)
+- Upgrade iotagent-node-lib dependency from 2.19.0 to 2.21.0
+
+1.18.0 (April 6th, 2022)
+
+- Add: extend explicitAttrs configuration model to allow JEXL expression for conditional propagation of measures (iota-node-lib#1179)
+- Fix: replace git:// url for https:// url in npm dependences
+- Upgrade iotagent-node-lib dependency from 2.19.0 to 2.20.0
+- Upgrade NodeJS version from 12 to 14 in Dockerfile
+
+1.17.0 (February 7th, 2022)
+
+- Fix: add graceful shutdown listening to SIGINT (#263)
+- Fix: remove request obsolete library, using iotagent-node-lib.request instead (iotagent-node-lib#858)
+- Upgrade logops dep from 2.1.0 to 2.1.2 due to colors dependency corruption
+- Upgrade iotagent-node-lib dependency from 2.18.0 to 2.19.0
+
+1.16.0 (November 12th, 2021)
+
+- Fix: return target error code instead of 500 error code (#167)
+- Upgrade iotagent-node-lib dependency from 2.17.0 to 2.18.0
+
+1.15.0 (August 2021)
+
+ - Upgrade iotagent-node-lib dependency from 2.16.0 to 2.17.0
+
+1.14.0 (June 18th, 2021)
+
+- Add: db uri and options in mongo connection log INFO trace
+- Fix: log about getProtocol result
+- Fix: ensure protocol exists before remove it (#234)
+- Fix: print URI in logs about redirection error (#232)
+- Upgrade underscore dependency from 1.7.0 to 1.12.1
+- Upgrade mongoose dependency from 5.7.7 to 5.11.20
+- Upgrade iotagent-node-lib dependency from 2.15.0 to 2.16.0
+- Upgrade mongodb dev dependency from 3.5.9 to 3.6.8
+- Upgrade NodeJS version from 10 to 12 in Dockerfile due to Node 10 End-of-Life
+- Set Nodejs 12 as minimum version in packages.json (effectively removing Nodev10 from supported versions)
+
+1.13.0 (February 18th, 2021)
+
+- Check if device before service in Combine results (due both has apikey)
+- Upgrade iotagent-node-lib dependency from 2.14.0 to 2.15.0
+
+1.12.0 (November 16th, 2022)
+
+- Add: include `description` field in configuration
+- Add: include `from` in log context based on forwarded header
+- Upgrade iotagent-node-lib dependency from 2.13.0 to 2.14.0
+- Update Docker security practices (Add HEALTHCHECK, Use Anonymous User, Use two-stage build)
+
+1.11.0 (September 15th, 2020)
+
+- Add: extra fields to configuration (timestamp, languageExpression, explicitAttrs)
+- Fix: set service subservice in logs of redirector and configurations
+- Fix: set new trans and corr or use it if provided in logs
+- Upgrade iotagent-node-lib dependency from 2.12.0 to 2.13.0
+- Overall update of dev package dependencies
+- Update codebase to use ES6
+    -  Remove JSHint and jshint overrides
+    -  Add esLint using standard tamia presets
+    -  Replace var with let/const
+    -  Fix or disable eslint errors
+
+1.10.0 (May 27th, 2020)
+
+- Set Nodejs 10 as minimum version in packages.json (effectively removing Nodev8 from supported versions)
+- Make optional PM2 usage in docker entrypoint [#202]
+- Upgrade NodeJS version from 10.17.0 to 10.19.0 in Dockerfile
+
+1.9.0 (April 7th, 2020)
+
+- Upgrade iotagent-node-lib dependency from 2.11.0 to 2.12.0
+- Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life 
+
+1.8.0 (November 11th, 2019)
+
+- Fix: replace remove deleteOne in tests due to was deprecated by mongo
+- Fix: replset options was never used
+- Upgrade iotagent-node-lib dependency from 2.9.0 to 2.11.0
+- Upgrade mongoose dependency from 4.13.14 to 5.7.7
+- Upgrade body-parser dependency from ~1.11.0 to ~1.19.0
+- Upgrade async dependency from 2.0.1 to 2.6.2
+- Upgrade jshint dev dependency from ~2.9.6 to ~2.10.2
+- Upgrade mocha dev dependency from 5.2.0 to 6.1.4
+- Upgrade should dev dependency  from 8.2.2 to 13.2.3
+- Upgrade timekeeper dev dependency from 0.0.5 to 2.2.0
+- Upgrade mongodb dev dependency from 2.3.35 to 3.2.3 and tests
+
+1.7.0 (August 13th, 2019)
+
+- Fix: add `type` to query about configuration protocol
+- Upgrade iotagent-node-lib dependency from 2.9.0 to 2.10.0
+
+1.6.0 (May 22nd, 2019)
+
+- Upgrade from node:8.12.0-slim to node:8.16.0-slim as base image in Dockerfile
+- Upgrade logops dependency from 1.0.0 to 2.1.0
+- Upgrade iotagent-node-lib dependency from 2.8.1 to 2.9.0
+
+1.5.0 (December 19th, 2018)
+
+- Set Nodejs 8.12.0 as minimum version in packages.json (effectively removing Nodev4 and Nodev6 as supported versions)
+- Fix: save cbHost in configuration
+- Add: use NodeJS 8 in Dockerfile
+- Add: use PM2 in Dockerfile
+- Upgrade: iotagent-node-lib dependence from x to 2.8.1
+- Upgrade: mongoose dependence from ~4.1.15 to 4.13.14
+- Upgrade: requests dependence from 2.74.0 to 2.88.0
+- Upgrade: express dependence from ~4.11.2 to 4.16.4
+- Upgrade: mocha development dependence from 2.4.5 to 5.2.0
+- Upgrade: istanbul development dependence from ~0.1.34 to 0.4.5
+- Remove: old unused development dependencies (closure-linter-wrapper, chai, sinon, sinon-chai, grunt and grunt related module)
+
+1.4.0 (August 6th, 2018)
+
+- Update iotagent-node-lib to 2.7.x
+- Fix: handle syntax error (#144)
+- Fix: check protocol on creation device before use it (#142)
+- Fix: static_attributes protocol from iota are not retrieved (#140)
+- Using precise dependencies (~=) in packages.json
+- Remove mongodb dependence from packages.json (already in iota-node-lib)
+
+1.3.0 (February 27th, 2018)
+
+- Update ioagent-node-lib to 2.6.x
+- FIx: add mongodb dependence into dependencies in package.json
+
+1.2.0 (October 28th, 2017)
+
+- FEATURE update node version to 4.8.4
+- Update MongoDB driver in order to fix NODE-818 error (#120)
+
+1.1.1 (November 16th, 2016)
+
+- FIX include protocol in query url iota devices (#104)
+
+1.1.0 (November 11th, 2016)
+
+- ADD Configurable IoTManager path
+- ADD mongodb retries
+- FIX total count of results / devices
+- FIX update protocol apikey param
+- FIX missed resource in header redirected to iota
+- FIX protocol filter in get protocols
+- FIX protocol filter in list protocols
+- FIX translation body iota redirector
+- FIX way to handle non 500 errors
+- FIX format for duplicated conform IOTA cpp
+- ADD operations manual (#87)
+
+1.0.0 (September 9th, 2016)
+
+- Add Protocol Creation features (#1)
+- Add Protocol List features (#1)
+- Add Service Update features (#2)
+- Add API for log management (#8)
+- Add RPM and linux service (#3)
+- Add executable (#5)
+- Add configurations List features (#7)
+- Add provisioning request redirection (#7)
+- Add delete protocol features (#1)
+- Add Dockerfile (#14)
+- FIX Support multiple protocols in the `protocol` field (#17)
+- FIX Resource missing in redirection (#21)
+- FIX Wrong result for device group creation (#23)
+- FIX Return all the devices for all the protocols (#25)
+- FIX Presence of etag caused Express to return 304 from the IotAgent (#27)
+- ADD Device Group GETs should contain a description field (#31)
+- FIX Failed request splitting for Device Creation
+- FIX IoTManager crashes redirecting due to multiple callbacks (#34)
+- FIX Can't set headers after they are sent (#37)
+- FIX Single GET requests should have multiple request syntax (#40)
+- FIX Exception trying to decode empty body.
