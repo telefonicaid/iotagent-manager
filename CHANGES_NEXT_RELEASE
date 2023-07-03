@@ -1,1 +1,2 @@
 - Remove: RPM stuff (no longer used)
+- Remove: expressionLanguage field (as it it not longer needed, due to only one expression language is supported, after the removal of legacy expressions in iotagent-node-lib 3.2.0) (iota-node-lib#1384)
