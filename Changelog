@@ -1,4 +1,5 @@
 2.3.0 (Sep 20th, 2023)
+
 - Upgrade mongodb dev dep from 4.7.0 to 4.17.0
 - Upgrade mongoose dep from 5.11.20 to 5.13.20
 - Upgrade iotagent-node-lib dependency from 3.3.0 to 3.4.0
