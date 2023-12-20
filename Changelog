@@ -1,3 +1,5 @@
+- Add: transport and endpoint to Group model (iotagent-node-lib#1542)
+
 3.0.0 (November 24th, 2023)
 
 - Add: payloadType to device and groups model (iotagent-json#778)
