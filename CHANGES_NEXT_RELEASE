@@ -1,2 +1,1 @@
-
-
+- Add: support `POST /iot/op/delete` operation at iotAgent API to delete multiple devices at once (iota-node-lib#1578)
