@@ -108,7 +108,7 @@ In order to run the docker image, first you must have a MongoDB instance running
 following command:
 
 ```console
-docker run --name mongodb -d mongo
+   docker run -d -p 27017:27017 --hostname mongo --name mongo mongo:6.0.12
 ```
 
 ### Build your own Docker image
