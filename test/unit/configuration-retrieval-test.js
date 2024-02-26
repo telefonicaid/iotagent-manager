@@ -160,7 +160,7 @@ describe('Configuration list', function () {
         });
     });
 
-    describe('When a configuration list request with a limit 2 arrives to the IoTAM', function () {
+    describe('When a configuration list request with a limit 3 arrives to the IoTAM', function () {
         const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
@@ -168,14 +168,14 @@ describe('Configuration list', function () {
                 'fiware-servicepath': '/gardens'
             },
             qs: {
-                limit: 2
+                limit: 3
             },
             method: 'GET'
         };
 
         it('should return just 3 results', function (done) {
             request(options, function (error, response, body) {
-                body.services.length.should.equal(2);
+                body.services.length.should.equal(3);
                 done();
             });
         });
