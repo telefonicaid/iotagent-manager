@@ -1,3 +1,5 @@
+- Remove: dependency on deprecated domain node module
+
 3.1.0 (January 8th, 2024)
 
 - Add: transport and endpoint to Group model (iotagent-node-lib#1542)
