@@ -1,3 +1,5 @@
+- Remove: dependency on deprecated domain node module (#268)
+
 3.2.0 (February 27th, 2024)
 
 - Add: support `POST /iot/op/delete` operation at iotAgent API to delete multiple devices at once (iota-node-lib#1578)
