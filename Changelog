@@ -1,4 +1,4 @@
-- Remove: dependency on deprecated domain node module
+- Remove: dependency on deprecated domain node module (#268)
 
 3.2.0 (February 27th, 2024)
 
