@@ -23,7 +23,7 @@
 
 const config = {
     server: {
-        port: 8082,
+        port: 8282,
         host: 'localhost'
     },
     mongodb: {
@@ -31,7 +31,7 @@ const config = {
         port: 27017,
         db: 'iotagent-manager'
     },
-    logLevel: 'FATAL'
+    logLevel: 'DEBUG'
 };
 
 module.exports = config;
