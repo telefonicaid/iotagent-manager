@@ -1,9 +1,9 @@
 3.3.0 (April 26th, 2024)
 
-- Upgrade express dep from 4.16.4 to 4.19.2 due to a vulnerability
-- Remove: dependency on deprecated domain node module (#268)
 - Add: autoprovision flag to groups model for iotagent-manager
+- Upgrade express dep from 4.16.4 to 4.19.2 due to a vulnerability
 - Upgrade iotagent-node-lib dependency from 4.3.0 to 4.4.0
+- Remove: dependency on deprecated domain node module (#268)
 
 3.2.0 (February 27th, 2024)
 
