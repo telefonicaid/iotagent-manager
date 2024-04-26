@@ -1,2 +1,0 @@
-- Upgrade express dep from 4.16.4 to 4.19.2 due to a vulnerability
-- Add: autoprovision flag to groups model for iotagent-manager
