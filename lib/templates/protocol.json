@@ -29,9 +29,9 @@
       "type": "string",
       "required": true
     },
-    "services": {
+    "groups": {
       "type": "array",
-      "id": "services",
+      "id": "groups",
       "required": false,
       "items": {
         "type": "object",
