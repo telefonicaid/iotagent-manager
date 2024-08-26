@@ -3,7 +3,7 @@
   "description": "A generic protocol",
   "iotagent": "http://smartGondor.com/",
   "resource": "/iot/d",
-  "services": [
+  "groups": [
     {
       "apikey": "L23123HJ01230BJ4HV87K0BMSA807898PI9H2",
       "token": "90DSFLK3Y9032NEQL8970A92HBARW83403H3",

@@ -3,5 +3,5 @@
   "description": "A generic protocol",
   "iotagent": "http://smartGondor.com/",
   "resource": "/iot/d",
-  "services": []
+  "groups": []
 }
