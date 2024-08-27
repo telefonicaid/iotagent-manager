@@ -172,7 +172,7 @@ following path: ``, indicating the following information:
 -   _description_: Textual description for its display in portals.
 -   _iotagent_: URL address where requests for this IoT Agent will be redirected.
 -   _resource_: Unique string used to identify different IoT Agents for the same protocol.
--   groups: List of device Configurations available in the IoT Agent. The IoTA Manager saves a cache for all the
+-   _groups_: List of device Configurations available in the IoT Agent. The IoTA Manager saves a cache for all the
     configurations, aimed to be used to fasten the operations agains the IoTA databases.
 
 The following example shows a registration of an IoT Agent that already have some configuration groups registered in the
