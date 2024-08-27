@@ -55,9 +55,18 @@ describe('IoTA Redirections', function () {
 
         ['DELETE Device', null, 'DELETE', '/iot/devices/devId'],
         ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices'],
-        ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/groups'],
-        ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/groups'],
-        ['DELETE Configuration', null, 'DELETE', '/iot/groups']
+        ['POST Configuration (/iot/groups)', './test/examples/provisioning/postGroup.json', 'POST', '/iot/groups'],
+        ['PUT Configuration (/iot/groups)', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/groups'],
+        ['DELETE Configuration (/iot/groups)', null, 'DELETE', '/iot/groups'],
+        // #FIXME341 - Remove those test cases when dropping /iot/services endpoint
+        [
+            'POST Configuration (/iot/services)',
+            './test/examples/provisioning/postGroupServices.json',
+            'POST',
+            '/iot/services'
+        ],
+        ['PUT Configuration (/iot/services)', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
+        ['DELETE Configuration (/iot/services)', null, 'DELETE', '/iot/services']
     ];
     const protocolRequest = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',

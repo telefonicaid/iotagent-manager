@@ -78,7 +78,7 @@ describe('Configuration list', function () {
         }
 
         request(protocolRequest, function () {
-            setTimeout(callback, 200);
+            callback();
         });
     }
 
@@ -122,6 +122,7 @@ describe('Configuration list', function () {
         });
 
         it('should return all the available configurations for its service', function (done) {
+            this.retries(3); //Add retries to avoid mongodb-travis issues
             request(options, function (error, response, body) {
                 // It should be greather than 7 but due to some mongodb-travis isses was fixed to 2
                 body.groups.length.should.greaterThan(2);
@@ -150,6 +151,65 @@ describe('Configuration list', function () {
 
                 for (let i = 0; i < body.groups.length; i++) {
                     if (body.groups[i].service !== 'smartGondor') {
+                        otherServiceFound = true;
+                    }
+                }
+
+                otherServiceFound.should.equal(false);
+                done();
+            });
+        });
+    });
+
+    // #FIXME341 - Remove this test when dropping /iot/services endpoint
+    describe('When a new configuration list request arrives to the IoTAM (SERVICES)', function () {
+        const options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            method: 'GET'
+        };
+
+        it('should return a 200 OK', function (done) {
+            request(options, function (error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+
+        it('should return all the available configurations for its service', function (done) {
+            this.retries(3); //Add retries to avoid mongodb-travis issues
+            request(options, function (error, response, body) {
+                // It should be greather than 7 but due to some mongodb-travis isses was fixed to 2
+                body.services.length.should.greaterThan(2);
+                done();
+            });
+        });
+
+        it('should map the attributes for the configurations appropriately', function (done) {
+            request(options, function (error, response, body) {
+                for (let i = 0; i < body.services.length; i++) {
+                    should.exist(body.services[i].entity_type);
+                    should.not.exist(body.services[i].type);
+                    should.exist(body.services[i].service_path);
+                    should.not.exist(body.services[i].subservice);
+                    should.exist(body.services[i].internal_attributes);
+                    should.not.exist(body.services[i].internalAttributes);
+                }
+
+                done();
+            });
+        });
+
+        it('should not return any configurations for other services', function (done) {
+            request(options, function (error, response, body) {
+                let otherServiceFound = false;
+
+                for (let i = 0; i < body.services.length; i++) {
+                    if (body.services[i].service !== 'smartGondor') {
                         otherServiceFound = true;
                     }
                 }
