@@ -172,7 +172,7 @@ following path: ``, indicating the following information:
 -   _description_: Textual description for its display in portals.
 -   _iotagent_: URL address where requests for this IoT Agent will be redirected.
 -   _resource_: Unique string used to identify different IoT Agents for the same protocol.
--   _services_: List of device Configurations available in the IoT Agent. The IoTA Manager saves a cache for all the
+-   groups: List of device Configurations available in the IoT Agent. The IoTA Manager saves a cache for all the
     configurations, aimed to be used to fasten the operations agains the IoTA databases.
 
 The following example shows a registration of an IoT Agent that already have some configuration groups registered in the
@@ -184,7 +184,7 @@ IoT Agent:
     "description": "A generic protocol",
     "iotagent": "http://smartGondor.com/iot",
     "resource": "/iot/d",
-    "services": [
+    "groups": [
         {
             "apikey": "801230BJKL23Y9090DSFL123HJK09H324HV8732",
             "token": "8970A9078A803H3BL98PINEQRW8342HBAMS",
