@@ -1,0 +1,2 @@
+- Add /iot/groups API endpoints support (as equivalent to /iot/services) (#270)
+- Deprecated: /iot/services API routes
