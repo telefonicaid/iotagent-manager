@@ -73,12 +73,12 @@ describe('Configuration list', function () {
 
                 protocolRequest.headers['fiware-service'] = services[service];
                 protocolRequest.headers['fiware-servicepath'] = newConfiguration.service_path;
-                protocolRequest.json.services.push(newConfiguration);
+                protocolRequest.json.groups.push(newConfiguration);
             }
         }
 
         request(protocolRequest, function () {
-            setTimeout(callback, 200);
+            callback();
         });
     }
 
@@ -105,6 +105,65 @@ describe('Configuration list', function () {
 
     describe('When a new configuration list request arrives to the IoTAM', function () {
         const options = {
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/groups',
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            },
+            method: 'GET'
+        };
+
+        it('should return a 200 OK', function (done) {
+            request(options, function (error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+
+        it('should return all the available configurations for its service', function (done) {
+            this.retries(3); //Add retries to avoid mongodb-travis issues
+            request(options, function (error, response, body) {
+                // It should be greather than 7 but due to some mongodb-travis isses was fixed to 2
+                body.groups.length.should.greaterThan(2);
+                done();
+            });
+        });
+
+        it('should map the attributes for the configurations appropriately', function (done) {
+            request(options, function (error, response, body) {
+                for (let i = 0; i < body.groups.length; i++) {
+                    should.exist(body.groups[i].entity_type);
+                    should.not.exist(body.groups[i].type);
+                    should.exist(body.groups[i].service_path);
+                    should.not.exist(body.groups[i].subservice);
+                    should.exist(body.groups[i].internal_attributes);
+                    should.not.exist(body.groups[i].internalAttributes);
+                }
+
+                done();
+            });
+        });
+
+        it('should not return any configurations for other services', function (done) {
+            request(options, function (error, response, body) {
+                let otherServiceFound = false;
+
+                for (let i = 0; i < body.groups.length; i++) {
+                    if (body.groups[i].service !== 'smartGondor') {
+                        otherServiceFound = true;
+                    }
+                }
+
+                otherServiceFound.should.equal(false);
+                done();
+            });
+        });
+    });
+
+    // #FIXME341 - Remove this test when dropping /iot/services endpoint
+    describe('When a new configuration list request arrives to the IoTAM (SERVICES)', function () {
+        const options = {
             url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
             headers: {
                 'fiware-service': 'smartGondor',
@@ -122,6 +181,7 @@ describe('Configuration list', function () {
         });
 
         it('should return all the available configurations for its service', function (done) {
+            this.retries(3); //Add retries to avoid mongodb-travis issues
             request(options, function (error, response, body) {
                 // It should be greather than 7 but due to some mongodb-travis isses was fixed to 2
                 body.services.length.should.greaterThan(2);
@@ -162,7 +222,7 @@ describe('Configuration list', function () {
 
     describe('When a configuration list request with a limit 3 arrives to the IoTAM', function () {
         const options = {
-            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/groups',
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -175,7 +235,7 @@ describe('Configuration list', function () {
 
         it('should return just 3 results', function (done) {
             request(options, function (error, response, body) {
-                body.services.length.should.equal(3);
+                body.groups.length.should.equal(3);
                 done();
             });
         });
@@ -183,7 +243,7 @@ describe('Configuration list', function () {
 
     describe('When a configuration list request with a offset 3 arrives to the IoTAM', function () {
         const options = {
-            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/groups',
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -197,7 +257,7 @@ describe('Configuration list', function () {
         it('should skip the first 3 results', function (done) {
             request(options, function (error, response, body) {
                 // It should be greather than 3 but due to some mongodb-travis isses was fixed to 0
-                body.services.length.should.greaterThan(-1);
+                body.groups.length.should.greaterThan(-1);
                 done();
             });
         });
@@ -205,7 +265,7 @@ describe('Configuration list', function () {
 
     describe('When a configuration list request arrives with a wrong limit', function () {
         const options = {
-            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/groups',
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -226,7 +286,7 @@ describe('Configuration list', function () {
 
     describe('When a configuration list request arrives with a wrong offset', function () {
         const options = {
-            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/groups',
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
