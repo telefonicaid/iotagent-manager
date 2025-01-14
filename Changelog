@@ -1,4 +1,4 @@
-- Add: allow set useCBflowControl in config group
+- Add: allow set useCBflowControl in config group (iotagent-node-lib#1420)
 - Add: allow store last measure in device (by id, apikey, service and subservice) in config group (iotagent-node-lib#1669)
 
 3.5.0 (Sep 18th, 2024)
