@@ -34,7 +34,7 @@
     "express": "4.20.0",
     "iotagent-node-lib": "https://github.com/telefonicaid/iotagent-node-lib.git#master",
     "logops": "2.1.2",
-    "mongoose": "8.8.4",
+    "mongoose": "8.9.5",
     "revalidator": "~0.3.1",
     "underscore": "~1.12.1"
   },
