@@ -1,6 +1,14 @@
+3.6.0 (Feb 3rd, 2025)
+
 - Add: allow set useCBflowControl in config group (iotagent-node-lib#1420)
 - Add: allow store last measure in device (by id, apikey, service and subservice) in config group (iotagent-node-lib#1669)
-- Upgrade mongoose dep from 8.8.4 to 8.9.5 (solving vulnerability CVE-2025-23061) (#1674) 
+- Add: /iot/groups API endpoints support (as equivalent to /iot/services) (#270)
+- Upgrade body-parser dep from 1.19.0 to 1.20.3
+- Upgrade express from 4.19.2 to 4.21.2
+- Upgrade mongodb devdep from 4.17.0 to 4.17.2
+- Upgrade mongoose dep from 5.13.20 to 8.9.5 (solving vulnerability CVE-2024-53900, CVE-2025-23061) (#351,#1674)
+- Upgrade iotagent-node-lib dependency from 4.6.0 to 4.7.0
+- Deprecated: /iot/services API routes
 
 3.5.0 (Sep 18th, 2024)
 
