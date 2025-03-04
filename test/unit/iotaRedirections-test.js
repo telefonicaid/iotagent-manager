@@ -55,9 +55,18 @@ describe('IoTA Redirections', function () {
 
         ['DELETE Device', null, 'DELETE', '/iot/devices/devId'],
         ['POST Device', './test/examples/provisioning/postDevice.json', 'POST', '/iot/devices'],
-        ['POST Configuration', './test/examples/provisioning/postGroup.json', 'POST', '/iot/services'],
-        ['PUT Configuration', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
-        ['DELETE Configuration', null, 'DELETE', '/iot/services']
+        ['POST Configuration (/iot/groups)', './test/examples/provisioning/postGroup.json', 'POST', '/iot/groups'],
+        ['PUT Configuration (/iot/groups)', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/groups'],
+        ['DELETE Configuration (/iot/groups)', null, 'DELETE', '/iot/groups'],
+        // #FIXME341 - Remove those test cases when dropping /iot/services endpoint
+        [
+            'POST Configuration (/iot/services)',
+            './test/examples/provisioning/postGroupServices.json',
+            'POST',
+            '/iot/services'
+        ],
+        ['PUT Configuration (/iot/services)', './test/examples/provisioning/putGroup.json', 'PUT', '/iot/services'],
+        ['DELETE Configuration (/iot/services)', null, 'DELETE', '/iot/services']
     ];
     const protocolRequest = {
         url: 'http://localhost:' + iotConfig.server.port + '/iot/protocols',
@@ -193,7 +202,7 @@ describe('IoTA Redirections', function () {
 
     describe('When a request arrives to the manager with an array of protocols', function () {
         const options = {
-            url: 'http://localhost:' + iotConfig.server.port + '/iot/services',
+            url: 'http://localhost:' + iotConfig.server.port + '/iot/groups',
             method: 'POST',
             headers: {
                 'fiware-service': 'smartGondor',
@@ -209,7 +218,7 @@ describe('IoTA Redirections', function () {
                 .matchHeader('fiware-servicepath', '/gardens');
 
             agentMock
-                .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup1.json'))
+                .post('/iot/groups', utils.readExampleFile('./test/examples/provisioning/postCleanGroup1.json'))
                 .query({ resource: '/iot/d', protocol: 'GENERIC_PROTOCOL' })
                 .reply(200, {});
 
@@ -218,7 +227,7 @@ describe('IoTA Redirections', function () {
                 .matchHeader('fiware-servicepath', '/gardens');
 
             secondAgentMock
-                .post('/iot/services', utils.readExampleFile('./test/examples/provisioning/postCleanGroup2.json'))
+                .post('/iot/groups', utils.readExampleFile('./test/examples/provisioning/postCleanGroup2.json'))
                 .query({ resource: '/iot/a', protocol: 'ANOTHER_PROTOCOL' })
                 .reply(200, {});
 
