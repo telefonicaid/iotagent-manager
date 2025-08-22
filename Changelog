@@ -1,3 +1,9 @@
+3.7.0 (Aug 22nd, 2025)
+
+- Fix: fill from log field with real IP
+- Upgrade NodeJS version from 16-slim to 16-bullseye-slim in Dockerfile
+- Upgrade iotagent-node-lib dependency from 4.8.0 to 4.9.0
+
 3.6.0 (Feb 3rd, 2025)
 
 - Add: allow set useCBflowControl in config group (iotagent-node-lib#1420)
