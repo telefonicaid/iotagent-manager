@@ -1,4 +1,4 @@
-3.7.0 (Aug 220nd, 2025)
+3.7.0 (Aug 22nd, 2025)
 
 - Fix: fill from log field with real IP
 - Upgrade NodeJS version from 16-slim to 16-bullseye-slim in Dockerfile
