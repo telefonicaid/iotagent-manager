@@ -28,6 +28,6 @@
 # Not every repository needs hooks, only the ones that needs special tunning. Standard
 # dockerhub autobuild works well most of the times.
 
-docker image push $IMAGE_NAME-distroless
+#docker image push $IMAGE_NAME-distroless
 
 
