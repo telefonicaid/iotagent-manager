@@ -156,7 +156,7 @@ RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
 # - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
 #
 ########################################################################################
-FROM gcr.io/distroless/nodejs${NODE_VERSION}-debian12 AS distroless
+FROM gcr.io/distroless/nodejs${NODE_VERSION}-debian12:latest AS distroless
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
