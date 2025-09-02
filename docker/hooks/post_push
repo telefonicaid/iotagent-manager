@@ -28,7 +28,6 @@
 # Not every repository needs hooks, only the ones that needs special tunning. Standard
 # dockerhub autobuild works well most of the times.
 
-# FIXME: distroless stuff disabled. See https://github.com/telefonicaid/iotagent-json/issues/891
-#docker image push $IMAGE_NAME-distroless
+docker image push $IMAGE_NAME-distroless
 
 
