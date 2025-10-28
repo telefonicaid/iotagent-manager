@@ -34,9 +34,7 @@ explains each configuration parameter in detail.
 
 -   **server.port**: port where the server will be listening for connections.
 -   **server.host**: address the server will bind to.
--   **mongodb.host**: host where the Mongo DB instance is listening.
--   **mongodb.port**: port where the Mongo DB instance is listening.
--   **mongodb.db**: name of the Mongo DB database to use.
+-   **mongodb.uri**: uri where the Mongo DB instance is listening.
 -   **bodyParserLimit**: set bodyParser limit. Default is 5Mb.
 -   **logLevel**: set the log level for the internal logger. Its allowed values are: FATAL, ERROR, WARNING, INFO and
     DEBUG.
@@ -50,10 +48,7 @@ following table shows the correspondence between allowed environment variables a
 | :-------------------- | :---------------------- |
 | IOTA_SERVER_PORT      | server.port             |
 | IOTA_SERVER_HOST      | server.host             |
-| IOTA_MONGO_HOST       | mongodb.host            |
-| IOTA_MONGO_PORT       | mongodb.port            |
-| IOTA_MONGO_REPLICASET | mongodb.replicaSet      |
-| IOTA_MONGO_DB         | mongodb.db              |
+| IOTA_MONGO_URI        | mongodb.uri             |
 | IOTA_BODYPARSER_LIMIT | bodyParserLimit         |
 | IOTA_LOG_LEVEL        | logLevel                |
 
@@ -131,7 +126,7 @@ To do it, follow the next steps once you have installed Docker in your machine:
 Once the MongoDB instance is running, you can execute the IoT Manager with the following command:
 
 ```console
-docker run -d  --link mongodb:mongo -e "IOTA_LOG_LEVEL=DEBUG" -e "IOTA_MONGO_HOST=mongo" -p 8082:8082 telefonicaiot/iotamanager
+docker run -d  --link mongodb:mongo -e "IOTA_LOG_LEVEL=DEBUG" -e "IOTA_MONGO_URI=mongodb://mongo:27017" -p 8082:8082 telefonicaiot/iotamanager
 ```
 
 ### Using PM2
