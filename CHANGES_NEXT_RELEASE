@@ -1,2 +1,1 @@
-- Add: IOTA_MONGO_URI env var
-- Deprecated: IOTA_MONGO_ different from IOTA_MONGO_URI (use IOTA_MONGO_URI instead)
+
