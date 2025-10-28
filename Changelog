@@ -1,3 +1,9 @@
+3.9.0 (Oct 28th, 2025)
+
+- Add: IOTA_MONGO_URI env var
+- Deprecated: IOTA_MONGO_ different from IOTA_MONGO_URI (use IOTA_MONGO_URI instead)
+- Upgrade iotagent-node-lib dependency from 4.10.0 to 4.11.0
+
 3.8.0 (Oct 6th, 2025)
 
 - Add: command modes (cmdMode): legacy, notification and advancedNotification (iota-node-lib#1732)
