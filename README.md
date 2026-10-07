@@ -1,6 +1,10 @@
 # iotagent-manager
 
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/iotagent-manager/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/iotagent-manager?branch=master)
+![Status](https://fiware.github.io/catalogue/badges/statuses/status-deprecated.svg)
+
+**This repository is now archived. IoT Agent Manager is no longer supported and further development is not envisaged.
+Please use the provisioning API of [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) directly instead.**
 
 ## Index
 
