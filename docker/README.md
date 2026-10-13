@@ -1,7 +1,10 @@
 # Telefónica IoT Agent Manager
 
-[![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
-[![](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/iot-agents.svg)](https://stackoverflow.com/questions/tagged/fiware+iot)
+[![FIWARE IoT Agents](https://fiware.github.io/catalogue/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
+[![](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware+iot)
+
+**This repository is now archived. IoT Agent Manager is no longer supported and further development is not envisaged.
+Please use the provisioning API of [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) directly instead.**
 
 The IoT Agent Manager works as a proxy for scenarios where multiple IoT Agents offer different southbound protocols.
 The IoTA Manager appears as a single administration endpoint for provisioning tasks, redirecting provisioning requests
